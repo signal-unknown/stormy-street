@@ -1,10 +1,12 @@
-package dat255.chalmers.stormystreet;
+package dat255.chalmers.stormystreet.controller;
 
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import dat255.chalmers.stormystreet.R;
 
 /**
  * A placeholder fragment containing a simple view.
