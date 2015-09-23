@@ -1,6 +1,12 @@
 <resources>
     <string name="app_name">Stormy Street</string>
 
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+
+    <string name="menu_drawer_home">Home</string>
+    <string name="menu_drawer_profile">My profile</string>
 </resources>
