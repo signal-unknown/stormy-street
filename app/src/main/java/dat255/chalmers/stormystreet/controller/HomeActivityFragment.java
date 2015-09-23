@@ -7,18 +7,27 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import dat255.chalmers.stormystreet.R;
+import dat255.chalmers.stormystreet.model.IScore;
+import dat255.chalmers.stormystreet.view.ScoreCard;
 
 /**
- * A placeholder fragment containing a simple view.
+ * @author Alexander Håkansson
+ * @since 2015-09-22
  */
 public class HomeActivityFragment extends Fragment {
 
-    public HomeActivityFragment() {
-    }
+    private ScoreCard scoreCard;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_home, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        scoreCard = (ScoreCard) view.findViewById(R.id.home_scoreCard);
     }
 }

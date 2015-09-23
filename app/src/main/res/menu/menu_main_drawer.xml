@@ -3,12 +3,11 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/menu_drawer_home"
-            android:checked="true"
-            android:title="@string/menu_drawer_home"/>
-        <!--android:icon="@drawable/ic_android" -->
+            android:title="@string/menu_drawer_home"
+            android:icon="@drawable/ic_home_black_24dp"/>
         <item
             android:id="@+id/menu_drawer_profile"
-            android:title="@string/menu_drawer_profile"/>
-        <!-- android:icon="@drawable/ic_android" -->
+            android:title="@string/menu_drawer_profile"
+            android:icon="@drawable/ic_person_black_24dp"/>
     </group>
 </menu>
