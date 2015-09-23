@@ -12,29 +12,29 @@ import android.content.Context;
 
 public class AppSQLiteWrapper extends SQLiteOpenHelper {
 
-    private static final String Columns = "value";
-    private static final String Table = "Values";
-    private static final String Database_Name = "ValueStorage.db";
-    private static final int Version = 1;
-    private static final String Create_Database = "Create table " + Table + " "  + Columns;
+    private static final String columns = "value";
+    private static final String table = "Values";
+    private static final String database_Name = "ValueStorage.db";
+    private static final int version = 1;
+    private static final String create_Database = "Create table " + table + " "  + columns;
 
 
     public AppSQLiteWrapper(Context context) {
 
         // Setting up SQLite_Database, with specifying name and version....
-        super(context, Database_Name, null, Version);
+        super(context, database_Name, null, version);
     }
     @Override
     public void onCreate (SQLiteDatabase database) {
 
 
-        database.execSQL(Create_Database);
+        database.execSQL(create_Database);
 
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
-        db.execSQL(Table);
+        db.execSQL(table);
         onCreate(db);
 
 
