@@ -9,6 +9,6 @@ public class GlobalState extends Application {
     @Override
     public void onCreate(){
         super.onCreate();
-        Log.i("Globalstate", "App stared");
+        Log.i("Globalstate", "App started");
     }
 }
