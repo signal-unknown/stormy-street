@@ -9,4 +9,6 @@
 
     <string name="menu_drawer_home">Home</string>
     <string name="menu_drawer_profile">My profile</string>
+
+    <string name="points">points</string>
 </resources>
