@@ -8,7 +8,7 @@ import java.util.List;
  * @since 2015-09-24
  */
 public class BusManager {
-    List<IBus> busList;
+    private List<IBus> busList;
 
     public BusManager(){
         busList = new ArrayList<>();
