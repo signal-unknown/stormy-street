@@ -1,5 +1,6 @@
 package dat255.chalmers.stormystreet.controller;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -12,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import dat255.chalmers.stormystreet.MapsActivity;
 import dat255.chalmers.stormystreet.R;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -70,6 +72,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout.closeDrawers();
         Toast.makeText(this, menuItem.getTitle(), Toast.LENGTH_LONG).show(); // Debug code
         // TODO: Handle menu
+        if(menuItem.getItemId() == (R.id.menu_drawer_map)){
+            Intent map = new Intent(this, MapsActivity.class);
+            startActivity(map);
+        }
         return true;
     }
 
