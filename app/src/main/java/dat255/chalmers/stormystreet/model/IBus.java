@@ -7,10 +7,10 @@ package dat255.chalmers.stormystreet.model;
  */
 
 public interface IBus {
-    String getDgwNumber();
+    int getDgwNumber();
     int getAcceleratorPedalPosition();
     int getAmbientTemperature();
-    boolean getIsAtStop();
+    boolean isAtStop();
     int getCoolingAirConditioning();
     int getDriverCabinTemperature();
     int getFmsVersionSupported(); //Not yet active in the API as of 2015-09-23
@@ -19,14 +19,14 @@ public interface IBus {
     String getMobileNetworkCellInfo(); //Not yet active in the API as of 2015-09-23
     String getMobileNetworkSignalStrength(); //Not yet active in the API as of 2015-09-23
     String getNextStop();
-    boolean getIsOffroute();
+    boolean isOffroute();
     int getOnlineUsers();
     int getAuthenticatedUsers();
-    boolean getIsDoorOpen();
+    boolean isDoorOpen();
     int getDoorsPosition();
     int getPramRequest();
     int getRampWheelChairLift(); //Not yet active in the API as of 2015-09-23
-    boolean getIsStopPressed();
+    boolean isStopPressed();
     int getStopRequest();
     long getTotalDistanceDriven();
     int getTurnSignals();
@@ -35,7 +35,7 @@ public interface IBus {
     int getWlanCellIdValue();
     int getWlanCellId2Value();
 
-    void setDgwNumber(String dgwNumber);
+    void setDgwNumber(int dgwNumber);
     void setAcceleratorPedalPosition(int acceleratorPedalPosition);
     void setAmbientTemperature(int ambientTemperature);
     void setIsAtStop(boolean isAtStop);
