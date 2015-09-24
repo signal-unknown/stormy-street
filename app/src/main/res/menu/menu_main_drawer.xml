@@ -9,5 +9,8 @@
             android:id="@+id/menu_drawer_profile"
             android:title="@string/menu_drawer_profile"
             android:icon="@drawable/ic_person_black_24dp"/>
+        <item
+            android:id="@+id/menu_drawer_map"
+            android:title="Trafikkarta"/>
     </group>
 </menu>
