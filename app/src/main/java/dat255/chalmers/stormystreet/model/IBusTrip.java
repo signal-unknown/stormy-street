@@ -10,5 +10,4 @@ public interface IBusTrip {
     long getStartTime();
     long getEndTime();
     long getDistance();
-    IScore getScore();
 }
