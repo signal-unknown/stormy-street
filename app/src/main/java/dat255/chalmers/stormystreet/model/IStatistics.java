@@ -10,7 +10,11 @@ import java.util.List;
 
 public interface IStatistics{
     IScore getTotalScore();
-    long getTimeSpentOnBus();
-    List<IBusTrip> getAllBusTrips();
     IScore getWeeklyAverageScore();
+    void setTotalScore(IScore score);
+    long getTimeSpentOnBus();
+    void setTimeSpentOnBus(long timeSpentOnBus);
+    List<IBusTrip> getAllBusTrips();
+    void addBusTrip(IBusTrip busTrip);
+    void addBusTrip(List<IBusTrip> busTrips);
 }

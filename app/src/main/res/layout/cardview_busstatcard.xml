@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:padding="16dp">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/busstatcard_topview"
+        android:gravity="center">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/busstatcard_topText"
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:textSize="32sp"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="true"
+            android:id="@+id/busstatcard_icon"
+            android:layout_toEndOf="@id/busstatcard_topText"
+            android:layout_toRightOf="@id/busstatcard_topText"
+            android:layout_centerVertical="true"/>
+    </RelativeLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/busstatcard_bottomText"
+        android:gravity="center"
+        android:layout_below="@id/busstatcard_topview"
+        android:textSize="18sp"/>
+</RelativeLayout>
