@@ -12,17 +12,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dat255.chalmers.stormystreet.R;
-import dat255.chalmers.stormystreet.model.IScore;
-import dat255.chalmers.stormystreet.view.BusStat;
-import dat255.chalmers.stormystreet.view.ScoreCard;
+import dat255.chalmers.stormystreet.view.StatCardData;
 
 /**
  * @author Alexander Håkansson
  * @since 2015-09-22
  */
 public class HomeActivityFragment extends Fragment {
-
-    private ScoreCard scoreCard;
 
     private RecyclerView cardRecyclerView;
     private RecyclerView.Adapter recyclerViewAdapter;
@@ -60,11 +56,11 @@ public class HomeActivityFragment extends Fragment {
 
         cardRecyclerView.setLayoutManager(recycleViewManager);
 
-        List<BusStat> stats = new ArrayList<>();
-        stats.add(new BusStat("6", "poäng", null));
-        stats.add(new BusStat("X", "stopp", null));
-        stats.add(new BusStat("6", "poäng", null));
-        stats.add(new BusStat("X", "stopp", null));
+        List<StatCardData> stats = new ArrayList<>();
+        stats.add(new StatCardData("6", "poäng", null));
+        stats.add(new StatCardData("X", "stopp", null));
+        stats.add(new StatCardData("6", "poäng", null));
+        stats.add(new StatCardData("X", "stopp", null));
 
         recyclerViewAdapter = new BusStatListAdapter(stats);
         cardRecyclerView.setAdapter(recyclerViewAdapter);
