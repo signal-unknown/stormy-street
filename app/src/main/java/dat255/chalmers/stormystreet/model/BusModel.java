@@ -66,7 +66,8 @@ public class BusModel implements IBus{
     }
 
     public int getFmsVersionSupported() {
-        return this.fmsVersionSupported;
+        throw new NotYetImplementedException("No signal from the api");
+        //return this.fmsVersionSupported;
     }
 
     public IGpsCoord getGPSPosition() {
@@ -78,11 +79,13 @@ public class BusModel implements IBus{
     }
 
     public String getMobileNetworkCellInfo() {
-        return this.mobileNetworkCellInfo;
+        throw new NotYetImplementedException("No signal from the api");
+        //return this.mobileNetworkCellInfo;
     }
 
     public String getMobileNetworkSignalStrength() {
-        return this.mobileNetworkSignalStrength;
+        throw new NotYetImplementedException("No signal from the api");
+        //return this.mobileNetworkSignalStrength;
     }
 
     public String getNextStop() {
@@ -114,7 +117,8 @@ public class BusModel implements IBus{
     }
 
     public int getRampWheelChairLift() {
-        return this.rampWheelChairLift;
+        throw new NotYetImplementedException("No signal from the api");
+        //return this.rampWheelChairLift;
     }
 
     public boolean isStopPressed() {
