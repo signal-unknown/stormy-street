@@ -39,7 +39,7 @@
 
         <activity
             android:name=".MapsActivity"
-            android:label="@string/title_activity_maps" >
+            android:label="@string/menu_drawer_bus_map" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="dat255.chalmers.stormystreet.controller.HomeActivity" />

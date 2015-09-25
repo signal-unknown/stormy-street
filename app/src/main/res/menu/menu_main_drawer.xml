@@ -11,6 +11,7 @@
             android:icon="@drawable/ic_person_black_24dp"/>
         <item
             android:id="@+id/menu_drawer_map"
-            android:title="Trafikkarta"/>
+            android:title="@string/menu_drawer_bus_map"
+            android:icon="@drawable/ic_directions_bus_black_24dp"/>
     </group>
 </menu>
