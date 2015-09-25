@@ -6,6 +6,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.util.Log;
+import android.database.Cursor;
+
+import dat255.chalmers.stormystreet.view.AppSQLiteWrapper;
+import dat255.chalmers.stormystreet.view.DataValue;
 
 /**
  * Created by DavidF on 2015-09-23.
@@ -27,17 +31,31 @@ public class SQLiteDataSource {
         appSQLiteWrapper.close();
 
     }
-    private void saveData() {
+    private void saveData(String dataValue) {
+
+        ContentValues values  = new ContentValues();
+        values.put(appSQLiteWrapper.column_Data, dataValue);
+
+        long addId = database.insert(appSQLiteWrapper.table, null, values);
+       // Cursor cursor = database.query(appSQLiteWrapper.table, null, )
+
+
+
 
 
     }
     private void deleteData(DataValue dataValue) {
 
         long id = dataValue.getId();
-        Log.i("Delete", "The value deleted is: " + id );
+        Log.i("Delete", "Bus data deleted with: " + id );
         database.delete(appSQLiteWrapper.table,appSQLiteWrapper.column_id, null);
+
+
 
     }
 
 
 }
+
+
+
