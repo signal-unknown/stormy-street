@@ -4,12 +4,10 @@ import android.content.Context;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.content.ContentValues;
-import android.database.Cursor;
 import android.util.Log;
-import android.database.Cursor;
 
-import dat255.chalmers.stormystreet.view.AppSQLiteWrapper;
-import dat255.chalmers.stormystreet.view.DataValue;
+import dat255.chalmers.stormystreet.model.AppSQLiteWrapper;
+import dat255.chalmers.stormystreet.model.DataValue;
 
 /**
  * Created by DavidF on 2015-09-23.
@@ -48,10 +46,7 @@ public class SQLiteDataSource {
 
         long id = dataValue.getId();
         Log.i("Delete", "Bus data deleted with: " + id );
-        database.delete(appSQLiteWrapper.table,appSQLiteWrapper.column_id, null);
-
-
-
+        database.delete(appSQLiteWrapper.table,appSQLiteWrapper.column_id + " = " + id, null);
     }
 
 
