@@ -8,7 +8,7 @@ import java.util.List;
  * The toplevel model of the app
  */
 public class MainModel {
-    BusManager busManager;
+    private BusManager busManager;
 
     public MainModel(){
         this.busManager = new BusManager();
