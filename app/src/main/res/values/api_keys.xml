@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="electricity_api">ELECTRICITY API HERE</string>
+    <string name="google_maps_key">GOOGLE MAPS API HERE</string>
+</resources>
