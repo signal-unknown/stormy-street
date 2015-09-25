@@ -1,4 +1,4 @@
-package dat255.chalmers.stormystreet.view;
+package dat255.chalmers.stormystreet.model;
 
 /**
  * Created by DavidF on 2015-09-23.

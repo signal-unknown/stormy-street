@@ -1,4 +1,4 @@
-package dat255.chalmers.stormystreet.view;
+package dat255.chalmers.stormystreet.model;
 
 /**
  * Created by DavidF on 2015-09-24.
@@ -10,18 +10,19 @@ public class DataValue {
 
 
     public long getId() {
+
         return id;
     }
-    private void setId(long id) {
+    public void setId(long id) {
 
         this.id = id;
     }
-    private void setDataValue(String dataValue) {
+    public void setDataValue(String dataValue) {
 
         this.dataValue = dataValue;
 
     }
-    private String getDataValue() {
+    public String getDataValue() {
 
         return dataValue;
     }
