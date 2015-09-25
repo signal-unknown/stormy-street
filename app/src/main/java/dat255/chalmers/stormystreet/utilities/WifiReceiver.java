@@ -4,6 +4,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.net.wifi.WifiManager;
+import android.util.Log;
+
 import dat255.chalmers.stormystreet.Constants;
 import dat255.chalmers.stormystreet.services.WifiService;
 
@@ -17,7 +19,10 @@ public class WifiReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        if (intent.getAction() == WifiManager.SCAN_RESULTS_AVAILABLE_ACTION) {
+        Log.d("Wifireceiver", "Received intent: " + intent.getAction());
+        Log.d("Wifireceiver", "Intent we compare with: " + WifiManager.SCAN_RESULTS_AVAILABLE_ACTION);
+        if (intent.getAction().equals(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION)) {
+            Log.d("Wifireceiver", "Inside if");
             wifiIntent = new Intent(context, WifiService.class);
             wifiIntent.setAction(Constants.ACTION_GET_MAC);
             context.startService(wifiIntent);

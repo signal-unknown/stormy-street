@@ -1,7 +1,9 @@
 package dat255.chalmers.stormystreet.controller;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -16,6 +18,8 @@ import android.widget.Toast;
 import dat255.chalmers.stormystreet.MapsActivity;
 import dat255.chalmers.stormystreet.R;
 
+import static android.support.v4.app.ActivityCompat.requestPermissions;
+
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private Toolbar toolbar;
@@ -23,6 +27,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private ActionBarDrawerToggle drawerToggle;
+    private final int MY_PERMISSION_LOCATION = 1337;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +37,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         toolbar = (Toolbar) findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
         setupNavigationDrawer();
+        if (android.os.Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1) {
+            // only for gingerbread and newer versions
+            checkPermissions();
+        }
+
     }
 
 
@@ -102,6 +112,27 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setHomeButtonEnabled(true);
+        }
+    }
+
+
+    public void checkPermissions(){
+        if(checkSelfPermission(android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+            requestPermissions(new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSION_LOCATION);
+
+        }
+    }
+
+    public void onRequestPermissionResult(int requestCode,
+                                          String permissions[], int[] grantResults){
+        switch(requestCode){
+            case MY_PERMISSION_LOCATION:{
+                //close application if permission isnt granted
+                if(!(grantResults[0] == PackageManager.PERMISSION_GRANTED)){
+                    //android.os.Process.killProcess(android.os.Process.myPid());
+                }
+                return;
+            }
         }
     }
 }

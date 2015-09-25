@@ -20,6 +20,18 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+        <receiver
+            android:name=".utilities.WifiReceiver"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="android.net.wifi.SCAN_RESULTS"></action>
+            </intent-filter>
+            </receiver>
+        <service
+            android:enabled="true"
+            android:name=".services.WifiService">
+        </service>
+
         <activity
             android:name=".controller.HomeActivity"
             android:label="@string/app_name" >
@@ -39,7 +51,7 @@
 
         <activity
             android:name=".MapsActivity"
-            android:label="@string/title_activity_maps" >
+            android:label="@string/menu_drawer_bus_map" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="dat255.chalmers.stormystreet.controller.HomeActivity" />

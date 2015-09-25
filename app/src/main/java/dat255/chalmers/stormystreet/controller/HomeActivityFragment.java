@@ -1,9 +1,14 @@
 package dat255.chalmers.stormystreet.controller;
 
+import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,7 +47,12 @@ public class HomeActivityFragment extends Fragment {
         cardRecyclerView = (RecyclerView) view.findViewById(R.id.home_recyclerview);
 
         // use a linear layout manager
-        recycleViewManager = new GridLayoutManager(getActivity(), 2); // 2 columns
+        if (getResources().getConfiguration().orientation != Configuration.ORIENTATION_LANDSCAPE) {
+            recycleViewManager = new GridLayoutManager(getActivity(), 2); // 2 columns if vertical
+        } else {
+            recycleViewManager = new GridLayoutManager(getActivity(), 3); // 3 columns if horizontal
+        }
+
         recycleViewManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
@@ -57,10 +67,12 @@ public class HomeActivityFragment extends Fragment {
         cardRecyclerView.setLayoutManager(recycleViewManager);
 
         List<StatCardData> stats = new ArrayList<>();
-        stats.add(new StatCardData("6", "poäng", null));
-        stats.add(new StatCardData("X", "stopp", null));
-        stats.add(new StatCardData("6", "poäng", null));
-        stats.add(new StatCardData("X", "stopp", null));
+        Bitmap personIcon = BitmapFactory.decodeResource(getResources(),
+                R.drawable.ic_person_black_24dp);
+        stats.add(new StatCardData("48503", "poäng", null));
+        stats.add(new StatCardData("O", "stopp", null));
+        stats.add(new StatCardData("3", "personer", personIcon));
+        stats.add(new StatCardData("34", "km/h", null));
 
         recyclerViewAdapter = new BusStatListAdapter(stats);
         cardRecyclerView.setAdapter(recyclerViewAdapter);
