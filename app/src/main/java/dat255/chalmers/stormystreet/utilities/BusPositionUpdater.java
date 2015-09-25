@@ -4,7 +4,6 @@ import android.os.AsyncTask;
 
 import com.google.android.gms.maps.model.LatLng;
 
-import java.util.List;
 import java.util.Map;
 
 /**
