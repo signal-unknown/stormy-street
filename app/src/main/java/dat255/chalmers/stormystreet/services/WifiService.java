@@ -8,7 +8,6 @@ import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
 import android.os.Handler;
 import android.os.HandlerThread;
-import android.os.Looper;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -25,6 +24,8 @@ public class WifiService extends IntentService {
     private List<String> macAddresses;
     private HandlerThread hThread;
     private final int DELAY_TIME = 30000; //30 seconds
+    private static long startTime;
+    private static long endTime;
     public WifiService(){
         super("dat255.chalmers.stormystreet.services.WifiService");
     }
@@ -38,33 +39,30 @@ public class WifiService extends IntentService {
     }
 
     @Override
-    protected void onHandleIntent(Intent intent) {
+    protected synchronized void onHandleIntent(Intent intent) {
         Log.d("Wifiservice", "Received intent: " + intent.getAction());
         if(intent.getAction().equals(Constants.ACTION_GET_MAC)){
             scanMacs();
             Log.d("Wifiservice", "Scanned MACs");
 
-            if(isNearBus()){
+            if(isNearBus() && startTime == 0){
                 Log.d("Wifiservice", "Near a bus");
                 /*Todo use API to check if you are connected to network as well
                     might not need to wait 30 secs then
                 */
-                hThread = new HandlerThread("WifiService");
-                hThread.start();
-                Handler mHandler = new Handler(hThread.getLooper());
-                Runnable mRun = new Runnable() {
-                    @Override
-                    public synchronized void run() {
-                        Log.d("Wifiservice", "Inside new thread");
-                        scanMacs();
-                        if(isNearBus()){
-                            Log.d("Wifiservice", "On bus");
-                            //Todo update model with mac addresses and if user is near bus
-                        }
-                    }
-                };
-                mHandler.postDelayed(mRun, DELAY_TIME);
+                startCount();
+
+            }else{
+                if(startTime !=0 && endTime == 0){//double check
+                    Log.d("Wifiservice", "No longer on bus");
+                    endTime = System.currentTimeMillis();
+                    Log.d("Wifiservice", endTime+"" );
+
+                    //update model with end time here
+                    resetTimestamps();
+                }
             }
+
         }
     }
 
@@ -84,12 +82,42 @@ public class WifiService extends IntentService {
         macAddresses.clear();
         for(ScanResult network : mScanResults){
             macAddresses.add(network.BSSID.toLowerCase());
-            Log.d("WifiService: Scanned",network.BSSID.toLowerCase());
+            Log.d("Scanned",network.BSSID.toLowerCase());
         }
 
     }
+    public void resetTimestamps(){
+        startTime = 0;
+        endTime =0;
+    }
 
+    public synchronized void startCount(){
+        hThread = new HandlerThread("WifiService");
+        hThread.start();
+        Handler mHandler = new Handler(hThread.getLooper());
+        Runnable mRun = new Runnable() {
+            @Override
+            public synchronized void run() {
+                Log.d("Wifiservice", "Inside new thread");
+                scanMacs();
+                if(isNearBus()){
+                    Log.d("Wifiservice", "On bus");
+                    startTime = System.currentTimeMillis();
+                    Log.d("Wifiservice", startTime+"");
+                    //Todo update model with time and if user is near bus
+                    setUserOnBus(true);
+                }else{
+                    setUserOnBus(false);
+                }
+            }
+        };
+        mHandler.postDelayed(mRun, DELAY_TIME);
 
+    }
+
+    public void setUserOnBus(boolean isOn){
+        //Todo update model that user is not on bus
+    }
 
     public List<String> getMacAddresses(){
         return this.macAddresses;
