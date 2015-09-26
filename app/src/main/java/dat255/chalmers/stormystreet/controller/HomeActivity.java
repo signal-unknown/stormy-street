@@ -38,7 +38,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(toolbar);
         setupNavigationDrawer();
         if (android.os.Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1) {
-            // only for gingerbread and newer versions
             checkPermissions();
         }
 
