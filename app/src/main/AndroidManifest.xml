@@ -25,6 +25,7 @@
             android:enabled="true">
             <intent-filter>
                 <action android:name="android.net.wifi.SCAN_RESULTS"></action>
+                <action android:name="android.net.wifi.supplicant.CONNECTION_CHANGE" />
             </intent-filter>
             </receiver>
         <service
