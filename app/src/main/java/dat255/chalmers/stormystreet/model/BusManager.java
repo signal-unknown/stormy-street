@@ -14,17 +14,17 @@ public class BusManager {
         busList = new ArrayList<>();
     }
 
-    public void addBus(IBus bus){
+    public synchronized void addBus(IBus bus){
         busList.add(bus);
     }
 
-    public void addBus(List<IBus> busList){
+    public synchronized void addBus(List<IBus> busList){
         for(IBus bus : busList){
             this.busList.add(bus);
         }
     }
 
-    public void removeBus(IBus bus){
+    public synchronized void removeBus(IBus bus){
         busList.remove(bus);
     }
 
