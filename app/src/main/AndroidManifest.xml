@@ -58,6 +58,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".controller.MainActivity" />
         </activity>
+        <activity android:name=".controller.DatabaseActivity"
+                  android:label="@string/menu_drawer_save_data">
+
+
+    </activity>
     </application>
 
 </manifest>
