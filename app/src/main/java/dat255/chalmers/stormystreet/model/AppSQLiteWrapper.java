@@ -1,7 +1,7 @@
 package dat255.chalmers.stormystreet.model;
 
 /**
- * Created by DavidF on 2015-09-23.
+ * Created by David Fogelberg on 2015-09-23.
  */
 
 import android.database.sqlite.SQLiteDatabase;
