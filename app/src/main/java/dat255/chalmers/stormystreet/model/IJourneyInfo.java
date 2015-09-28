@@ -8,4 +8,5 @@ package dat255.chalmers.stormystreet.model;
 public interface IJourneyInfo {
     String getBusName();
     String getDestination();
+    IJourneyInfo clone();
 }
