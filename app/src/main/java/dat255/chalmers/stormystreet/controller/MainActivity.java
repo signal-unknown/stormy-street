@@ -13,6 +13,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,6 +36,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private static final String TAG_HOME_SCREEN = "fragment_home_screen";
     private static final String TAG_PROFILE_SCREEN = "fragment_profile_screen";
     private static final String TAG_MAP_SCREEN = "fragment_map_screen";
+    private static final String TAG_SAVE_DATA ="save_data_screen";               // ändrat
+
 
     private String currentFragmentTag = TAG_HOME_SCREEN;
 
@@ -102,6 +105,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.menu_drawer_map:
                 switchFragment(TAG_MAP_SCREEN, false);
                 break;
+            case R.id.menu_drawer_save:                  // ändrat
+                switchFragment(TAG_SAVE_DATA, false);
+                break;
         }
         return true;
     }
@@ -140,6 +146,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     Intent i = new Intent(this, MapsActivity.class);
                     startActivity(i);
                     return;
+                case TAG_SAVE_DATA:
+                    Intent s = new Intent(this, DatabaseActivity.class);
+                    startActivity(s);
+                    return;
+
+
                 default:
                     fragment = new HomeFragment();
                     break;
