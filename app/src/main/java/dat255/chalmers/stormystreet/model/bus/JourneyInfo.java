@@ -1,4 +1,6 @@
-package dat255.chalmers.stormystreet.model;
+package dat255.chalmers.stormystreet.model.bus;
+
+import dat255.chalmers.stormystreet.model.IJourneyInfo;
 
 /**
  * @author Kevin Hoogendijk
