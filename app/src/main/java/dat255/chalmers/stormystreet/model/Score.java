@@ -20,4 +20,8 @@ public class Score implements IScore {
     public String getSuffix() {
         return this.suffix;
     }
+
+    public String toString(){
+        return Long.toString(this.value);
+    }
 }

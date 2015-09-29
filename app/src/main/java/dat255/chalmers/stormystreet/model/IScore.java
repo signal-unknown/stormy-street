@@ -9,4 +9,5 @@ package dat255.chalmers.stormystreet.model;
 public interface IScore {
     long getValue();
     String getSuffix();
+    String toString();
 }
