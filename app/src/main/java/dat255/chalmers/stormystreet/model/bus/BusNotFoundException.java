@@ -1,4 +1,4 @@
-package dat255.chalmers.stormystreet.model;
+package dat255.chalmers.stormystreet.model.bus;
 
 /**
  * @author Kevin Hoogendijk

@@ -5,10 +5,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,11 +25,13 @@ import dat255.chalmers.stormystreet.view.StatCardData;
  * @author Alexander Håkansson
  * @since 2015-09-22
  */
-public class HomeActivityFragment extends Fragment {
+public class HomeFragment extends Fragment {
 
     private RecyclerView cardRecyclerView;
     private RecyclerView.Adapter recyclerViewAdapter;
     private GridLayoutManager recycleViewManager;
+
+    private Toolbar toolbar;
 
 
     @Override

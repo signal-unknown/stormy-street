@@ -2,6 +2,8 @@ package dat255.chalmers.stormystreet.model;
 
 import java.util.List;
 
+import dat255.chalmers.stormystreet.model.bus.IBusTrip;
+
 /**
  * @author Kevin Hoogendijk
  * @since 2015-09-23
@@ -11,9 +13,7 @@ import java.util.List;
 public interface IStatistics{
     IScore getTotalScore();
     IScore getWeeklyAverageScore();
-    void setTotalScore(IScore score);
     long getTimeSpentOnBus();
-    void setTimeSpentOnBus(long timeSpentOnBus);
     List<IBusTrip> getAllBusTrips();
     void addBusTrip(IBusTrip busTrip);
     void addBusTrip(List<IBusTrip> busTrips);

@@ -14,6 +14,4 @@ public interface IUser {
     void setIsOnBus(boolean isOnBus);
     int getCurrentBusNumber();
     void setCurrentBusNumber(int currentBusNumber);
-    List<String> getMacAddresses();
-    void setMacAddresses(List<String> macAddresses);
 }

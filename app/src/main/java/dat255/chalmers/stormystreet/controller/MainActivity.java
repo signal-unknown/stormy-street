@@ -4,23 +4,26 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import dat255.chalmers.stormystreet.MapsActivity;
 import dat255.chalmers.stormystreet.R;
 
-import static android.support.v4.app.ActivityCompat.requestPermissions;
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    private FragmentManager fragmentManager;
 
     private Toolbar toolbar;
 
@@ -29,10 +32,25 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private ActionBarDrawerToggle drawerToggle;
     private final int MY_PERMISSION_LOCATION = 1337;
 
+    private static final String KEY_CURRENT_FRAGMENT_TAG = "home_activity_current_fragment";
+    private static final String TAG_HOME_SCREEN = "fragment_home_screen";
+    private static final String TAG_PROFILE_SCREEN = "fragment_profile_screen";
+    private static final String TAG_MAP_SCREEN = "fragment_map_screen";
+    private static final String TAG_SAVE_DATA ="save_data_screen";               // ändrat
+
+
+    private String currentFragmentTag = TAG_HOME_SCREEN;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        if (savedInstanceState != null) {
+            currentFragmentTag = savedInstanceState.getString(KEY_CURRENT_FRAGMENT_TAG);
+        }
+
+        setupFragments();
 
         toolbar = (Toolbar) findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
@@ -42,7 +60,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         }
 
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -77,15 +94,73 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onNavigationItemSelected(MenuItem menuItem) {
-        menuItem.setChecked(true);
         drawerLayout.closeDrawers();
-        Toast.makeText(this, menuItem.getTitle(), Toast.LENGTH_LONG).show(); // Debug code
-        // TODO: Handle menu
-        if(menuItem.getItemId() == (R.id.menu_drawer_map)){
-            Intent map = new Intent(this, MapsActivity.class);
-            startActivity(map);
+        switch (menuItem.getItemId()) {
+            case R.id.menu_drawer_home:
+                switchFragment(TAG_HOME_SCREEN, false);
+                break;
+            case R.id.menu_drawer_profile:
+                switchFragment(TAG_PROFILE_SCREEN, false);
+                break;
+            case R.id.menu_drawer_map:
+                switchFragment(TAG_MAP_SCREEN, false);
+                break;
+            case R.id.menu_drawer_save:                  // ändrat
+                switchFragment(TAG_SAVE_DATA, false);
+                break;
         }
         return true;
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(KEY_CURRENT_FRAGMENT_TAG, currentFragmentTag);
+    }
+
+    private void switchFragment(final String fragmentTag, final boolean addToBackStack) {
+        fragmentManager = getSupportFragmentManager();
+
+        currentFragmentTag = fragmentTag;
+        setupFragments();
+
+    }
+
+    private void setupFragments() {
+
+        fragmentManager = getSupportFragmentManager();
+
+        // get fragment
+        Fragment fragment = fragmentManager.findFragmentByTag(currentFragmentTag);
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+        if (fragment == null) {
+            switch (currentFragmentTag) {
+                case TAG_HOME_SCREEN:
+                    fragment = new HomeFragment();
+                    break;
+                case TAG_PROFILE_SCREEN:
+                    fragment = new ProfileFragment();
+                    break;
+                case TAG_MAP_SCREEN:
+                    Intent i = new Intent(this, MapsActivity.class);
+                    startActivity(i);
+                    return;
+                case TAG_SAVE_DATA:
+                    Intent s = new Intent(this, DatabaseActivity.class);
+                    startActivity(s);
+                    return;
+
+
+                default:
+                    fragment = new HomeFragment();
+                    break;
+            }
+        }
+
+        transaction.replace(R.id.fragment_container, fragment, currentFragmentTag);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 
     private void setupNavigationDrawer() {

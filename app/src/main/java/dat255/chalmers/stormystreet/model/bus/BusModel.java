@@ -1,4 +1,8 @@
-package dat255.chalmers.stormystreet.model;
+package dat255.chalmers.stormystreet.model.bus;
+
+import dat255.chalmers.stormystreet.model.IGpsCoord;
+import dat255.chalmers.stormystreet.model.IJourneyInfo;
+import dat255.chalmers.stormystreet.model.NotYetImplementedException;
 
 /**
  * @author Kevin Hoogendijk
@@ -32,10 +36,6 @@ public class BusModel implements IBus{
     private int wlanRssl2Value;
     private int wlanCellIdValue;
     private int wlanCellId2Value;
-
-    public BusModel(){
-
-    }
 
     //#######################################
     //          GETTERS
@@ -71,11 +71,11 @@ public class BusModel implements IBus{
     }
 
     public IGpsCoord getGPSPosition() {
-        return this.gpsPosition;
+        return this.gpsPosition.clone();
     }
 
     public IJourneyInfo getJourneyInfo() {
-        return this.journeyInfo;
+        return this.journeyInfo.clone();
     }
 
     public String getMobileNetworkCellInfo() {
@@ -158,111 +158,111 @@ public class BusModel implements IBus{
     //          SETTERS
     //#######################################
 
-    public void setDgwNumber(int dgwNumber) {
+    public synchronized void setDgwNumber(int dgwNumber) {
         this.dgwNumber = dgwNumber;
     }
 
-    public void setAcceleratorPedalPosition(int acceleratorPedalPosition) {
+    public synchronized void setAcceleratorPedalPosition(int acceleratorPedalPosition) {
         this.acceleratorPedalPosition = acceleratorPedalPosition;
     }
 
-    public void setAmbientTemperature(int ambientTemperature) {
+    public synchronized void setAmbientTemperature(int ambientTemperature) {
         this.ambientTemperature = ambientTemperature;
     }
 
-    public void setCoolingAirConditioning(int coolingAirConditioning) {
+    public synchronized void setCoolingAirConditioning(int coolingAirConditioning) {
         this.coolingAirConditioning = coolingAirConditioning;
     }
 
-    public void setDriverCabinTemperature(int driverCabinTemperature) {
+    public synchronized void setDriverCabinTemperature(int driverCabinTemperature) {
         this.driverCabinTemperature = driverCabinTemperature;
     }
 
-    public void setGPSPosition(IGpsCoord gpsPosition) {
+    public synchronized void setGPSPosition(IGpsCoord gpsPosition) {
         this.gpsPosition = gpsPosition;
     }
 
-    public void setFmsVersionSupported(int fmsVersionSupported) {
+    public synchronized void setFmsVersionSupported(int fmsVersionSupported) {
         this.fmsVersionSupported = fmsVersionSupported;
     }
 
-    public void setJourneyInfo(IJourneyInfo journeyInfo) {
+    public synchronized void setJourneyInfo(IJourneyInfo journeyInfo) {
         this.journeyInfo = journeyInfo;
     }
 
-    public void setMobileNetworkCellInfo(String mobileNetworkCellInfo) {
+    public synchronized void setMobileNetworkCellInfo(String mobileNetworkCellInfo) {
         this.mobileNetworkCellInfo = mobileNetworkCellInfo;
     }
 
-    public void setMobileNetworkSignalStrength(String mobileNetworkSignalStrength) {
+    public synchronized void setMobileNetworkSignalStrength(String mobileNetworkSignalStrength) {
         this.mobileNetworkSignalStrength = mobileNetworkSignalStrength;
     }
 
-    public void setNextStop(String nextStop) {
+    public synchronized void setNextStop(String nextStop) {
         this.nextStop = nextStop;
     }
 
-    public void setIsOffroute(boolean isOffroute) {
+    public synchronized void setIsOffroute(boolean isOffroute) {
         this.isOffroute = isOffroute;
     }
 
-    public void setOnlineUsers(int onlineUsers) {
+    public synchronized void setOnlineUsers(int onlineUsers) {
         this.onlineUsers = onlineUsers;
     }
 
-    public void setAuthenticatedUsers(int authenticatedUsers) {
+    public synchronized void setAuthenticatedUsers(int authenticatedUsers) {
         this.authenticatedUsers = authenticatedUsers;
     }
 
-    public void setIsDoorOpen(boolean isDoorOpen) {
+    public synchronized void setIsDoorOpen(boolean isDoorOpen) {
         this.isDoorOpen = isDoorOpen;
     }
 
-    public void setDoorsPosition(int doorsPosition) {
+    public synchronized void setDoorsPosition(int doorsPosition) {
         this.doorsPosition = doorsPosition;
     }
 
-    public void setPramRequest(int pramRequest) {
+    public synchronized void setPramRequest(int pramRequest) {
         this.pramRequest = pramRequest;
     }
 
-    public void setRampWheelChairLift(int rampWheelChairLift) {
+    public synchronized void setRampWheelChairLift(int rampWheelChairLift) {
         this.rampWheelChairLift = rampWheelChairLift;
     }
 
-    public void setIsStopPressed(boolean isStopPressed) {
+    public synchronized void setIsStopPressed(boolean isStopPressed) {
         this.isStopPressed = isStopPressed;
     }
 
-    public void setStopRequest(int stopRequest) {
+    public synchronized void setStopRequest(int stopRequest) {
         this.stopRequest = stopRequest;
     }
 
-    public void setTotalDistanceDriven(long totalDistanceDriven) {
+    public synchronized void setTotalDistanceDriven(long totalDistanceDriven) {
         this.totalDistanceDriven = totalDistanceDriven;
     }
 
-    public void setTurnSignals(int turnSignals) {
+    public synchronized void setTurnSignals(int turnSignals) {
         this.turnSignals = turnSignals;
     }
 
-    public void setWlanRsslValue(int wlanRsslValue) {
+    public synchronized void setWlanRsslValue(int wlanRsslValue) {
         this.wlanRsslValue = wlanRsslValue;
     }
 
-    public void setWlanRssl2Value(int wlanRssl2Value) {
+    public synchronized void setWlanRssl2Value(int wlanRssl2Value) {
         this.wlanRssl2Value = wlanRssl2Value;
     }
 
-    public void setWlanCellIdValue(int wlanCellIdValue) {
+    public synchronized void setWlanCellIdValue(int wlanCellIdValue) {
         this.wlanCellIdValue = wlanCellIdValue;
     }
 
-    public void setWlanCellId2Value(int wlanCellId2Value) {
+    public synchronized void setWlanCellId2Value(int wlanCellId2Value) {
         this.wlanCellId2Value = wlanCellId2Value;
     }
 
-    public void setIsAtStop(boolean isAtStop) {
+    public synchronized void setIsAtStop(boolean isAtStop) {
         isAtStop = isAtStop;
     }
 }

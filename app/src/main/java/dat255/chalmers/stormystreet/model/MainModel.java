@@ -1,6 +1,6 @@
 package dat255.chalmers.stormystreet.model;
 
-import java.util.List;
+import dat255.chalmers.stormystreet.model.bus.BusManager;
 
 /**
  * @author Kevin Hoogendijk

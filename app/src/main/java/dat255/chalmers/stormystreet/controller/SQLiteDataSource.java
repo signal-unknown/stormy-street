@@ -14,7 +14,7 @@ import dat255.chalmers.stormystreet.model.AppSQLiteWrapper;
 import dat255.chalmers.stormystreet.model.DataValue;
 
 /**
- * Created by DavidF on 2015-09-23.
+ * Created by David Fogelberg on 2015-09-23.
  */
 public class SQLiteDataSource {
 
@@ -25,16 +25,16 @@ public class SQLiteDataSource {
     public SQLiteDataSource(Context context) {
         appSQLiteWrapper = new AppSQLiteWrapper(context);
     }
-    private void open()throws SQLException {
+    public void open()throws SQLException {
 
         database = appSQLiteWrapper.getWritableDatabase();
     }
-    private void close() {
+    public void close() {
 
         appSQLiteWrapper.close();
 
     }
-    private DataValue saveData(String dataValue) {
+    public DataValue saveData(String dataValue) {
 
         ContentValues values  = new ContentValues();
         values.put(appSQLiteWrapper.column_Data, dataValue);
@@ -56,13 +56,13 @@ public class SQLiteDataSource {
         dataValue.setName(cursor.getString(1));
         return dataValue;
     }
-    private void deleteData(DataValue dataValue) {
+    public void deleteData(DataValue dataValue) {
 
         long id = dataValue.getId();
         Log.i("Delete", "Bus data deleted with: " + id);
         database.delete(appSQLiteWrapper.table, appSQLiteWrapper.column_id + " = " + id, null);
     }
-    private List getAllDataValues() {
+    public List getAllDataValues() {
         List dataList = new ArrayList();
 
         Cursor cursor = database.query(appSQLiteWrapper.table,data_Table_Columns,null,null,null,null,null);

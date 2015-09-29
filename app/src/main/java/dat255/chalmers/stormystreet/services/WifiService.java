@@ -53,20 +53,16 @@ public class WifiService extends IntentService {
                 startCount();
 
             }else{
-                if(startTime !=0 && endTime == 0){//double check
-                    Log.d("Wifiservice", "No longer on bus");
-                    endTime = System.currentTimeMillis();
-                    Log.d("Wifiservice", endTime+"" );
-
-                    //update model with end time here
-                    resetTimestamps();
-                }
+                checkEndPoint();
             }
 
+        }else if(intent.getAction().equals(Constants.ACTION_WIFI_CHANGED)){
+            Log.d("Wifiservice", "Got action wifi changed");
+            checkEndPoint();
         }
     }
 
-    public boolean isNearBus(){
+    public synchronized boolean isNearBus(){
        for(String mac : Constants.busMacVin.values()){
            if(macAddresses.contains(mac)){
                return true;
@@ -75,7 +71,7 @@ public class WifiService extends IntentService {
         return false;
     }
 
-    public void scanMacs(){
+    public synchronized void scanMacs(){
         mWifiManager = (WifiManager)getSystemService(Context.WIFI_SERVICE);
         List<ScanResult> mScanResults = mWifiManager.getScanResults();
         macAddresses = new ArrayList<>();
@@ -86,9 +82,21 @@ public class WifiService extends IntentService {
         }
 
     }
-    public void resetTimestamps(){
+    public synchronized void resetTimestamps(){
         startTime = 0;
         endTime =0;
+    }
+    public synchronized void checkEndPoint(){
+        Log.d("Wifiservice", "Inside checkendpoint");
+        if(startTime !=0 && endTime == 0 ){//double check
+            Log.d("Wifiservice", "No longer on bus");
+            endTime = System.currentTimeMillis();
+            Log.d("Wifiservice", endTime+"" );
+
+            //update model with end time here
+            resetTimestamps();
+            setUserOnBus(false);
+        }
     }
 
     public synchronized void startCount(){
@@ -100,13 +108,14 @@ public class WifiService extends IntentService {
             public synchronized void run() {
                 Log.d("Wifiservice", "Inside new thread");
                 scanMacs();
-                if(isNearBus()){
+                if(isNearBus() && mWifiManager.isWifiEnabled()){
                     Log.d("Wifiservice", "On bus");
-                    startTime = System.currentTimeMillis();
+                    startTime = System.currentTimeMillis()+DELAY_TIME;//compensating for delay
                     Log.d("Wifiservice", startTime+"");
                     //Todo update model with time and if user is near bus
                     setUserOnBus(true);
                 }else{
+                    Log.d("Wifiservice", "Out of range");
                     setUserOnBus(false);
                 }
             }
@@ -115,7 +124,7 @@ public class WifiService extends IntentService {
 
     }
 
-    public void setUserOnBus(boolean isOn){
+    public synchronized void setUserOnBus(boolean isOn){
         //Todo update model that user is not on bus
     }
 

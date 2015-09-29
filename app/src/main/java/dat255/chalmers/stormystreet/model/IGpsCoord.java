@@ -10,4 +10,5 @@ public interface IGpsCoord {
     double getLong();
     double getSpeed();
     int getDirection();
+    IGpsCoord clone();
 }
