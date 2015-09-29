@@ -6,7 +6,7 @@ package dat255.chalmers.stormystreet.model;
  */
 public class DataValue {
 
-    private long id;
+    private int id;
     private String dataValue;
 
 
@@ -14,7 +14,7 @@ public class DataValue {
         // returns the id of specific column
         return id;
     }
-    public void setId(long id) {
+    public void setId(int id) {
 
         this.id = id;
     }
@@ -24,6 +24,11 @@ public class DataValue {
 
     }
     public String getDataValue() {
+
+        return this.dataValue;
+    }
+    @Override
+    public String toString() {
 
         return dataValue;
     }
