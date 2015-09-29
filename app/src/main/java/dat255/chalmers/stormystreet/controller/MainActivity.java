@@ -1,5 +1,6 @@
 package dat255.chalmers.stormystreet.controller;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
@@ -18,7 +19,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import dat255.chalmers.stormystreet.MapsActivity;
 import dat255.chalmers.stormystreet.R;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -101,12 +101,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.menu_drawer_profile:
                 switchFragment(TAG_PROFILE_SCREEN, false);
+                navigationView.getMenu().findItem(R.id.menu_drawer_home).setChecked(true);
+                menuItem.setChecked(false);
                 break;
             case R.id.menu_drawer_map:
                 switchFragment(TAG_MAP_SCREEN, false);
+                navigationView.getMenu().findItem(R.id.menu_drawer_home).setChecked(true);
+                menuItem.setChecked(false);
                 break;
-            case R.id.menu_drawer_save:                  // ändrat
+            case R.id.menu_drawer_save:
                 switchFragment(TAG_SAVE_DATA, false);
+                navigationView.getMenu().findItem(R.id.menu_drawer_home).setChecked(true);
+                menuItem.setChecked(false);
                 break;
         }
         return true;
@@ -189,6 +195,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
+    @TargetApi(Build.VERSION_CODES.M)
     public void checkPermissions(){
         if(checkSelfPermission(android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
             requestPermissions(new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSION_LOCATION);

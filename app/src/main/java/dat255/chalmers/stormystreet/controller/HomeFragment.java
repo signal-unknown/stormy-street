@@ -11,6 +11,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.test.mock.MockApplication;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +19,9 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
+import dat255.chalmers.stormystreet.GlobalState;
 import dat255.chalmers.stormystreet.R;
+import dat255.chalmers.stormystreet.model.MainModel;
 import dat255.chalmers.stormystreet.view.StatCardData;
 
 /**
@@ -33,11 +36,14 @@ public class HomeFragment extends Fragment {
 
     private Toolbar toolbar;
 
+    private MainModel model;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_home, container, false);
+
     }
 
     @Override
@@ -48,6 +54,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void setupRecyclerView(View view) {
+        model = ((GlobalState) getActivity().getApplication()).getModel();
         cardRecyclerView = (RecyclerView) view.findViewById(R.id.home_recyclerview);
 
         // use a linear layout manager
@@ -73,10 +80,11 @@ public class HomeFragment extends Fragment {
         List<StatCardData> stats = new ArrayList<>();
         Bitmap personIcon = BitmapFactory.decodeResource(getResources(),
                 R.drawable.ic_person_black_24dp);
-        stats.add(new StatCardData("48503", "poäng", null));
+        stats.add(new StatCardData(model.getCurrentUser().getStatistics().getTotalScore().toString(), model.getCurrentUser().getStatistics().getTotalScore().getSuffix() , null));
         stats.add(new StatCardData("O", "stopp", null));
         stats.add(new StatCardData("3", "personer", personIcon));
         stats.add(new StatCardData("34", "km/h", null));
+        stats.add(new StatCardData(Long.toString(model.getCurrentUser().getStatistics().getTimeSpentOnBus()/10000), "timmar", null));
 
         recyclerViewAdapter = new BusStatListAdapter(stats);
         cardRecyclerView.setAdapter(recyclerViewAdapter);
