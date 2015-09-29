@@ -140,8 +140,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     fragment = new HomeFragment();
                     break;
                 case TAG_PROFILE_SCREEN:
-                    fragment = new ProfileFragment();
-                    break;
+                    Intent profile = new Intent(this, ProfileActivity.class);
+                    startActivity(profile);
+                    return;
                 case TAG_MAP_SCREEN:
                     Intent i = new Intent(this, MapsActivity.class);
                     startActivity(i);
@@ -150,8 +151,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     Intent s = new Intent(this, DatabaseActivity.class);
                     startActivity(s);
                     return;
-
-
                 default:
                     fragment = new HomeFragment();
                     break;
