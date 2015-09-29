@@ -14,7 +14,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -74,6 +77,7 @@ public class BusPositionUpdater extends AsyncTask<Void,Void,Map<LatLng, String>>
 
         //Parse data
 
+        Map<String,TimedPosition> tempMap = new HashMap<String,TimedPosition>();
         try {
             JSONArray jsonArray = new JSONArray(jsonGPSData.toString());
             for(int i = 0; i < jsonArray.length(); i++){
@@ -107,21 +111,38 @@ public class BusPositionUpdater extends AsyncTask<Void,Void,Map<LatLng, String>>
                     String lonDegrees = nMEALongitude.substring(0,3);
                     String lonMinutes = nMEALongitude.substring(3,5);
                     String lonSeconds = nMEALongitude.substring(6);
-                    lonSeconds = lonSeconds.substring(0,2) + '.' + lonSeconds.substring(2);
+                    lonSeconds = lonSeconds.substring(0,2) + '.' + lonSeconds.substring(2,4);
 
                     //Convert from degrees, minutes and seconds to standard longitude and latitude
                     double latitude = Double.parseDouble(latDegrees) + Double.parseDouble(latMinutes)/60D + Double.parseDouble(latSeconds)/3600D;
                     double longitude = Double.parseDouble(lonDegrees) + Double.parseDouble(lonMinutes)/60D + Double.parseDouble(lonSeconds)/3600D;
 
                     LatLng position = new LatLng(latitude,longitude);
-                    //TODO do things with this value
+
+                    long timestamp = object.getLong("timestamp");
+                    if(tempMap.containsKey(object.getString("gatewayId"))){
+                        if(tempMap.get(object.getString("gatewayId")).isOlder(timestamp)){
+                            TimedPosition timedPosition = new TimedPosition(position, object.getLong("timestamp"));
+                            tempMap.put(object.getString("gatewayId"), timedPosition);
+                        }
+                    }else{
+                        TimedPosition timedPosition = new TimedPosition(position, object.getLong("timestamp"));
+                        tempMap.put(object.getString("gatewayId"), timedPosition);
+                    }
                 }
             }
         } catch (JSONException e) {
             //TODO Fucking handle it
             e.printStackTrace();
         }
-        return null;
+
+        //Create correct map
+        Set<String> iDs = tempMap.keySet();
+        Map<LatLng, String> map = new HashMap<LatLng,String>();
+        for(String iD:iDs){
+            map.put(tempMap.get(iD).getPosition(),iD);
+        }
+        return map;
     }
 
     @Override
