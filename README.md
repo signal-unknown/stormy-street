@@ -9,5 +9,6 @@ git update-index --assume-unchanged app/src/main/java/dat255/chalmers/stormystre
 ```
 You must add the API keys for ElectriCity and Google Maps manually to the following files
 ```
-app/src/main/res/values/api_keys.xmlapp/src/main/java/dat255/chalmers/stormystreet/APIConstants.java
+app/src/main/res/values/api_keys.xml
+app/src/main/java/dat255/chalmers/stormystreet/APIConstants.java
 ```
