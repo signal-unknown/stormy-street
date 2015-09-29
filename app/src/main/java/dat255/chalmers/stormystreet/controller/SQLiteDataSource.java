@@ -20,9 +20,10 @@ public class SQLiteDataSource {
 
     private AppSQLiteWrapper appSQLiteWrapper;
     private SQLiteDatabase database;
-    private String [] data_Table_Columns = {appSQLiteWrapper.column_id, appSQLiteWrapper.database_Name};
+    private String [] data_Table_Columns = {appSQLiteWrapper.column_id, appSQLiteWrapper.column_name};
 
     public SQLiteDataSource(Context context) {
+
         appSQLiteWrapper = new AppSQLiteWrapper(context);
     }
     public void open()throws SQLException {
@@ -37,10 +38,10 @@ public class SQLiteDataSource {
     public DataValue saveData(String dataValue) {
 
         ContentValues values  = new ContentValues();
-        values.put(appSQLiteWrapper.column_Data, dataValue);
+        values.put(appSQLiteWrapper.column_name, dataValue);
 
-        long addId = database.insert(appSQLiteWrapper.table, null, values);
-        Cursor cursor = database.query(appSQLiteWrapper.table, data_Table_Columns, appSQLiteWrapper.column_id + " = " + addId,
+        long addId = database.insert(appSQLiteWrapper.column, null, values);
+        Cursor cursor = database.query(appSQLiteWrapper.column, data_Table_Columns, appSQLiteWrapper.column_id + " = " + addId,
                 null, null, null, null);
         cursor.moveToFirst();
 
@@ -52,20 +53,20 @@ public class SQLiteDataSource {
     private DataValue parseDatavalue(Cursor cursor) {
 
         DataValue dataValue = new DataValue();
-        dataValue.setId(cursor.getInt(0));
+        dataValue.setId((cursor.getInt(0)));
         dataValue.setName(cursor.getString(1));
         return dataValue;
     }
     public void deleteData(DataValue dataValue) {
 
         long id = dataValue.getId();
-        Log.i("Delete", "Bus data deleted with: " + id);
-        database.delete(appSQLiteWrapper.table, appSQLiteWrapper.column_id + " = " + id, null);
+        Log.d("Delete", "Bus data deleted with: " + id);
+        database.delete(appSQLiteWrapper.column, appSQLiteWrapper.column_id + " = " + id, null);
     }
     public List getAllDataValues() {
         List dataList = new ArrayList();
 
-        Cursor cursor = database.query(appSQLiteWrapper.table,data_Table_Columns,null,null,null,null,null);
+        Cursor cursor = database.query(appSQLiteWrapper.column,data_Table_Columns,null,null,null,null,null);
         cursor.moveToFirst();
 
         while(!cursor.isAfterLast()) {
