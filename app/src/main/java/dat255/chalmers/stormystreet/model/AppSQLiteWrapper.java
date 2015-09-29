@@ -12,13 +12,18 @@ import android.content.Context;
 
 public class AppSQLiteWrapper extends SQLiteOpenHelper {
 
-    public static final String column_id = "value";
-    public static final String table = "Values";
-    public static final String column_Data = "data";
+    public static final String column = "_value";
+    public static final String column_id = "_id";
+    public static final String column_name = "data";
 
-    public static final String database_Name = "ValueStorage.db";
+    private static final String database_Name = "ValueStorage.db";
     private static final int version = 1;
-    private static final String create_Database = "Create table " + table + " "  + column_id;
+    private static final String create_Database = "create table " + column
+
+            + "(" + column_id + " integer primary key autoincrement, "
+
+            + column_name + " data not null);";
+
 
 
     public AppSQLiteWrapper(Context context) {
@@ -36,7 +41,7 @@ public class AppSQLiteWrapper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
-        db.execSQL(table);
+        db.execSQL(column);
         onCreate(db);
 
 
