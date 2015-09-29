@@ -23,13 +23,26 @@
             android:fitsSystemWindows="true">
 
             <ImageView
-                android:id="@+id/image"
+                android:id="@+id/profileImage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:src="@drawable/drawer_header"
                 android:scaleType="centerCrop"
                 android:fitsSystemWindows="true"
                 app:layout_collapseMode="parallax"/>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:src="@drawable/image_bottom_gradient"/>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:fitsSystemWindows="true"
+                android:src="@drawable/image_top_gradient"/>
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar_main"
