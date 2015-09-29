@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import java.util.List;
+import android.widget.EditText;
 
 import dat255.chalmers.stormystreet.R;
 import dat255.chalmers.stormystreet.model.DataValue;
@@ -16,42 +17,45 @@ import dat255.chalmers.stormystreet.model.DataValue;
  */
 public class DatabaseActivity extends ListActivity {
 
-    SQLiteDataSource sqLiteDataSourceOpertions;
+    private SQLiteDataSource sqLiteDataSourceOpertions;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_save_data);
 
-        //sqLiteDataSourceOpertions = new SQLiteDataSource(this);
-        //sqLiteDataSourceOpertions.open();
-        //List dataValues = sqLiteDataSourceOpertions.getAllDataValues();
-        //ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1 , dataValues);
-        //setListAdapter(adapter);
+
+        sqLiteDataSourceOpertions = new SQLiteDataSource(this);
+        sqLiteDataSourceOpertions.open();
+        List dataValues = sqLiteDataSourceOpertions.getAllDataValues();
+        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1 , dataValues);
+        setListAdapter(adapter);
 
     }
-    private void saveBusData(View view) {
+    public void saveBusData(View view) {
 
        ArrayAdapter adapter = (ArrayAdapter) getListAdapter();
 
-        // some text edit for testing  +????????????C/////// output
+       EditText text =(EditText) findViewById(R.id.editText1);
+       DataValue value = sqLiteDataSourceOpertions.saveData(text.getText().toString());
 
-        DataValue value = sqLiteDataSourceOpertions.saveData("1010_1111_0111"); // test
+       // DataValue value = sqLiteDataSourceOpertions.saveData("1010_1111_0111"); // test
 
         adapter.add(value);
 
     }
-    private void deleteBusData(DataValue dataValue) {
+    public void deleteBusData(View view) {
         ArrayAdapter adapter = (ArrayAdapter) getListAdapter();
+        DataValue value = null;
         if (getListAdapter().getCount() > 0) {
 
-            dataValue = (DataValue) getListAdapter().getItem(0);
-            sqLiteDataSourceOpertions.deleteData(dataValue);
-            adapter.remove(dataValue);
+            value = (DataValue) getListAdapter().getItem(0);
+            sqLiteDataSourceOpertions.deleteData(value);
+            adapter.remove(value);
         }
     }
-    /**@Override
+    @Override
             protected void onResume(){
             sqLiteDataSourceOpertions.open();
             super.onResume();
@@ -63,5 +67,5 @@ public class DatabaseActivity extends ListActivity {
             super.onPause();
         }
 
-*/
+
 }
