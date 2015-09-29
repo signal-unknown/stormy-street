@@ -4,13 +4,21 @@ import android.os.AsyncTask;
 
 import com.google.android.gms.maps.model.LatLng;
 
-import java.io.BufferedInputStream;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.HttpURLConnection;
+import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Map;
+
+import javax.net.ssl.HttpsURLConnection;
+
+import dat255.chalmers.stormystreet.APIConstants;
 
 /**
  * Task for fetching and parsing GPS data from ElectriCitys API
@@ -19,32 +27,98 @@ public class BusPositionUpdater extends AsyncTask<Void,Void,Map<LatLng, String>>
 
     @Override
     protected Map<LatLng, String> doInBackground(Void... params) {
-        //TODO fetch positions, and map them to an identifier (probably registration nr)
+        //TODO refactor this method, as it is way too big
 
-        //Create proper URLs
+        //Create proper URL
 
-        //Base URLs and parameters
-        String uRLLatitude = "https://ece01.ericsson.net:4443/ecity";
-        String uRLLongitude = uRLLatitude + "Ericsson$Longitude2_Value";
-        uRLLatitude += "?resourceSpec=Ericsson$Latitude2_Value";
+        //Base URL and parameter
+        String url = "https://ece01.ericsson.net:4443/ecity";
+        url += "?sensorSpec=Ericsson$GPS_NMEA";
 
-        //Get current time and a timestamp 15 seconds before that
+        //Get current time and a timestamp 10 seconds before that
         long curTime = System.currentTimeMillis();
-        long oldTime = curTime - 15000;
+        long oldTime = curTime - 10000;
 
-        //Add times to base URLs
-        uRLLongitude += "&t1=" + oldTime + "&t2=" + curTime;
-        uRLLatitude += "&t1=" + oldTime + "&t2=" + curTime;
+        //Add times to base URL
+        url += "&t1=" + oldTime + "&t2=" + curTime;
 
+        //I have no idea what i'm doing here
+        StringBuffer jsonGPSData = new StringBuffer("");
+        HttpsURLConnection http = null;
         try {
-            URL urlLat = new URL(uRLLatitude);
-            HttpURLConnection httpLat = (HttpURLConnection) urlLat.openConnection();
-            httpLat.setRequestMethod("GET");
+            URL urlLat = new URL(url);
+            http = (HttpsURLConnection) urlLat.openConnection();
+            http.setRequestProperty("Authorization", "Basic " + APIConstants.ELECTRICITY_API_KEY);
+            http.setRequestMethod("GET");
+            http.connect();
+            InputStream is = http.getInputStream();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+            String line = "";
+            while ((line = reader.readLine()) != null) {
+                jsonGPSData.append(line);
+            }
+
+            //Let's pray and hope this works
+
         } catch (MalformedURLException e) {
             //TODO deal with it
             e.printStackTrace();
         } catch (IOException e) {
             //TODO deal with it
+            e.printStackTrace();
+        }
+
+        if(http!=null){
+            http.disconnect();
+        }
+
+        //Parse data
+
+        try {
+            JSONArray jsonArray = new JSONArray(jsonGPSData.toString());
+            for(int i = 0; i < jsonArray.length(); i++){
+                JSONObject object = jsonArray.getJSONObject(i);
+
+                //The following assumes that the position is on the northern hemisphere and east
+                //of Greenwich, which always is the case in Sweden, at least for the coming
+                //few hundred million years or so, at which point the app should be updated
+                if(object.getString("resourceSpec").equals("RMC_Value") &&
+                        !object.getString("gatewayId").equals("Vin_Num_001")){//Ignore simulated bus
+                    String resource = object.getString("value");
+                    //If you don't understand what is happening here, please educate yourself on
+                    //marine GPS coordinates
+
+                    //Remove unnecessary data
+                    int beginIndex = resource.indexOf("A") + 2;
+                    int lastIndex = resource.lastIndexOf("E") - 1;
+                    resource = resource.substring(beginIndex,lastIndex);
+
+                    //Separate longitude and latitude values (NMEA)
+                    String nMEALatitude = resource.substring(0,resource.indexOf("N")-1);
+                    String nMEALongitude = resource.substring(resource.lastIndexOf("N")+2);
+
+                    //Separate DMS values for latitude
+                    String latDegrees = nMEALatitude.substring(0,2);
+                    String latMinutes = nMEALatitude.substring(2,4);
+                    String latSeconds = nMEALatitude.substring(5);
+                    latSeconds = latSeconds.substring(0,2) + '.' + latSeconds.substring(2);
+
+                    //Separate DMS values for longitude
+                    String lonDegrees = nMEALongitude.substring(0,3);
+                    String lonMinutes = nMEALongitude.substring(3,5);
+                    String lonSeconds = nMEALongitude.substring(6);
+                    lonSeconds = lonSeconds.substring(0,2) + '.' + lonSeconds.substring(2);
+
+                    //Convert from degrees, minutes and seconds to standard longitude and latitude
+                    double latitude = Double.parseDouble(latDegrees) + Double.parseDouble(latMinutes)/60D + Double.parseDouble(latSeconds)/3600D;
+                    double longitude = Double.parseDouble(lonDegrees) + Double.parseDouble(lonMinutes)/60D + Double.parseDouble(lonSeconds)/3600D;
+
+                    LatLng position = new LatLng(latitude,longitude);
+                    //TODO do things with this value
+                }
+            }
+        } catch (JSONException e) {
+            //TODO Fucking handle it
             e.printStackTrace();
         }
         return null;
