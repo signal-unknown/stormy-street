@@ -52,7 +52,7 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".MapsActivity"
+            android:name=".controller.MapsActivity"
             android:label="@string/menu_drawer_bus_map"
             android:parentActivityName=".controller.MainActivity" >
             <meta-data

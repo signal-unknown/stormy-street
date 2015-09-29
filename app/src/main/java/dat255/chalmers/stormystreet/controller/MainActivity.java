@@ -18,7 +18,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import dat255.chalmers.stormystreet.MapsActivity;
 import dat255.chalmers.stormystreet.R;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
