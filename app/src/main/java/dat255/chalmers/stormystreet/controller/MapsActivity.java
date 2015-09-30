@@ -41,7 +41,7 @@ public class MapsActivity extends AppCompatActivity implements BusPositionListen
         }
 
         setUpMapIfNeeded();
-        new BusPositionUpdater().execute();
+        new BusPositionUpdater(this).execute();
     }
 
     @Override

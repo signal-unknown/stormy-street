@@ -22,11 +22,17 @@ import java.util.Set;
 import javax.net.ssl.HttpsURLConnection;
 
 import dat255.chalmers.stormystreet.APIConstants;
+import dat255.chalmers.stormystreet.controller.BusPositionListener;
 
 /**
  * Task for fetching and parsing GPS data from ElectriCitys API
  */
 public class BusPositionUpdater extends AsyncTask<Void,Void,Map<LatLng, String>>{
+    private BusPositionListener bpl;
+
+    public BusPositionUpdater(BusPositionListener bpl){
+        this.bpl = bpl;
+    }
 
     @Override
     protected Map<LatLng, String> doInBackground(Void... params) {
@@ -119,6 +125,7 @@ public class BusPositionUpdater extends AsyncTask<Void,Void,Map<LatLng, String>>
 
                     LatLng position = new LatLng(latitude,longitude);
 
+                    //Find latest position from each bus
                     long timestamp = object.getLong("timestamp");
                     if(tempMap.containsKey(object.getString("gatewayId"))){
                         if(tempMap.get(object.getString("gatewayId")).isOlder(timestamp)){
@@ -148,5 +155,6 @@ public class BusPositionUpdater extends AsyncTask<Void,Void,Map<LatLng, String>>
     @Override
     protected void onPostExecute(Map<LatLng, String> map){
         //TODO handle positions
+        bpl.updatePositions(map);
     }
 }
