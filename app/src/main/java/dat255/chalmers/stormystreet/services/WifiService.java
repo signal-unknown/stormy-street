@@ -6,14 +6,21 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
+import android.os.DropBoxManager;
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.provider.Settings;
 import android.util.Log;
+
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import dat255.chalmers.stormystreet.Constants;
+import dat255.chalmers.stormystreet.GlobalState;
+import dat255.chalmers.stormystreet.model.CurrentTrip;
+import dat255.chalmers.stormystreet.model.bus.BusTrip;
 
 /**
  * @author Maxim Goretskyy
@@ -26,6 +33,9 @@ public class WifiService extends IntentService {
     private final int DELAY_TIME = 30000; //30 seconds
     private static long startTime;
     private static long endTime;
+    private String currMac;
+    private int currBusNum;
+
     public WifiService(){
         super("dat255.chalmers.stormystreet.services.WifiService");
     }
@@ -52,6 +62,7 @@ public class WifiService extends IntentService {
                 */
                 startCount();
 
+
             }else{
                 checkEndPoint();
             }
@@ -65,10 +76,20 @@ public class WifiService extends IntentService {
     public synchronized boolean isNearBus(){
        for(String mac : Constants.busMacVin.values()){
            if(macAddresses.contains(mac)){
+               currMac = mac;
                return true;
            }
        }
         return false;
+    }
+
+    public synchronized void setCurrBus(String mac){
+        for(Map.Entry<Integer, String> entry : Constants.busMacVin.entrySet()){
+            if(entry.getValue().equals(mac)){
+                this.currBusNum = entry.getKey();
+                Log.d("Wifiservice", "Curr buss num: " + this.currBusNum);
+            }
+        }
     }
 
     public synchronized void scanMacs(){
@@ -91,9 +112,10 @@ public class WifiService extends IntentService {
         if(startTime !=0 && endTime == 0 ){//double check
             Log.d("Wifiservice", "No longer on bus");
             endTime = System.currentTimeMillis();
-            Log.d("Wifiservice", endTime+"" );
+            Log.d("Wifiservice", endTime + "");
 
             //update model with end time here
+            ((GlobalState)getApplication()).getModel().getCurrentUser().getStatistics().addBusTrip(new BusTrip(startTime, endTime, 1337));
             resetTimestamps();
             setUserOnBus(false);
         }
@@ -113,7 +135,12 @@ public class WifiService extends IntentService {
                     startTime = System.currentTimeMillis()+DELAY_TIME;//compensating for delay
                     Log.d("Wifiservice", startTime+"");
                     //Todo update model with time and if user is near bus
+                    ((GlobalState)getApplication()).getModel().setCurrentTrip(new CurrentTrip(startTime));
+                    if(!currMac.equals("")){
+                        setCurrBus(currMac);
+                    }
                     setUserOnBus(true);
+
                 }else{
                     Log.d("Wifiservice", "Out of range");
                     setUserOnBus(false);
