@@ -11,10 +11,14 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.util.Map;
+import java.util.Set;
+
 import dat255.chalmers.stormystreet.R;
 import dat255.chalmers.stormystreet.utilities.BusPositionUpdater;
 
-public class MapsActivity extends AppCompatActivity {
+public class MapsActivity extends AppCompatActivity implements BusPositionListener {
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     private Toolbar toolbar;
@@ -68,5 +72,16 @@ public class MapsActivity extends AppCompatActivity {
         mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
         mMap.setMyLocationEnabled(true);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(57.708870,11.974560),13));
+    }
+
+    @Override
+    public void updatePositions(Map<LatLng, String> positions) {
+        if(mMap!=null){
+            mMap.clear();
+            Set<LatLng> positionSet = positions.keySet();
+            for(LatLng position:positionSet){
+                mMap.addMarker(new MarkerOptions().position(position).title(positions.get(position)));
+            }
+        }
     }
 }
