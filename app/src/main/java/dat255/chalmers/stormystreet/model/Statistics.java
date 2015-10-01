@@ -13,7 +13,7 @@ import dat255.chalmers.stormystreet.model.bus.IBusTrip;
  * @since 2015-09-29
  */
 public class Statistics implements IStatistics{
-    List<IBusTrip> busTrips;
+    private List<IBusTrip> busTrips;
     private static final int DAY = 100*60*60*24;
 
     public Statistics(List<IBusTrip> busTrips){
