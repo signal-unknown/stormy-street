@@ -55,7 +55,7 @@ public class WifiService extends IntentService {
             scanMacs();
             Log.d("Wifiservice", "Scanned MACs");
 
-            if(isNearBus() && startTime == 0){
+            if(isNearBus()){
                 Log.d("Wifiservice", "Near a bus");
                 /*Todo use API to check if you are connected to network as well
                     might not need to wait 30 secs then
@@ -130,7 +130,7 @@ public class WifiService extends IntentService {
             public synchronized void run() {
                 Log.d("Wifiservice", "Inside new thread");
                 scanMacs();
-                if(isNearBus() && mWifiManager.isWifiEnabled()){
+                if(isNearBus() && startTime==0){
                     Log.d("Wifiservice", "On bus");
                     startTime = System.currentTimeMillis()+DELAY_TIME;//compensating for delay
                     Log.d("Wifiservice", startTime+"");
