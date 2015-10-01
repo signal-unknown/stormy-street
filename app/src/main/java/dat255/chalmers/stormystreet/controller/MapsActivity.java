@@ -9,6 +9,7 @@ import android.view.View;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -95,10 +96,15 @@ public class MapsActivity extends AppCompatActivity implements BusPositionListen
             //Add a marker for each bus
             Set<LatLng> positionSet = positions.keySet();
             for(LatLng position:positionSet){
-                mMap.addMarker(new MarkerOptions().position(position).title(positions.get(position)));
+                MarkerOptions options = new MarkerOptions();
+                options.position(position);
+                options.title(positions.get(position));
+                options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+                mMap.addMarker(options);
             }
         }
-        if(isVisible) {//Get new positions after 500 millisconds if the activity is visible onscreen
+        //Get new positions after 500 millisconds if the activity is visible onscreen
+        if(isVisible) {
             new Timer().schedule(new TimerTask() {
                 @Override
                 public void run() {
