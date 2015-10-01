@@ -24,6 +24,7 @@ public class MainModel {
         this.busManager = new BusManager();
         this.currentUser = new User("Dummy namn");
         this.listeners = new HashSet<>();
+        this.currentTrip = new CurrentTrip(0,0);
     }
 
     public BusManager getBusManager() {
