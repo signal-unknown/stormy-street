@@ -14,6 +14,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.Map;
 import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import dat255.chalmers.stormystreet.R;
 import dat255.chalmers.stormystreet.utilities.BusPositionUpdater;
@@ -22,11 +24,13 @@ public class MapsActivity extends AppCompatActivity implements BusPositionListen
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     private Toolbar toolbar;
+    private boolean isVisible;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+        isVisible = true;
 
         toolbar = (Toolbar) findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
@@ -48,6 +52,13 @@ public class MapsActivity extends AppCompatActivity implements BusPositionListen
     protected void onResume() {
         super.onResume();
         setUpMapIfNeeded();
+        isVisible = true;
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        isVisible = false;
     }
 
 
@@ -82,6 +93,14 @@ public class MapsActivity extends AppCompatActivity implements BusPositionListen
             for(LatLng position:positionSet){
                 mMap.addMarker(new MarkerOptions().position(position).title(positions.get(position)));
             }
+        }
+        if(isVisible) {
+            new Timer().schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    new BusPositionUpdater(MapsActivity.this).execute();
+                }
+            }, 500);
         }
     }
 }
