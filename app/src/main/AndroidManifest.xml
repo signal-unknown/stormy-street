@@ -67,6 +67,10 @@
             android:name=".controller.ProfileActivity"
             android:label="@string/app_name" >
         </activity>
+        <activity
+            android:name=".controller.BusInfoActivity"
+            android:label="Bus_info" >
+    </activity>
     </application>
 
 </manifest>
