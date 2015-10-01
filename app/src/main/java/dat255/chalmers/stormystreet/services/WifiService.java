@@ -20,6 +20,7 @@ import java.util.Map;
 import dat255.chalmers.stormystreet.Constants;
 import dat255.chalmers.stormystreet.GlobalState;
 import dat255.chalmers.stormystreet.model.CurrentTrip;
+import dat255.chalmers.stormystreet.model.MainModel;
 import dat255.chalmers.stormystreet.model.bus.BusTrip;
 
 /**
@@ -128,14 +129,15 @@ public class WifiService extends IntentService {
         Runnable mRun = new Runnable() {
             @Override
             public synchronized void run() {
+                MainModel model = ((GlobalState)getApplication()).getModel();
                 Log.d("Wifiservice", "Inside new thread");
                 scanMacs();
                 if(isNearBus() && startTime==0){
                     Log.d("Wifiservice", "On bus");
                     startTime = System.currentTimeMillis()+DELAY_TIME;//compensating for delay
                     Log.d("Wifiservice", startTime+"");
-                    //Todo update model with time and if user is near bus
-                    ((GlobalState)getApplication()).getModel().setCurrentTrip(new CurrentTrip(startTime));
+                    model.setIsOnBus(true);
+                    ((GlobalState)getApplication()).getModel().setCurrentTrip(new CurrentTrip(startTime, 0)); //Set correct distance
                     if(!currMac.equals("")){
                         setCurrBus(currMac);
                     }
