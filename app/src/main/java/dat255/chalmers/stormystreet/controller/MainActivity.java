@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private static final String TAG_PROFILE_SCREEN = "fragment_profile_screen";
     private static final String TAG_MAP_SCREEN = "fragment_map_screen";
     private static final String TAG_SAVE_DATA ="save_data_screen";               // ändrat
+    private static final String TAG_BUS_INFO ="bus_info_screen";
 
 
     private String currentFragmentTag = TAG_HOME_SCREEN;
@@ -114,6 +115,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 navigationView.getMenu().findItem(R.id.menu_drawer_home).setChecked(true);
                 menuItem.setChecked(false);
                 break;
+            case R.id.menu_drawer_bus_info:
+                 switchFragment(TAG_BUS_INFO,false);
+                navigationView.getMenu().findItem(R.id.menu_drawer_bus_info).setChecked(true);
+                menuItem.setChecked(false);
+
+
         }
         return true;
     }
@@ -156,6 +163,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 case TAG_SAVE_DATA:
                     Intent s = new Intent(this, DatabaseActivity.class);
                     startActivity(s);
+                    return;
+                case TAG_BUS_INFO:
+                    Intent b = new Intent(this, BusInfoActivity.class);
+                    startActivity(b);
                     return;
                 default:
                     fragment = new HomeFragment();
