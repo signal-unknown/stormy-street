@@ -32,6 +32,7 @@ public class MapsActivity extends AppCompatActivity implements BusPositionListen
         setContentView(R.layout.activity_maps);
         isVisible = true;
 
+        //Set up toolbar
         toolbar = (Toolbar) findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
@@ -44,6 +45,7 @@ public class MapsActivity extends AppCompatActivity implements BusPositionListen
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
+        //Set up map and get bus positions
         setUpMapIfNeeded();
         new BusPositionUpdater(this).execute();
     }
@@ -80,21 +82,23 @@ public class MapsActivity extends AppCompatActivity implements BusPositionListen
      * Should not be ran without proper nullcheck
      */
     private void setUpMap() {
-        mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
         mMap.setMyLocationEnabled(true);
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(57.708870,11.974560),13));
+        //Zoom over central Gothenburg and zoom enough to show the entire ElectriCity bus line
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(57.708870,11.974560),12.5f));
     }
 
     @Override
     public void updatePositions(Map<LatLng, String> positions) {
         if(mMap!=null){
+            //Clear map of old markers
             mMap.clear();
+            //Add a marker for each bus
             Set<LatLng> positionSet = positions.keySet();
             for(LatLng position:positionSet){
                 mMap.addMarker(new MarkerOptions().position(position).title(positions.get(position)));
             }
         }
-        if(isVisible) {
+        if(isVisible) {//Get new positions after 500 millisconds if the activity is visible onscreen
             new Timer().schedule(new TimerTask() {
                 @Override
                 public void run() {
