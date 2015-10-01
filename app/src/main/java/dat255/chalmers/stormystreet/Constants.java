@@ -52,7 +52,8 @@ public class Constants {
     /**
      * Converts a bus vin to a Reg nr, returns null if the vin is invalid
      */
-    public static String vinToRegNr(int vin){
-        return busVinRegNr.get(vin);
+    public static String vinToRegNr(Integer vin){
+        String regNr = busVinRegNr.get(vin);
+        return regNr;
     }
 }
