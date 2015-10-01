@@ -134,7 +134,7 @@ public class WifiService extends IntentService {
                 scanMacs();
                 if(isNearBus() && startTime==0){
                     Log.d("Wifiservice", "On bus");
-                    startTime = System.currentTimeMillis()+DELAY_TIME;//compensating for delay
+                    startTime = System.currentTimeMillis()-DELAY_TIME;//compensating for delay
                     Log.d("Wifiservice", startTime+"");
                     model.setIsOnBus(true);
                     ((GlobalState)getApplication()).getModel().setCurrentTrip(new CurrentTrip(startTime, 0)); //Set correct distance
