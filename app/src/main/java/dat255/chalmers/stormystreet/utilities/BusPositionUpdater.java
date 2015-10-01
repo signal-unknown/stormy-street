@@ -22,6 +22,7 @@ import java.util.Set;
 import javax.net.ssl.HttpsURLConnection;
 
 import dat255.chalmers.stormystreet.APIConstants;
+import dat255.chalmers.stormystreet.Constants;
 import dat255.chalmers.stormystreet.controller.BusPositionListener;
 
 /**
@@ -143,7 +144,8 @@ public class BusPositionUpdater extends AsyncTask<Void,Void,Map<LatLng, String>>
         Set<String> iDs = tempMap.keySet();
         Map<LatLng, String> map = new HashMap<LatLng,String>();
         for(String iD:iDs){
-            map.put(tempMap.get(iD).getPosition(),iD);
+            String regNr = Constants.vinToRegNr(Integer.parseInt(iD));
+            map.put(tempMap.get(iD).getPosition(),regNr);
         }
         return map;
     }
