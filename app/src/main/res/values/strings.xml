@@ -11,6 +11,7 @@
     <string name="menu_drawer_profile">My profile</string>
     <string name="menu_drawer_bus_map">Bus map</string>
     <string name="menu_drawer_save_data">Save data</string>
+    <string name="menu_drawer_bus_info">Bus info</string>
 
 
     <string name="points">points</string>
