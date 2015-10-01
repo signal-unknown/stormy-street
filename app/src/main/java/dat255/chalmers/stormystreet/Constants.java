@@ -11,6 +11,7 @@ public class Constants {
     public static final String ACTION_WIFI_CHANGED = "ACTION_WIFI_CHANGED";
 
     public static final HashMap<Integer, String> busMacVin;
+    private static final HashMap<Integer, String> busVinRegNr;
     static{
         busMacVin  = new HashMap<>();
         busMacVin.put(100020, "00:13:95:13:49:f5");
@@ -34,6 +35,24 @@ public class Constants {
         busMacVin.put(171330, "04:f0:21:10:09:b7");
         busMacVin.put(13379000, "0a:18:d6:29:4c:b0");
 
+        //Initialize map with bus vin numbers and registration numbers
+        busVinRegNr = new HashMap<Integer, String>();
+        busVinRegNr.put(100020,"EPO 131");
+        busVinRegNr.put(100021,"EPO 136");
+        busVinRegNr.put(100022,"EPO 143");
+        busVinRegNr.put(171164,"EOG 604");
+        busVinRegNr.put(171234,"EOG 606");
+        busVinRegNr.put(171235,"EOG 616");
+        busVinRegNr.put(171327,"EOG 622");
+        busVinRegNr.put(171328,"EOG 627");
+        busVinRegNr.put(171329,"EOG 631");
+        busVinRegNr.put(171330,"EOG 634");
     }
 
+    /**
+     * Converts a bus vin to a Reg nr, returns null if the vin is invalid
+     */
+    public static String vinToRegNr(int vin){
+        return busVinRegNr.get(vin);
+    }
 }
