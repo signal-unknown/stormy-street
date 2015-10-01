@@ -11,6 +11,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.Map;
@@ -100,7 +101,8 @@ public class MapsActivity extends AppCompatActivity implements BusPositionListen
                 options.position(position);
                 options.title(positions.get(position));
                 options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
-                mMap.addMarker(options);
+                Marker marker = mMap.addMarker(options);
+                marker.showInfoWindow();
             }
         }
         //Get new positions after 500 millisconds if the activity is visible onscreen
