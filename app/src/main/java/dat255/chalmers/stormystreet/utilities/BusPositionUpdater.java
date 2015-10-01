@@ -109,19 +109,15 @@ public class BusPositionUpdater extends AsyncTask<Void,Void,Map<LatLng, String>>
 
                     //Separate DMS values for latitude
                     String latDegrees = nMEALatitude.substring(0,2);
-                    String latMinutes = nMEALatitude.substring(2,4);
-                    String latSeconds = nMEALatitude.substring(5);
-                    latSeconds = latSeconds.substring(0,2) + '.' + latSeconds.substring(2);
+                    String latMinutes = nMEALatitude.substring(2,9);
 
                     //Separate DMS values for longitude
                     String lonDegrees = nMEALongitude.substring(0,3);
-                    String lonMinutes = nMEALongitude.substring(3,5);
-                    String lonSeconds = nMEALongitude.substring(6);
-                    lonSeconds = lonSeconds.substring(0,2) + '.' + lonSeconds.substring(2,4);
+                    String lonMinutes = nMEALongitude.substring(3,10);
 
-                    //Convert from degrees, minutes and seconds to standard longitude and latitude
-                    double latitude = Double.parseDouble(latDegrees) + Double.parseDouble(latMinutes)/60D + Double.parseDouble(latSeconds)/3600D;
-                    double longitude = Double.parseDouble(lonDegrees) + Double.parseDouble(lonMinutes)/60D + Double.parseDouble(lonSeconds)/3600D;
+                    //Convert from degrees, minutes and seconds to decimal longitude and latitude
+                    double latitude = Double.parseDouble(latDegrees) + Double.parseDouble(latMinutes)/60.0D;
+                    double longitude = Double.parseDouble(lonDegrees) + Double.parseDouble(lonMinutes)/60.0D;
 
                     LatLng position = new LatLng(latitude,longitude);
 
