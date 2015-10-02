@@ -26,6 +26,7 @@ public class Constants {
         busMacVin.put(171330, "00:13:95:13:5f:20");
 
         //Updated BSSIDs below
+        busMacVin.put(100020, "04:f0:21:10:0a:07");
         busMacVin.put(100021, "04:f0:21:10:09:df");
         busMacVin.put(100022, "04:f0:21:10:09:e8");
         busMacVin.put(171164, "04:f0:21:10:09:b8");
@@ -33,7 +34,6 @@ public class Constants {
         busMacVin.put(171327, "04:f0:21:10:09:53");
         busMacVin.put(171328, "04:f0:21:10:09:b9");
         busMacVin.put(171330, "04:f0:21:10:09:b7");
-        busMacVin.put(13379000, "0a:18:d6:29:4c:b0");
 
         //Initialize map with bus vin numbers and registration numbers
         busVinRegNr = new HashMap<Integer, String>();
