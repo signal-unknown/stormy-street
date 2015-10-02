@@ -6,22 +6,25 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
-import android.os.DropBoxManager;
 import android.os.Handler;
 import android.os.HandlerThread;
-import android.provider.Settings;
 import android.util.Log;
 
 
+import org.json.JSONException;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import dat255.chalmers.stormystreet.BusResource;
 import dat255.chalmers.stormystreet.Constants;
 import dat255.chalmers.stormystreet.GlobalState;
 import dat255.chalmers.stormystreet.model.CurrentTrip;
 import dat255.chalmers.stormystreet.model.MainModel;
 import dat255.chalmers.stormystreet.model.bus.BusTrip;
+import dat255.chalmers.stormystreet.utilities.APIProxy;
 
 /**
  * @author Maxim Goretskyy
@@ -113,10 +116,11 @@ public class WifiService extends IntentService {
         if(startTime !=0 && endTime == 0 ){//double check
             Log.d("Wifiservice", "No longer on bus");
             endTime = System.currentTimeMillis();
-            Log.d("Wifiservice", endTime + "");
-
+            Log.d("Wifiservice", "Endtime is " + endTime);
             //update model with end time here
-            ((GlobalState)getApplication()).getModel().getCurrentUser().getStatistics().addBusTrip(new BusTrip(startTime, endTime, 1337));
+            int distance = calcDistance(startTime, endTime);
+            Log.d("Wifiservice", "Calculated distance is " + distance);
+            ((GlobalState)getApplication()).getModel().getCurrentUser().getStatistics().addBusTrip(new BusTrip(startTime, endTime, distance));
             resetTimestamps();
             setUserOnBus(false);
         }
@@ -159,5 +163,23 @@ public class WifiService extends IntentService {
 
     public List<String> getMacAddresses(){
         return this.macAddresses;
+    }
+
+    public int calcDistance(long startTime, long endTime){
+        String response="";
+        int result=0;
+        try {
+            response = APIProxy.getBusResource(this.currBusNum, startTime, endTime, BusResource.Total_Vehicle_Distance_Value);
+        } catch (IOException e) {
+            Log.d("Apiproxy", "Caught ioexception in wifiservice");
+        } catch (JSONException e) {
+            Log.d("Apiproxy", "Caught jsonexception in wifiservice");
+        }
+        try{
+            result = Integer.parseInt(response);
+        }catch(NumberFormatException ex){
+
+        }
+        return result * 5; //Format we get from API is divided by 5.
     }
 }
