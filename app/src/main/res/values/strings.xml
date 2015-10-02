@@ -15,4 +15,11 @@
 
 
     <string name="points">points</string>
+
+    <string name="wifi_alert_title">Wifi is disabled</string>
+    <string name="wifi_alert_text">Do you want to enable wifi?</string>
+    <string name="wifi_alert_positive">Settings</string>
+    <string name="wifi_alert_negative">Cancel</string>
+    <string name="wifi_alert_neutral">Enable</string>
+    <string name="wifi_alert_negative_toast">Stormy Street requires wifi enabled to work</string>
 </resources>
