@@ -37,6 +37,14 @@ public class DataValue {
         dataValues.add(value);
     }
 
+    public List<String> getValues(){
+        return this.dataValues;
+    }
+
+    public int getNumberOfValues(){
+        return dataValues.size();
+    }
+
     @Override
     public String toString() {
         String toString = "";

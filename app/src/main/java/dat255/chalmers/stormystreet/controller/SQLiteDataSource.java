@@ -33,18 +33,17 @@ public class SQLiteDataSource {
     public void close() {
         appSQLiteWrapper.close();
     }
-    public DataValue saveData(Integer... dataValues) {
+    public DataValue saveData(DataValue dataValue) {
 
         //Adds all the datavalues to a contentvalues object, if too many values are provided it logs an error
         ContentValues values  = new ContentValues();
-        for(int i = 0; i < dataValues.length; i++){
+        for(int i = 0; i < dataValue.getNumberOfValues(); i++){
             if(data_Table_Columns.length > i) {
-                values.put(data_Table_Columns[i+1], dataValues[i]);
+                values.put(data_Table_Columns[i+1], dataValue.getValues().get(i));
             }else{
                 Log.e("Database::saveData", "Too many values provided");
             }
         }
-
 
         long addId = database.insert(appSQLiteWrapper.TABLE, null, values);         //inserts the row
 
