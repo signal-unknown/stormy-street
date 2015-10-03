@@ -1,5 +1,8 @@
 package dat255.chalmers.stormystreet.model;
 
+import android.provider.ContactsContract;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,6 +14,9 @@ public class DataValue {
     private int id;
     private List<String> dataValues;
 
+    public DataValue(){
+        dataValues = new ArrayList<>();
+    }
 
     public long getId() {
         // returns the id of specific row
@@ -33,9 +39,9 @@ public class DataValue {
 
     @Override
     public String toString() {
-        String toString = ":";
+        String toString = "";
         for(String value : dataValues){
-            toString += value + ":";
+            toString += value + " ";
         }
 
         return toString;
