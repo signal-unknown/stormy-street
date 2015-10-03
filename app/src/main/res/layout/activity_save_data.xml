@@ -8,11 +8,14 @@
         android:id="@+id/editText1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
+        android:ems="10"
         android:layout_alignParentTop="true"
-        android:ems="10">
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_toLeftOf="@+id/deleteBtn"
+        android:layout_toStartOf="@+id/deleteBtn">
         <requestFocus />
-        </EditText>
+    </EditText>
 
     <Button
 
@@ -39,5 +42,23 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/deleteBtn"
         />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/editText2"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/editText1"
+        android:layout_alignRight="@+id/deleteBtn"
+        android:layout_alignEnd="@+id/deleteBtn" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/editText3"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/deleteBtn"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

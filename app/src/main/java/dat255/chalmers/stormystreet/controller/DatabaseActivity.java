@@ -34,16 +34,14 @@ public class DatabaseActivity extends ListActivity {
 
     }
     public void saveBusData(View view) {
+        ArrayAdapter adapter = (ArrayAdapter) getListAdapter();
 
-       ArrayAdapter adapter = (ArrayAdapter) getListAdapter();
-
-       EditText text =(EditText) findViewById(R.id.editText1);
-       DataValue value = sqLiteDataSourceOpertions.saveData(text.getText().toString());
-
-       // DataValue value = sqLiteDataSourceOpertions.saveData("1010_1111_0111"); // test
+        EditText text =(EditText) findViewById(R.id.editText1);
+        EditText text2 = (EditText) findViewById(R.id.editText2);
+        EditText text3 = (EditText) findViewById(R.id.editText3);
+        DataValue value = sqLiteDataSourceOpertions.saveData(Integer.parseInt(text.getText().toString()),Integer.parseInt(text2.getText().toString()),Integer.parseInt(text3.getText().toString()));
 
         adapter.add(value);
-
     }
     public void deleteBusData(View view) {
         ArrayAdapter adapter = (ArrayAdapter) getListAdapter();
