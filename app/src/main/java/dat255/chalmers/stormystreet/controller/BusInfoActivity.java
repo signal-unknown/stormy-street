@@ -2,7 +2,10 @@ package dat255.chalmers.stormystreet.controller;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -14,15 +17,29 @@ import dat255.chalmers.stormystreet.model.CurrentTrip;
 /**
  * Created by DavidF on 2015-10-01.
  */
-public class BusInfoActivity extends Activity {
+public class BusInfoActivity extends AppCompatActivity {
 
      public TextView info;
+    private Toolbar toolbar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bus_info);
+
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar_main);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onBackPressed();
+                }
+            });
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
       info = (TextView) findViewById(R.id.BusInfoView);
 
