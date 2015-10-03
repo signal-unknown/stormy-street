@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import java.util.List;
 import android.widget.EditText;
 
+import dat255.chalmers.stormystreet.GlobalState;
 import dat255.chalmers.stormystreet.R;
 import dat255.chalmers.stormystreet.model.DataValue;
 
@@ -29,7 +30,8 @@ public class DatabaseActivity extends ListActivity {
         sqLiteDataSourceOpertions = new SQLiteDataSource(this);
         sqLiteDataSourceOpertions.open();
         List dataValues = sqLiteDataSourceOpertions.getAllDataValues();
-        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1 , dataValues);
+        List busTrips = ((GlobalState)getApplication()).getModel().getAllBusTrips();
+        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1 , busTrips);
         setListAdapter(adapter);
 
     }
@@ -39,9 +41,12 @@ public class DatabaseActivity extends ListActivity {
         EditText text =(EditText) findViewById(R.id.editText1);
         EditText text2 = (EditText) findViewById(R.id.editText2);
         EditText text3 = (EditText) findViewById(R.id.editText3);
-        DataValue value = sqLiteDataSourceOpertions.saveData(Integer.parseInt(text.getText().toString()),Integer.parseInt(text2.getText().toString()),Integer.parseInt(text3.getText().toString()));
+        DataValue value = new DataValue();
+        value.addValues(text.getText().toString(), text2.getText().toString(), text3.getText().toString());
+        sqLiteDataSourceOpertions.saveData(value);
 
         adapter.add(value);
+
     }
     public void deleteBusData(View view) {
         ArrayAdapter adapter = (ArrayAdapter) getListAdapter();
