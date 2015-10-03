@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.provider.ContactsContract;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -73,7 +74,7 @@ public class SQLiteDataSource {
         database.delete(appSQLiteWrapper.TABLE, appSQLiteWrapper.COLUMN_ID + " = " + id, null);
     }
 
-    public List getAllDataValues() {
+    public List<DataValue> getAllDataValues() {
         List dataList = new ArrayList();
 
         Cursor cursor = database.query(appSQLiteWrapper.TABLE, data_Table_Columns, null, null, null, null, null);
