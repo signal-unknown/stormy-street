@@ -8,11 +8,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import java.lang.Thread;
 
 import java.util.Random;
 
 import dat255.chalmers.stormystreet.R;
-import dat255.chalmers.stormystreet.model.CurrentTrip;
+import dat255.chalmers.stormystreet.model.*;
 
 /**
  * Created by DavidF on 2015-10-01.
@@ -21,6 +22,9 @@ public class BusInfoActivity extends AppCompatActivity {
 
      public TextView info;
     private Toolbar toolbar;
+    private MainModel model = new MainModel();
+    public Boolean stopThread = false;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -29,25 +33,37 @@ public class BusInfoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_bus_info);
 
 
+
+
         toolbar = (Toolbar) findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    stopThread = true;
                     onBackPressed();
+
                 }
             });
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+          //  Thread thread = Thread.currentThread();
+            //thread.interrupt();
+
+
         }
 
-      info = (TextView) findViewById(R.id.BusInfoView);
+
+        info = (TextView) findViewById(R.id.BusInfoView);
 
         info.setText("lol");
+
         new Thread(new UpdateInfo()).start();
 
+
     }
-    public void getInfo() {
+    public void getInfo() {      // Test method ############################
 
         Random rnd = new Random();
 
@@ -82,21 +98,32 @@ public class BusInfoActivity extends AppCompatActivity {
         }
 
     }
-    class UpdateInfo implements Runnable {
+    public void getBusInfo(int v) {             // Getting info from model //////////////////////////////////////
 
+       info.setText("Information about selected bus: " + "\n \n" + "User name: " +  model.getCurrentUsername() + "\n\n" + "Statistics: " + model.getCurrentUser().getStatistics() + "\n\n " +
+               "Distance/time: " + model.getCurrentTrip()
+               + "\n\n" + "Calling thread #: " + v);
+
+
+    }
+    class UpdateInfo implements Runnable {
+        int v = 0;
         @Override
         public void run() {
 
-            for (int i = 0; i < 10; i++) {
+            while (stopThread != true) {
 
                 try {
 
-                    Thread.sleep(2000);  // 2 second
+                    Thread.sleep(3000);  // 3 seconds
                     runOnUiThread(new Runnable() {   // for modifying view
                         @Override
                         public void run() {
 
-                            getInfo();
+                            //getInfo();
+                            getBusInfo(v);
+                            v++;
+
 
                         }
                     });
@@ -111,6 +138,7 @@ public class BusInfoActivity extends AppCompatActivity {
 
             }
         }
+
 
     }
 
