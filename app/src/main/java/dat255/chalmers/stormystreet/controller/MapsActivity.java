@@ -105,7 +105,6 @@ public class MapsActivity extends AppCompatActivity implements BusPositionListen
                 options.title(positions.get(position));
                 options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
                 Marker marker = mMap.addMarker(options);
-                marker.showInfoWindow();
             }
         }
         //Get new positions after 500 millisconds if the activity is visible onscreen
