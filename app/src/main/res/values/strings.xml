@@ -19,12 +19,16 @@
     <string name="profile_stats_co2">Grams CO2 saved</string>
 
 
-    <string name="points">points</string>
-
     <string name="wifi_alert_title">Wifi is disabled</string>
     <string name="wifi_alert_text">Do you want to enable wifi?</string>
     <string name="wifi_alert_positive">Settings</string>
     <string name="wifi_alert_negative">Cancel</string>
     <string name="wifi_alert_neutral">Enable</string>
     <string name="wifi_alert_negative_toast">Stormy Street requires wifi enabled to work</string>
+
+    <string name="points">Points</string>
+    <string name="next_stop">Next stop</string>
+    <string name="kmh">km/h</string>
+    <string name="current_bus">Current bus</string>
+    <string name="on_wifi">On wifi</string>
 </resources>

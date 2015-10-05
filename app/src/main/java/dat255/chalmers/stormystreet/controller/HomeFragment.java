@@ -13,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.test.mock.MockApplication;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,10 +21,14 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
+import dat255.chalmers.stormystreet.BusResource;
+import dat255.chalmers.stormystreet.Constants;
 import dat255.chalmers.stormystreet.GlobalState;
 import dat255.chalmers.stormystreet.R;
 import dat255.chalmers.stormystreet.model.IModelListener;
 import dat255.chalmers.stormystreet.model.MainModel;
+import dat255.chalmers.stormystreet.model.bus.BusNotFoundException;
+import dat255.chalmers.stormystreet.model.bus.IBus;
 import dat255.chalmers.stormystreet.view.StatCardData;
 
 /**
@@ -36,9 +41,11 @@ public class HomeFragment extends Fragment implements IModelListener{
     private RecyclerView.Adapter recyclerViewAdapter;
     private GridLayoutManager recycleViewManager;
 
-    private Toolbar toolbar;
-
     private MainModel model;
+
+    private final Bitmap personIcon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_person_black_24dp);
+    private final Bitmap speedometerIcon = BitmapFactory.decodeResource(getResources(), R.drawable.speedometer);
+    private final Bitmap celsiusIcon = BitmapFactory.decodeResource(getResources(), R.drawable.temperature_celsius);
 
 
     @Override
@@ -80,20 +87,37 @@ public class HomeFragment extends Fragment implements IModelListener{
 
         cardRecyclerView.setLayoutManager(recycleViewManager);
 
+        modelUpdated();
+    }
+
+    @Override
+    public void modelUpdated() {
+        model = ((GlobalState) getActivity().getApplication()).getModel();
+
         List<StatCardData> stats = new ArrayList<>();
-        Bitmap personIcon = BitmapFactory.decodeResource(getResources(),
-                R.drawable.ic_person_black_24dp);
-        stats.add(new StatCardData(model.getCurrentUser().getStatistics().getTotalScore().toString(), model.getCurrentUser().getStatistics().getTotalScore().getSuffix() , null));
-        stats.add(new StatCardData("O", "stopp", null));
-        stats.add(new StatCardData("3", "personer", personIcon));
-        stats.add(new StatCardData("34", "km/h", null));
-        stats.add(new StatCardData(Long.toString(model.getCurrentUser().getStatistics().getTimeSpentOnBus()/10000), "timmar", null));
+        stats.add(new StatCardData(model.getTotalScore().toString(), getString(R.string.points), null));
+
+        if (model.getIsOnBus()) {
+            try {
+                IBus currentBus = model.getBus(model.getCurrentBusNumber());
+                // Show next stop
+                stats.add(new StatCardData(currentBus.getNextStop(), getString(R.string.next_stop), null));
+                // Show current bus reg number
+                stats.add(new StatCardData(Constants.vinToRegNr(currentBus.getDgwNumber()), getString(R.string.current_bus), null));
+                // Show bus speed
+                stats.add(new StatCardData(Double.toString(currentBus.getGPSPosition().getSpeed()), getString(R.string.kmh), speedometerIcon));
+                // Show degrees in bus
+                stats.add(new StatCardData(Integer.toString(currentBus.getDriverCabinTemperature()), null, celsiusIcon));
+                // Show how many are using wifi
+                stats.add(new StatCardData(Integer.toString(currentBus.getOnlineUsers()), getString(R.string.on_wifi), personIcon));
+            } catch (BusNotFoundException e) {
+                e.printStackTrace();
+            }
+        } else {
+            // TODO: Show other cards when not on bus
+        }
 
         recyclerViewAdapter = new BusStatListAdapter(stats);
         cardRecyclerView.setAdapter(recyclerViewAdapter);
-    }
-
-    public void modelUpdated() {
-        //TODO: Update view with info from model
     }
 }
