@@ -43,9 +43,9 @@ public class HomeFragment extends Fragment implements IModelListener{
 
     private MainModel model;
 
-    private final Bitmap personIcon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_person_black_24dp);
-    private final Bitmap speedometerIcon = BitmapFactory.decodeResource(getResources(), R.drawable.speedometer);
-    private final Bitmap celsiusIcon = BitmapFactory.decodeResource(getResources(), R.drawable.temperature_celsius);
+    private Bitmap personIcon;
+    private Bitmap speedometerIcon;
+    private Bitmap celsiusIcon;
 
 
     @Override
@@ -58,6 +58,10 @@ public class HomeFragment extends Fragment implements IModelListener{
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        personIcon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_person_black_24dp);
+        speedometerIcon = BitmapFactory.decodeResource(getResources(), R.drawable.speedometer);
+        celsiusIcon = BitmapFactory.decodeResource(getResources(), R.drawable.temperature_celsius);
 
         ((GlobalState)getActivity().getApplication()).getModel().addListener(this);
         setupRecyclerView(view);
