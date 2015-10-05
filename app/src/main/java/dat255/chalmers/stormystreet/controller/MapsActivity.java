@@ -121,6 +121,7 @@ public class MapsActivity extends AppCompatActivity implements BusPositionListen
 
     @Override
     public boolean onMarkerClick(Marker marker) {
+        marker.hideInfoWindow();
         Intent busInfo = new Intent(this, BusInfoActivity.class);
         busInfo.putExtra(Constants.EXTRA_BUS_INFO_BUS_ID, marker.getTitle());
         startActivity(busInfo);

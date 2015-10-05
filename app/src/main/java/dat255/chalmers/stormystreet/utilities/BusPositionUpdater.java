@@ -144,8 +144,11 @@ public class BusPositionUpdater extends AsyncTask<Void,Void,Map<LatLng, String>>
         Set<String> iDs = tempMap.keySet();
         Map<LatLng, String> map = new HashMap<LatLng,String>();
         for(String iD:iDs){
-            String regNr = Constants.vinToRegNr(Integer.parseInt(iD));
-            map.put(tempMap.get(iD).getPosition(),regNr);
+            // String regNr = Constants.vinToRegNr(Integer.parseInt(iD));
+
+            // Put the VIN in the title so the marker can later be identified
+            // The VIN will not be shown since the custom click listener should hide it
+            map.put(tempMap.get(iD).getPosition(),iD);
         }
         return map;
     }

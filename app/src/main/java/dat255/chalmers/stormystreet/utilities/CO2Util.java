@@ -1,4 +1,4 @@
-package dat255.chalmers.stormystreet.util;
+package dat255.chalmers.stormystreet.utilities;
 
 /**
  * CO2 emissions are based on statistics from the following article:

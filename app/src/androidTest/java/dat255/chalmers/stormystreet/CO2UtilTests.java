@@ -2,7 +2,7 @@ package dat255.chalmers.stormystreet;
 
 import android.test.ActivityTestCase;
 
-import dat255.chalmers.stormystreet.util.CO2Util;
+import dat255.chalmers.stormystreet.utilities.CO2Util;
 
 /**
  * @author Alexander Håkansson

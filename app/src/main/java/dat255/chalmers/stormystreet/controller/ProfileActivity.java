@@ -14,7 +14,7 @@ import android.widget.TextView;
 import dat255.chalmers.stormystreet.GlobalState;
 import dat255.chalmers.stormystreet.R;
 import dat255.chalmers.stormystreet.model.MainModel;
-import dat255.chalmers.stormystreet.util.CO2Util;
+import dat255.chalmers.stormystreet.utilities.CO2Util;
 
 public class ProfileActivity extends AppCompatActivity {
 
