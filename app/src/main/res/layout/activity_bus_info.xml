@@ -44,9 +44,9 @@
             android:id="@+id/BusInfoView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/Image_bus"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:text = "hello"
             android:textColor="@color/wallet_bright_foreground_holo_dark"
             android:fitsSystemWindows="true"
 
@@ -57,6 +57,8 @@
     </android.support.design.widget.AppBarLayout>
 
     </RelativeLayout>
+
+
 
 
 </android.support.design.widget.CoordinatorLayout >
