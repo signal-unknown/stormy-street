@@ -1,5 +1,6 @@
 package dat255.chalmers.stormystreet.controller;
 
+import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -19,10 +20,11 @@ import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import dat255.chalmers.stormystreet.Constants;
 import dat255.chalmers.stormystreet.R;
 import dat255.chalmers.stormystreet.utilities.BusPositionUpdater;
 
-public class MapsActivity extends AppCompatActivity implements BusPositionListener {
+public class MapsActivity extends AppCompatActivity implements BusPositionListener, GoogleMap.OnMarkerClickListener {
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     private Toolbar toolbar;
@@ -85,6 +87,7 @@ public class MapsActivity extends AppCompatActivity implements BusPositionListen
      */
     private void setUpMap() {
         mMap.setMyLocationEnabled(true);
+        mMap.setOnMarkerClickListener(this);
         //Zoom over central Gothenburg and zoom enough to show the entire ElectriCity bus line
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(57.708870,11.974560),12.5f));
     }
@@ -114,5 +117,13 @@ public class MapsActivity extends AppCompatActivity implements BusPositionListen
                 }
             }, 500);
         }
+    }
+
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        Intent busInfo = new Intent(this, BusInfoActivity.class);
+        busInfo.putExtra(Constants.EXTRA_BUS_INFO_BUS_ID, marker.getTitle());
+        startActivity(busInfo);
+        return false;
     }
 }

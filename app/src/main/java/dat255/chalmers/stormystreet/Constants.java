@@ -9,6 +9,7 @@ import java.util.HashMap;
 public class Constants {
     public static final String ACTION_GET_MAC = "ACTION_GET_MAC";
     public static final String ACTION_WIFI_CHANGED = "ACTION_WIFI_CHANGED";
+    public static final String EXTRA_BUS_INFO_BUS_ID = "EXTRA_BUS_INFO_BUS_ID";
 
     public static final HashMap<Integer, String> busMacVin;
     private static final HashMap<Integer, String> busVinRegNr;
