@@ -24,4 +24,8 @@ public class BusTrip implements IBusTrip {
     public long getDistance() {
         return this.distance;
     }
+
+    public String toString(){
+        return this.startTime + " " + this.endTime + " " + this.distance;
+    }
 }

@@ -1,5 +1,10 @@
 package dat255.chalmers.stormystreet.model;
 
+import android.provider.ContactsContract;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by David Fogelberg on 2015-09-25.
  * Data class
@@ -7,30 +12,47 @@ package dat255.chalmers.stormystreet.model;
 public class DataValue {
 
     private int id;
-    private String dataValue;
+    private List<String> dataValues;
 
+    public DataValue(){
+        dataValues = new ArrayList<>();
+    }
 
     public long getId() {
-        // returns the id of specific column
+        // returns the id of specific row
         return id;
     }
     public void setId(int id) {
 
         this.id = id;
     }
-    public void setName(String dataValue) {
 
-        this.dataValue = dataValue;
-
+    public void addValues(String... values){
+        for(String value : values){
+            dataValues.add(value);
+        }
     }
-    public String getDataValue() {
 
-        return this.dataValue;
+    public void addValue(String value){
+        dataValues.add(value);
     }
+
+    public List<String> getValues(){
+        return this.dataValues;
+    }
+
+    public int getNumberOfValues(){
+        return dataValues.size();
+    }
+
     @Override
     public String toString() {
+        String toString = "";
+        for(String value : dataValues){
+            toString += value + " ";
+        }
 
-        return dataValue;
+        return toString;
     }
 
 

@@ -19,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import dat255.chalmers.stormystreet.GlobalState;
 import dat255.chalmers.stormystreet.R;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -60,6 +61,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             checkPermissions();
         }
 
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        ((GlobalState)getApplication()).saveModel();
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+        ((GlobalState)getApplication()).saveModel();
     }
 
     @Override
