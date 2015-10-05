@@ -1,9 +1,11 @@
 package dat255.chalmers.stormystreet.controller;
 
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -14,7 +16,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -47,7 +48,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
         if (savedInstanceState != null) {
             currentFragmentTag = savedInstanceState.getString(KEY_CURRENT_FRAGMENT_TAG);
         }
@@ -186,7 +186,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     break;
             }
         }
-
+        WifiManager wifi = (WifiManager)getSystemService(Context.WIFI_SERVICE);
+        if(!wifi.isWifiEnabled()){
+            WifiAlertDialogFragment alert = new WifiAlertDialogFragment();
+            alert.show(fragmentManager, "Wifi alert");
+        }
         transaction.replace(R.id.fragment_container, fragment, currentFragmentTag);
         transaction.addToBackStack(null);
         transaction.commit();
