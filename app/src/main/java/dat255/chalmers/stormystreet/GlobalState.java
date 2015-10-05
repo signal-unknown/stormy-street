@@ -20,7 +20,6 @@ public class GlobalState extends Application {
     public void onCreate(){
         super.onCreate();
         model = new MainModel();
-
         Log.i("Globalstate", "App started");
         loadModel();
     }
@@ -28,14 +27,12 @@ public class GlobalState extends Application {
     public void loadModel(){
         SQLiteDataSource dataSource = new SQLiteDataSource(getApplicationContext());
         dataSource.open();
-        Log.d("LoadModel", "Current distance: " + model.getUserStatistics().getTotalScore());
         long startTime, endTime, distance;
         for(DataValue value:dataSource.getAllDataValues()){
             startTime = Long.parseLong(value.getValues().get(0));
             endTime = Long.parseLong(value.getValues().get(1));
             distance = Long.parseLong(value.getValues().get(2));
             model.addBusTrip(new BusTrip(startTime, endTime, distance));
-            Log.d("LoadModel", "Added " + distance);
         }
     }
 
@@ -46,9 +43,12 @@ public class GlobalState extends Application {
 
         DataValue value;
         for(IBusTrip trip:model.getAllBusTrips()){
-            value = new DataValue();
-            value.addValues(Long.toString(trip.getStartTime()), Long.toString(trip.getEndTime()), Long.toString(trip.getDistance()));
-            dataSource.saveData(value);
+            long lastEndTime = dataSource.getLastTimeStamp();
+            if(trip.getStartTime() > lastEndTime) {
+                value = new DataValue();
+                value.addValues(Long.toString(trip.getStartTime()), Long.toString(trip.getEndTime()), Long.toString(trip.getDistance()));
+                dataSource.saveData(value);
+            }
         }
 
         dataSource.close();

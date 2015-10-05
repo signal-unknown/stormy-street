@@ -91,6 +91,14 @@ public class SQLiteDataSource {
         return dataList;
     }
 
+    public long getLastTimeStamp(){
+        Cursor cursor = database.rawQuery("SELECT * FROM _value ORDER BY end_time DESC LIMIT 1", null);
+        cursor.moveToFirst();
+        long timestamp = cursor.getLong(2);
+        cursor.close();
+        return timestamp;
+    }
+
     private int getNumberOfColumns(){
         Cursor ti = database.rawQuery("PRAGMA table_info(" + appSQLiteWrapper.TABLE + ")", null);
         int i = 0;

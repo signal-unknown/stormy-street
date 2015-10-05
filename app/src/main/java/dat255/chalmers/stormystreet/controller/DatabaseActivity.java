@@ -12,6 +12,7 @@ import android.widget.EditText;
 import dat255.chalmers.stormystreet.GlobalState;
 import dat255.chalmers.stormystreet.R;
 import dat255.chalmers.stormystreet.model.DataValue;
+import dat255.chalmers.stormystreet.model.bus.BusTrip;
 
 /**
  * Created by David Fogelberg on 2015-09-28.
@@ -44,6 +45,8 @@ public class DatabaseActivity extends ListActivity {
         DataValue value = new DataValue();
         value.addValues(text.getText().toString(), text2.getText().toString(), text3.getText().toString());
         sqLiteDataSourceOpertions.saveData(value);
+        sqLiteDataSourceOpertions.getLastTimeStamp();
+        ((GlobalState)getApplication()).getModel().addBusTrip(new BusTrip(Long.parseLong(text.getText().toString()), Long.parseLong(text2.getText().toString()), Long.parseLong(text3.getText().toString())));
 
         adapter.add(value);
 
