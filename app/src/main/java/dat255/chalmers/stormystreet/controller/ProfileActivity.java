@@ -34,11 +34,6 @@ public class ProfileActivity extends AppCompatActivity {
         profileImageView.setImageBitmap(profileImage);
 
         collapsingToolbarLayout.setTitle("John Doe");
-
-        TextView text = (TextView) findViewById(R.id.debug_text);
-        for (int i = 0; i < 100; i++) {
-            text.append("Hello I am a test. LOL \n");
-        }
     }
 
     private void setupToolbar() {

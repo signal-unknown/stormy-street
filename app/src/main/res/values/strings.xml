@@ -13,6 +13,8 @@
     <string name="menu_drawer_save_data">Save data</string>
     <string name="menu_drawer_bus_info">Bus info</string>
 
+    <string name="profile_stats">Statistics</string>
+
 
     <string name="points">points</string>
 </resources>
