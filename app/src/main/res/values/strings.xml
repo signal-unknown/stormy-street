@@ -26,6 +26,8 @@
     <string name="wifi_alert_neutral">Enable</string>
     <string name="wifi_alert_negative_toast">Stormy Street requires wifi enabled to work</string>
 
+    <string name="bus">Bus</string>
+
     <string name="points">Points</string>
     <string name="next_stop">Next stop</string>
     <string name="kmh">km/h</string>
