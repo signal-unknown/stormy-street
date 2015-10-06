@@ -3,6 +3,7 @@ package dat255.chalmers.stormystreet.services;
 import android.os.AsyncTask;
 
 import dat255.chalmers.stormystreet.model.bus.IBus;
+import dat255.chalmers.stormystreet.utilities.APIParser;
 
 /**
  * @author Alexander Håkansson
@@ -30,8 +31,7 @@ public class BusInfoUpdater extends AsyncTask<Integer, Void, IBus> {
     }
 
     private IBus getBusForVin(int vin) {
-        // TODO: Use API Parser
-        return null;
+        return APIParser.getBusInfo(vin);
     }
 
     @Override
