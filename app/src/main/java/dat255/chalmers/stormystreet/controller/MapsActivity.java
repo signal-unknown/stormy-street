@@ -23,6 +23,7 @@ import java.util.TimerTask;
 import dat255.chalmers.stormystreet.Constants;
 import dat255.chalmers.stormystreet.R;
 import dat255.chalmers.stormystreet.services.BusPositionUpdater;
+import dat255.chalmers.stormystreet.utilities.TimedAndAngledPosition;
 
 public class MapsActivity extends AppCompatActivity implements BusPositionListener, GoogleMap.OnMarkerClickListener {
 
@@ -93,18 +94,20 @@ public class MapsActivity extends AppCompatActivity implements BusPositionListen
     }
 
     @Override
-    public void updatePositions(Map<LatLng, String> positions) {
+    public void updatePositions(Map<TimedAndAngledPosition, String> positions) {
         if(mMap!=null){
             //Clear map of old markers
             mMap.clear();
             //Add a marker for each bus
-            Set<LatLng> positionSet = positions.keySet();
-            for(LatLng position:positionSet){
+            Set<TimedAndAngledPosition> positionSet = positions.keySet();
+            for(TimedAndAngledPosition position:positionSet){
                 MarkerOptions options = new MarkerOptions();
-                options.position(position);
+                options.position(position.getPosition());
+                options.flat(true);
                 options.title(positions.get(position));
-                options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
-                Marker marker = mMap.addMarker(options);
+                options.icon(BitmapDescriptorFactory.fromResource(R.drawable.navigation));
+                options.rotation((float)position.getAngle());
+                mMap.addMarker(options);
             }
         }
         //Get new positions after 500 millisconds if the activity is visible onscreen

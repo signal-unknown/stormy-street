@@ -1,8 +1,10 @@
 package dat255.chalmers.stormystreet.controller;
 
+import android.app.Activity;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Looper;
 import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -98,6 +100,23 @@ public class HomeFragment extends Fragment implements IModelListener{
     public void modelUpdated() {
         model = ((GlobalState) getActivity().getApplication()).getModel();
 
+        if (Looper.myLooper() == Looper.getMainLooper()) {
+            updateCards();
+        } else {
+            Activity activity = getActivity();
+            if (activity != null) {
+                activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        updateCards();
+                    }
+                });
+            }
+        }
+
+    }
+
+    public synchronized void updateCards(){
         List<StatCardData> stats = new ArrayList<>();
         stats.add(new StatCardData(model.getTotalScore().toString(), getString(R.string.points), null));
 

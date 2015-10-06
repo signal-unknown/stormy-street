@@ -1,7 +1,6 @@
 package dat255.chalmers.stormystreet.services;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
 
@@ -16,22 +15,19 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.regex.Pattern;
 
 import javax.net.ssl.HttpsURLConnection;
 
 import dat255.chalmers.stormystreet.APIConstants;
-import dat255.chalmers.stormystreet.Constants;
 import dat255.chalmers.stormystreet.controller.BusPositionListener;
-import dat255.chalmers.stormystreet.utilities.TimedPosition;
+import dat255.chalmers.stormystreet.utilities.TimedAndAngledPosition;
 
 /**
  * Task for fetching and parsing GPS data from ElectriCitys API
  */
-public class BusPositionUpdater extends AsyncTask<Void,Void,Map<LatLng, String>>{
+public class BusPositionUpdater extends AsyncTask<Void,Void,Map<TimedAndAngledPosition, String>>{
     private BusPositionListener bpl;
 
     public BusPositionUpdater(BusPositionListener bpl){
@@ -39,7 +35,7 @@ public class BusPositionUpdater extends AsyncTask<Void,Void,Map<LatLng, String>>
     }
 
     @Override
-    protected Map<LatLng, String> doInBackground(Void... params) {
+    protected Map<TimedAndAngledPosition, String> doInBackground(Void... params) {
         //TODO refactor this method, as it is way too big
 
         //Create proper URL
@@ -87,7 +83,7 @@ public class BusPositionUpdater extends AsyncTask<Void,Void,Map<LatLng, String>>
 
         //Parse data
 
-        Map<String,TimedPosition> tempMap = new HashMap<String,TimedPosition>();
+        Map<String,TimedAndAngledPosition> tempMap = new HashMap<String,TimedAndAngledPosition>();
         try {
             JSONArray jsonArray = new JSONArray(jsonGPSData.toString());
             for(int i = 0; i < jsonArray.length(); i++){
@@ -139,12 +135,12 @@ public class BusPositionUpdater extends AsyncTask<Void,Void,Map<LatLng, String>>
                     long timestamp = object.getLong("timestamp");
                     if(tempMap.containsKey(object.getString("gatewayId"))){
                         if(tempMap.get(object.getString("gatewayId")).isOlder(timestamp)){
-                            TimedPosition timedPosition = new TimedPosition(position, object.getLong("timestamp"));
-                            tempMap.put(object.getString("gatewayId"), timedPosition);
+                            TimedAndAngledPosition timedAndAngledPosition = new TimedAndAngledPosition(position, object.getLong("timestamp"), angle);
+                            tempMap.put(object.getString("gatewayId"), timedAndAngledPosition);
                         }
                     }else{
-                        TimedPosition timedPosition = new TimedPosition(position, object.getLong("timestamp"));
-                        tempMap.put(object.getString("gatewayId"), timedPosition);
+                        TimedAndAngledPosition timedAndAngledPosition = new TimedAndAngledPosition(position, object.getLong("timestamp"), angle);
+                        tempMap.put(object.getString("gatewayId"), timedAndAngledPosition);
                     }
                 }
             }
@@ -155,19 +151,19 @@ public class BusPositionUpdater extends AsyncTask<Void,Void,Map<LatLng, String>>
 
         //Create correct map
         Set<String> iDs = tempMap.keySet();
-        Map<LatLng, String> map = new HashMap<LatLng,String>();
+        Map<TimedAndAngledPosition, String> map = new HashMap<TimedAndAngledPosition,String>();
         for(String iD:iDs){
             // String regNr = Constants.vinToRegNr(Integer.parseInt(iD));
 
             // Put the VIN in the title so the marker can later be identified
             // The VIN will not be shown since the custom click listener should hide it
-            map.put(tempMap.get(iD).getPosition(),iD);
+            map.put(tempMap.get(iD),iD);
         }
         return map;
     }
 
     @Override
-    protected void onPostExecute(Map<LatLng, String> map){
+    protected void onPostExecute(Map<TimedAndAngledPosition, String> map){
         //TODO handle positions
         bpl.updatePositions(map);
     }
