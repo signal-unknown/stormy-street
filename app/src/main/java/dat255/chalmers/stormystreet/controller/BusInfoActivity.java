@@ -15,13 +15,14 @@ import dat255.chalmers.stormystreet.R;
 import dat255.chalmers.stormystreet.model.*;
 import dat255.chalmers.stormystreet.model.bus.BusNotFoundException;
 import dat255.chalmers.stormystreet.model.bus.IBus;
+import dat255.chalmers.stormystreet.services.BusInfoUpdater;
 
 // TODO: Use model listener to automatically get when there is new data - no need for updating thread
 
 /**
  * @author David Fogelberg, Alexander Håkansson
  */
-public class BusInfoActivity extends AppCompatActivity {
+public class BusInfoActivity extends AppCompatActivity implements BusInfoUpdater.IBusInfoListener {
 
     private static final int UPDATE_INTERVAL = 3000; // How often the bus info will update
 
@@ -31,7 +32,7 @@ public class BusInfoActivity extends AppCompatActivity {
 
     private MainModel model;
 
-    private IBus busInfo;
+    private int busVin = -1;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,22 +47,20 @@ public class BusInfoActivity extends AppCompatActivity {
         // The activity might be finishing if it can't get the bus with the VIN number provided
         if (!isFinishing()) {
             // Set the toolbar text to the bus reg number
-            toolbar.setTitle(getString(R.string.bus) + " " + Constants.vinToRegNr(busInfo.getDgwNumber()));
+            toolbar.setTitle(getString(R.string.bus) + " " + Constants.vinToRegNr(busVin));
 
             // Starting thread for getting data from model
-            new Thread(new UpdateInfo()).start();
+            new BusInfoUpdater(this).execute(busVin);
+            //new Thread(new UpdateInfo()).start();
         }
     }
 
     private void getBusData() {
         model = ((GlobalState)getApplication()).getModel();
-        String vinNumber = getIntent().getStringExtra(Constants.EXTRA_BUS_INFO_BUS_ID);
+        int vinNumber = getIntent().getIntExtra(Constants.EXTRA_BUS_INFO_BUS_ID, -1);
         try {
-            if (vinNumber != null) {
-                busInfo = model.getBus(Integer.parseInt(vinNumber));
-                if (busInfo == null) {
-                    throw new BusNotFoundException();
-                }
+            if (vinNumber != -1) {
+                busVin = vinNumber;
             } else {
                 throw new BusNotFoundException();
             }
@@ -91,13 +90,16 @@ public class BusInfoActivity extends AppCompatActivity {
         // TODO: Show info from model;
         model = ((GlobalState)getApplication()).getModel();
         try {
-            busInfo = model.getBus(busInfo.getDgwNumber());
-
-            debugTextView.setText("Next stop: " + busInfo.getNextStop());
+            debugTextView.setText("Next stop: " + model.getBus(busVin).getNextStop());
         } catch (BusNotFoundException e) {
             // TODO: Deal with it 8-D
             e.printStackTrace();
         }
+
+    }
+
+    @Override
+    public void busUpdated(IBus bus) {
 
     }
 
