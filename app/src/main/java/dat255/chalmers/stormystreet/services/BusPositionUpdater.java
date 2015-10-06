@@ -1,6 +1,7 @@
 package dat255.chalmers.stormystreet.services;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
 
@@ -18,6 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -95,10 +97,20 @@ public class BusPositionUpdater extends AsyncTask<Void,Void,Map<LatLng, String>>
                 //of Greenwich, which always is the case in Sweden, at least for the coming
                 //few hundred million years or so, at which point the app should be updated
                 if(object.getString("resourceSpec").equals("RMC_Value") &&
+                        object.getString("value").length() > 55 && //Ignore empty data
                         !object.getString("gatewayId").equals("Vin_Num_001")){//Ignore simulated bus
                     String resource = object.getString("value");
                     //If you don't understand what is happening here, please educate yourself on
                     //marine GPS coordinates
+
+                    //Parse direction of the bus
+                    String trackAngle = resource;
+                    trackAngle = trackAngle.substring(trackAngle.indexOf("E") + 2);
+                    trackAngle = trackAngle.substring(trackAngle.indexOf(",") + 1);
+                    trackAngle = trackAngle.substring(0, trackAngle.indexOf(","));
+                    double angle = Double.parseDouble(trackAngle);
+
+                    //Parse decimal longitude and latitude
 
                     //Remove unnecessary data
                     int beginIndex = resource.indexOf("A") + 2;
