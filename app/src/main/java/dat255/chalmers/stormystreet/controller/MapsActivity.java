@@ -107,6 +107,7 @@ public class MapsActivity extends AppCompatActivity implements BusPositionListen
                 options.position(position.getPosition());
                 options.flat(true);
                 options.title(positions.get(position));
+                options.anchor(0.5f, 0.5f);
                 options.icon(BitmapDescriptorFactory.fromResource(R.drawable.navigation));
                 options.rotation((float)position.getAngle());
                 mMap.addMarker(options);
