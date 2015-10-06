@@ -1,6 +1,7 @@
 package dat255.chalmers.stormystreet.services;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
 
@@ -18,6 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -99,6 +101,19 @@ public class BusPositionUpdater extends AsyncTask<Void,Void,Map<LatLng, String>>
                     String resource = object.getString("value");
                     //If you don't understand what is happening here, please educate yourself on
                     //marine GPS coordinates
+                    System.out.println(resource);
+
+                    String trackAngle = resource;
+                    System.out.println(trackAngle);
+                    trackAngle = trackAngle.substring(trackAngle.indexOf("E") + 2);
+                    System.out.println(trackAngle);
+                    trackAngle = trackAngle.substring(trackAngle.indexOf(",") + 1);
+                    System.out.println(trackAngle);
+                    trackAngle = trackAngle.substring(0, trackAngle.indexOf(","));
+                    System.out.println(trackAngle);
+                    double angle = Double.parseDouble(trackAngle);
+
+
 
                     //Remove unnecessary data
                     int beginIndex = resource.indexOf("A") + 2;
