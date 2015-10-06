@@ -27,7 +27,6 @@ public class BusInfoActivity extends AppCompatActivity implements BusInfoUpdater
     private static final int UPDATE_INTERVAL = 3000; // How often the bus info will update
 
     private Toolbar toolbar;
-    private Boolean stopThread = false;
 
     private MainModel model;
     private boolean isVisible;
@@ -88,7 +87,6 @@ public class BusInfoActivity extends AppCompatActivity implements BusInfoUpdater
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    stopThread = true; // stop thread
                     onBackPressed();
                 }
             });
