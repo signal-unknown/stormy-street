@@ -5,12 +5,12 @@ import com.google.android.gms.maps.model.LatLng;
 /**
  * Class for handling GPS positions with timestamps
  */
-public class TimedPosition {
+public class TimedAndAngledPosition {
 
     private final LatLng position;
     private final long timestamp;
 
-    public TimedPosition(LatLng position, long timestamp){
+    public TimedAndAngledPosition(LatLng position, long timestamp){
         this.position = position;
         this.timestamp = timestamp;
     }
