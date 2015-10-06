@@ -43,11 +43,14 @@ public class BusInfoActivity extends AppCompatActivity {
         debugTextView = (TextView) findViewById(R.id.debug_text_view);
 
 
-        // Set the toolbar text to the bus reg number
-        toolbar.setTitle(getString(R.string.bus) + " " + Constants.vinToRegNr(busInfo.getDgwNumber()));
+        // The activity might be finishing if it can't get the bus with the VIN number provided
+        if (!isFinishing()) {
+            // Set the toolbar text to the bus reg number
+            toolbar.setTitle(getString(R.string.bus) + " " + Constants.vinToRegNr(busInfo.getDgwNumber()));
 
-        // Starting thread for getting data from model
-        new Thread(new UpdateInfo()).start();
+            // Starting thread for getting data from model
+            new Thread(new UpdateInfo()).start();
+        }
     }
 
     private void getBusData() {
@@ -56,6 +59,9 @@ public class BusInfoActivity extends AppCompatActivity {
         try {
             if (vinNumber != null) {
                 busInfo = model.getBus(Integer.parseInt(vinNumber));
+                if (busInfo == null) {
+                    throw new BusNotFoundException();
+                }
             } else {
                 throw new BusNotFoundException();
             }
