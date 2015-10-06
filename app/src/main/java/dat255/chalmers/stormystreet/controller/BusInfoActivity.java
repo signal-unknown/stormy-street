@@ -2,22 +2,22 @@ package dat255.chalmers.stormystreet.controller;
 
 
 import android.os.Bundle;
+import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import java.lang.Thread;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 import dat255.chalmers.stormystreet.Constants;
 import dat255.chalmers.stormystreet.GlobalState;
 import dat255.chalmers.stormystreet.R;
-import dat255.chalmers.stormystreet.model.*;
+import dat255.chalmers.stormystreet.model.MainModel;
 import dat255.chalmers.stormystreet.model.bus.BusNotFoundException;
 import dat255.chalmers.stormystreet.model.bus.IBus;
 import dat255.chalmers.stormystreet.services.BusInfoUpdater;
-
-// TODO: Use model listener to automatically get when there is new data - no need for updating thread
 
 /**
  * @author David Fogelberg, Alexander Håkansson
@@ -26,11 +26,11 @@ public class BusInfoActivity extends AppCompatActivity implements BusInfoUpdater
 
     private static final int UPDATE_INTERVAL = 3000; // How often the bus info will update
 
-    private TextView debugTextView; // TODO: Implement real stat views
     private Toolbar toolbar;
     private Boolean stopThread = false;
 
     private MainModel model;
+    private boolean isVisible;
 
     private int busVin = -1;
 
@@ -39,10 +39,10 @@ public class BusInfoActivity extends AppCompatActivity implements BusInfoUpdater
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bus_info);
 
-        setupToolbar();
-        getBusData();
-        debugTextView = (TextView) findViewById(R.id.debug_text_view);
+        isVisible = true;
 
+        setupToolbar();
+        getBusVIN();
 
         // The activity might be finishing if it can't get the bus with the VIN number provided
         if (!isFinishing()) {
@@ -51,11 +51,22 @@ public class BusInfoActivity extends AppCompatActivity implements BusInfoUpdater
 
             // Starting thread for getting data from model
             new BusInfoUpdater(this).execute(busVin);
-            //new Thread(new UpdateInfo()).start();
         }
     }
 
-    private void getBusData() {
+    @Override
+    protected void onResume() {
+        super.onResume();
+        isVisible = true;
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        isVisible = false;
+    }
+
+    private void getBusVIN() {
         model = ((GlobalState)getApplication()).getModel();
         int vinNumber = getIntent().getIntExtra(Constants.EXTRA_BUS_INFO_BUS_ID, -1);
         try {
@@ -85,40 +96,31 @@ public class BusInfoActivity extends AppCompatActivity implements BusInfoUpdater
         }
     }
 
-    // Getting info from model
-    private void getBusInfo() {
-        // TODO: Show info from model;
-        model = ((GlobalState)getApplication()).getModel();
-        try {
-            debugTextView.setText("Next stop: " + model.getBus(busVin).getNextStop());
-        } catch (BusNotFoundException e) {
-            // TODO: Deal with it 8-D
-            e.printStackTrace();
-        }
-
+    private void updateUI(final IBus bus) {
+        // TODO: Update the UI
     }
 
     @Override
-    public void busUpdated(IBus bus) {
-
-    }
-
-    private class UpdateInfo implements Runnable {
-        @Override
-        public void run() {
-            while (!stopThread) {
-                try {
-                    Thread.sleep(UPDATE_INTERVAL);
-                    runOnUiThread(new Runnable() {   // for modifying view
-                        @Override
-                        public void run() {
-                            getBusInfo();
-                        }
-                    });
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+    public void busUpdated(final IBus bus) {
+        if (Looper.myLooper() == Looper.getMainLooper()) {
+            updateUI(bus);
+        } else {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    updateUI(bus);
                 }
-            }
+            });
+        }
+
+        // Get new info after the specified time interval has passed
+        if(isVisible) {
+            new Timer().schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    new BusInfoUpdater(BusInfoActivity.this).execute(busVin);
+                }
+            }, UPDATE_INTERVAL);
         }
     }
 }
