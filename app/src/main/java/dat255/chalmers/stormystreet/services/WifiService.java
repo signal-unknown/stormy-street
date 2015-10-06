@@ -81,6 +81,7 @@ public class WifiService extends IntentService {
        for(String mac : Constants.busMacVin.values()){
            if(macAddresses.contains(mac)){
                currMac = mac;
+               Log.d("Wifiservice", "Curr buss mac: " + currMac);
                return true;
            }
        }
@@ -118,9 +119,11 @@ public class WifiService extends IntentService {
             endTime = System.currentTimeMillis();
             Log.d("Wifiservice", "Endtime is " + endTime);
             //update model with end time here
-            int distance = calcDistance(startTime, endTime);
-            Log.d("Wifiservice", "Calculated distance is " + distance);
-            ((GlobalState)getApplication()).getModel().getCurrentUser().getStatistics().addBusTrip(new BusTrip(startTime, endTime, distance));
+            MainModel model = ((GlobalState) getApplication()).getModel();
+            long distance = model.getCurrentTrip().getDistance();
+            Log.d("Wifiservice", "Distanse is " + distance);
+            model.getCurrentUser().getStatistics().addBusTrip(new BusTrip(startTime, endTime, distance));
+            model.setCurrentTrip(null);
             resetTimestamps();
             setUserOnBus(false);
         }
@@ -139,16 +142,16 @@ public class WifiService extends IntentService {
                 if(isNearBus() && startTime==0){
                     Log.d("Wifiservice", "On bus");
                     startTime = System.currentTimeMillis()-DELAY_TIME;//compensating for delay
-                    Log.d("Wifiservice", startTime+"");
+                    Log.d("Wifiservice", startTime + " my starttime");
                     model.setIsOnBus(true);
                     ((GlobalState)getApplication()).getModel().setCurrentTrip(new CurrentTrip(startTime, 0)); //Set correct distance
                     if(!currMac.equals("")){
+                        Log.d("Wifiservice", "Mac inside " + currMac);
                         setCurrBus(currMac);
                     }
                     setUserOnBus(true);
 
                 }else{
-                    Log.d("Wifiservice", "Out of range");
                     setUserOnBus(false);
                 }
             }
@@ -156,30 +159,10 @@ public class WifiService extends IntentService {
         mHandler.postDelayed(mRun, DELAY_TIME);
 
     }
-
     public synchronized void setUserOnBus(boolean isOn){
         //Todo update model that user is not on bus
     }
-
     public List<String> getMacAddresses(){
         return this.macAddresses;
-    }
-
-    public int calcDistance(long startTime, long endTime){
-        String response="";
-        int result=0;
-        try {
-            response = APIProxy.getBusResource(this.currBusNum, startTime, endTime, BusResource.Total_Vehicle_Distance_Value);
-        } catch (IOException e) {
-            Log.d("Apiproxy", "Caught ioexception in wifiservice");
-        } catch (JSONException e) {
-            Log.d("Apiproxy", "Caught jsonexception in wifiservice");
-        }
-        try{
-            result = Integer.parseInt(response);
-        }catch(NumberFormatException ex){
-
-        }
-        return result * 5; //Format we get from API is divided by 5.
     }
 }
