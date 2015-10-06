@@ -135,11 +135,11 @@ public class BusPositionUpdater extends AsyncTask<Void,Void,Map<LatLng, String>>
                     long timestamp = object.getLong("timestamp");
                     if(tempMap.containsKey(object.getString("gatewayId"))){
                         if(tempMap.get(object.getString("gatewayId")).isOlder(timestamp)){
-                            TimedAndAngledPosition timedAndAngledPosition = new TimedAndAngledPosition(position, object.getLong("timestamp"));
+                            TimedAndAngledPosition timedAndAngledPosition = new TimedAndAngledPosition(position, object.getLong("timestamp"), angle);
                             tempMap.put(object.getString("gatewayId"), timedAndAngledPosition);
                         }
                     }else{
-                        TimedAndAngledPosition timedAndAngledPosition = new TimedAndAngledPosition(position, object.getLong("timestamp"));
+                        TimedAndAngledPosition timedAndAngledPosition = new TimedAndAngledPosition(position, object.getLong("timestamp"), angle);
                         tempMap.put(object.getString("gatewayId"), timedAndAngledPosition);
                     }
                 }
