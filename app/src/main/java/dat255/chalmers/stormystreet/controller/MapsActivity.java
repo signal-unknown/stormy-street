@@ -22,7 +22,7 @@ import java.util.TimerTask;
 
 import dat255.chalmers.stormystreet.Constants;
 import dat255.chalmers.stormystreet.R;
-import dat255.chalmers.stormystreet.utilities.BusPositionUpdater;
+import dat255.chalmers.stormystreet.services.BusPositionUpdater;
 
 public class MapsActivity extends AppCompatActivity implements BusPositionListener, GoogleMap.OnMarkerClickListener {
 
