@@ -27,7 +27,7 @@ import dat255.chalmers.stormystreet.utilities.TimedAndAngledPosition;
 /**
  * Task for fetching and parsing GPS data from ElectriCitys API
  */
-public class BusPositionUpdater extends AsyncTask<Void,Void,Map<LatLng, String>>{
+public class BusPositionUpdater extends AsyncTask<Void,Void,Map<TimedAndAngledPosition, String>>{
     private BusPositionListener bpl;
 
     public BusPositionUpdater(BusPositionListener bpl){
@@ -35,7 +35,7 @@ public class BusPositionUpdater extends AsyncTask<Void,Void,Map<LatLng, String>>
     }
 
     @Override
-    protected Map<LatLng, String> doInBackground(Void... params) {
+    protected Map<TimedAndAngledPosition, String> doInBackground(Void... params) {
         //TODO refactor this method, as it is way too big
 
         //Create proper URL
@@ -151,19 +151,19 @@ public class BusPositionUpdater extends AsyncTask<Void,Void,Map<LatLng, String>>
 
         //Create correct map
         Set<String> iDs = tempMap.keySet();
-        Map<LatLng, String> map = new HashMap<LatLng,String>();
+        Map<TimedAndAngledPosition, String> map = new HashMap<TimedAndAngledPosition,String>();
         for(String iD:iDs){
             // String regNr = Constants.vinToRegNr(Integer.parseInt(iD));
 
             // Put the VIN in the title so the marker can later be identified
             // The VIN will not be shown since the custom click listener should hide it
-            map.put(tempMap.get(iD).getPosition(),iD);
+            map.put(tempMap.get(iD),iD);
         }
         return map;
     }
 
     @Override
-    protected void onPostExecute(Map<LatLng, String> map){
+    protected void onPostExecute(Map<TimedAndAngledPosition, String> map){
         //TODO handle positions
         bpl.updatePositions(map);
     }
