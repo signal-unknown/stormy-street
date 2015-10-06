@@ -1,4 +1,4 @@
-package dat255.chalmers.stormystreet.utilities;
+package dat255.chalmers.stormystreet.services;
 
 import android.os.AsyncTask;
 
@@ -24,6 +24,7 @@ import javax.net.ssl.HttpsURLConnection;
 import dat255.chalmers.stormystreet.APIConstants;
 import dat255.chalmers.stormystreet.Constants;
 import dat255.chalmers.stormystreet.controller.BusPositionListener;
+import dat255.chalmers.stormystreet.utilities.TimedPosition;
 
 /**
  * Task for fetching and parsing GPS data from ElectriCitys API
