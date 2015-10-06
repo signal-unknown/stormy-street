@@ -103,9 +103,11 @@ public class MapsActivity extends AppCompatActivity implements BusPositionListen
             for(TimedAndAngledPosition position:positionSet){
                 MarkerOptions options = new MarkerOptions();
                 options.position(position.getPosition());
+                options.flat(true);
                 options.title(positions.get(position));
-                options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
-                Marker marker = mMap.addMarker(options);
+                options.icon(BitmapDescriptorFactory.fromResource(R.drawable.navigation));
+                options.rotation((float)position.getAngle());
+                mMap.addMarker(options);
             }
         }
         //Get new positions after 500 millisconds if the activity is visible onscreen
