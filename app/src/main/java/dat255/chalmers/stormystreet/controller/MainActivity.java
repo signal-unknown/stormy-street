@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private static final String TAG_MAP_SCREEN = "fragment_map_screen";
     private static final String TAG_SAVE_DATA ="save_data_screen";               // ändrat
     private static final String TAG_BUS_INFO ="bus_info_screen";
+    private static final String TAG_FACEBOOK ="facebook_screen";
 
 
     private String currentFragmentTag = TAG_HOME_SCREEN;
@@ -129,11 +131,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 menuItem.setChecked(false);
                 break;
             case R.id.menu_drawer_bus_info:
-                 switchFragment(TAG_BUS_INFO,false);
+                 switchFragment(TAG_BUS_INFO, false);
                 navigationView.getMenu().findItem(R.id.menu_drawer_bus_info).setChecked(true);
                 menuItem.setChecked(false);
-
-
+                break;
+            case R.id.menu_drawer_facebook:
+                switchFragment(TAG_FACEBOOK, false);
+                navigationView.getMenu().findItem(R.id.menu_drawer_facebook).setChecked(true);
+                menuItem.setChecked(false);
+                break;
         }
         return true;
     }
@@ -181,6 +187,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     Intent b = new Intent(this, BusInfoActivity.class);
                     startActivity(b);
                     return;
+                case TAG_FACEBOOK:
+                    Intent f = new Intent(this, FacebookActivity.class);
+                    startActivity(f);
                 default:
                     fragment = new HomeFragment();
                     break;
