@@ -1,7 +1,6 @@
 package dat255.chalmers.stormystreet.services;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
 
@@ -16,17 +15,14 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.regex.Pattern;
 
 import javax.net.ssl.HttpsURLConnection;
 
 import dat255.chalmers.stormystreet.APIConstants;
-import dat255.chalmers.stormystreet.Constants;
 import dat255.chalmers.stormystreet.controller.BusPositionListener;
-import dat255.chalmers.stormystreet.utilities.TimedPosition;
+import dat255.chalmers.stormystreet.utilities.TimedAndAngledPosition;
 
 /**
  * Task for fetching and parsing GPS data from ElectriCitys API
@@ -87,7 +83,7 @@ public class BusPositionUpdater extends AsyncTask<Void,Void,Map<LatLng, String>>
 
         //Parse data
 
-        Map<String,TimedPosition> tempMap = new HashMap<String,TimedPosition>();
+        Map<String,TimedAndAngledPosition> tempMap = new HashMap<String,TimedAndAngledPosition>();
         try {
             JSONArray jsonArray = new JSONArray(jsonGPSData.toString());
             for(int i = 0; i < jsonArray.length(); i++){
@@ -139,12 +135,12 @@ public class BusPositionUpdater extends AsyncTask<Void,Void,Map<LatLng, String>>
                     long timestamp = object.getLong("timestamp");
                     if(tempMap.containsKey(object.getString("gatewayId"))){
                         if(tempMap.get(object.getString("gatewayId")).isOlder(timestamp)){
-                            TimedPosition timedPosition = new TimedPosition(position, object.getLong("timestamp"));
-                            tempMap.put(object.getString("gatewayId"), timedPosition);
+                            TimedAndAngledPosition timedAndAngledPosition = new TimedAndAngledPosition(position, object.getLong("timestamp"));
+                            tempMap.put(object.getString("gatewayId"), timedAndAngledPosition);
                         }
                     }else{
-                        TimedPosition timedPosition = new TimedPosition(position, object.getLong("timestamp"));
-                        tempMap.put(object.getString("gatewayId"), timedPosition);
+                        TimedAndAngledPosition timedAndAngledPosition = new TimedAndAngledPosition(position, object.getLong("timestamp"));
+                        tempMap.put(object.getString("gatewayId"), timedAndAngledPosition);
                     }
                 }
             }
