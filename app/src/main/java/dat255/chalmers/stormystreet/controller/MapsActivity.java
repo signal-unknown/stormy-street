@@ -60,6 +60,7 @@ public class MapsActivity extends AppCompatActivity implements BusPositionListen
     protected void onResume() {
         super.onResume();
         setUpMapIfNeeded();
+        new BusPositionUpdater(this).execute();
         isVisible = true;
     }
 
