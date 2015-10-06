@@ -121,8 +121,9 @@ public class WifiService extends IntentService {
             //update model with end time here
             MainModel model = ((GlobalState) getApplication()).getModel();
             long distance = model.getCurrentTrip().getDistance();
-            Log.d("Wifiservice", "Distanse is " + distance);
+            Log.d("Wifiservice", "Distance is " + distance);
             model.getCurrentUser().getStatistics().addBusTrip(new BusTrip(startTime, endTime, distance));
+            model.addBusTrip(new BusTrip(startTime, endTime, distance));
             model.setCurrentTrip(null);
             resetTimestamps();
             setUserOnBus(false);
@@ -143,7 +144,6 @@ public class WifiService extends IntentService {
                     Log.d("Wifiservice", "On bus");
                     startTime = System.currentTimeMillis()-DELAY_TIME;//compensating for delay
                     Log.d("Wifiservice", startTime + " my starttime");
-                    model.setIsOnBus(true);
                     ((GlobalState)getApplication()).getModel().setCurrentTrip(new CurrentTrip(startTime, 0)); //Set correct distance
                     if(!currMac.equals("")){
                         Log.d("Wifiservice", "Mac inside " + currMac);
@@ -160,7 +160,7 @@ public class WifiService extends IntentService {
 
     }
     public synchronized void setUserOnBus(boolean isOn){
-        //Todo update model that user is not on bus
+        ((GlobalState)getApplication()).getModel().setIsOnBus(isOn);
     }
     public List<String> getMacAddresses(){
         return this.macAddresses;

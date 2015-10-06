@@ -34,10 +34,10 @@ public class GlobalState extends Application {
             distance = Long.parseLong(value.getValues().get(2));
             model.addBusTrip(new BusTrip(startTime, endTime, distance));
         }
+        dataSource.close();
     }
 
     public void saveModel(){
-
         SQLiteDataSource dataSource = new SQLiteDataSource(getApplicationContext());
         dataSource.open();
 
