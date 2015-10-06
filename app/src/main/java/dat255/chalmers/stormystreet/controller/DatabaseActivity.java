@@ -62,16 +62,14 @@ public class DatabaseActivity extends ListActivity {
         }
     }
     @Override
-            protected void onResume(){
-            sqLiteDataSourceOpertions.open();
-            super.onResume();
-        }
+    protected void onResume(){
+        sqLiteDataSourceOpertions.open();
+        super.onResume();
+    }
     @Override
-            protected void onPause(){
-
-            sqLiteDataSourceOpertions.close();
-            super.onPause();
-        }
-
-
+    protected void onPause(){
+        ((GlobalState)getApplication()).saveModel();
+        sqLiteDataSourceOpertions.close();
+        super.onPause();
+    }
 }

@@ -63,6 +63,7 @@ public class BusInfoActivity extends AppCompatActivity implements BusInfoUpdater
     protected void onPause(){
         super.onPause();
         isVisible = false;
+        ((GlobalState)getApplication()).saveModel();
     }
 
     private void getBusVIN() {
