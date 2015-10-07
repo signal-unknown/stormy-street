@@ -75,14 +75,6 @@
         android:name=".controller.BusInfoActivity"
         android:label="Bus_info" >
     </activity>
-        <activity
-            android:name=".controller.FacebookActivity"
-            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:label="facebook_screen"
-            >
-
-        </activity>
     </application>
 
 </manifest>
