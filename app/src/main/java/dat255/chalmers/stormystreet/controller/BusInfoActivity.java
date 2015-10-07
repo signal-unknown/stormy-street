@@ -6,7 +6,7 @@ import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -57,6 +57,7 @@ public class BusInfoActivity extends AppCompatActivity implements BusInfoUpdater
     protected void onResume() {
         super.onResume();
         isVisible = true;
+        new BusInfoUpdater(this).execute(busVin);
     }
 
     @Override
@@ -99,6 +100,7 @@ public class BusInfoActivity extends AppCompatActivity implements BusInfoUpdater
         if (bus != null) {
             model.addBus(bus);
             // TODO: Update the UI
+            Toast.makeText(this, Long.toString(bus.getTotalDistanceDriven()), Toast.LENGTH_SHORT).show();
         }
     }
 

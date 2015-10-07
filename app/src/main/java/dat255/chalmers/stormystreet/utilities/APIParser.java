@@ -55,8 +55,8 @@ public class APIParser {
         Get latest info about the bus and return the bus.
      */
     public synchronized static IBus getBusInfo(int busVin){
-        long startTime = System.currentTimeMillis();
-        long endTime = System.currentTimeMillis() - 20000;
+        long startTime = System.currentTimeMillis() - 20000;
+        long endTime = System.currentTimeMillis();
         String jsonData = APIProxy.getBusInfo(busVin, startTime, endTime);
         IBus result = new BusModel();
         try {

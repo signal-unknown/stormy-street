@@ -144,7 +144,7 @@ public class MapsActivity extends AppCompatActivity implements BusPositionListen
     public boolean onMarkerClick(Marker marker) {
         if(busMarkers.contains(marker)) {
             Intent busInfo = new Intent(this, BusInfoActivity.class);
-            busInfo.putExtra(Constants.EXTRA_BUS_INFO_BUS_ID, marker.getTitle());
+            busInfo.putExtra(Constants.EXTRA_BUS_INFO_BUS_ID, Integer.parseInt(marker.getTitle()));
             startActivity(busInfo);
             return true;
         }else{

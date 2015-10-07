@@ -74,7 +74,7 @@
         </activity>
         <activity
             android:name=".controller.BusInfoActivity"
-            android:label="Bus_info" >
+            android:label="@string/app_name" >
         </activity>
         <activity
             android:name="com.facebook.FacebookActivity"
