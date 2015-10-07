@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.facebook.login.widget.LoginButton;
+
 import dat255.chalmers.stormystreet.GlobalState;
 import dat255.chalmers.stormystreet.R;
 import dat255.chalmers.stormystreet.model.MainModel;
@@ -22,6 +24,8 @@ public class ProfileActivity extends AppCompatActivity {
     private CollapsingToolbarLayout collapsingToolbarLayout;
     private ImageView profileImageView;
 
+    private LoginButton facebookLoginButton;
+
     private TextView textPoints, textTime, textCO2;
 
     @Override
@@ -31,6 +35,10 @@ public class ProfileActivity extends AppCompatActivity {
 
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         profileImageView = (ImageView) findViewById(R.id.profileImage);
+        facebookLoginButton = (LoginButton) findViewById(R.id.facebook_login_button);
+
+        int buttonPadding = getResources().getDimensionPixelSize(R.dimen.facebook_button_padding);
+        facebookLoginButton.setPadding(buttonPadding, buttonPadding, buttonPadding, buttonPadding);
 
         textPoints = (TextView) findViewById(R.id.profile_stats_points_value);
         textTime = (TextView) findViewById(R.id.profile_stats_time_value);

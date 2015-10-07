@@ -67,10 +67,19 @@
             android:layout_height="match_parent"
             android:padding="4dp">
 
+            <com.facebook.login.widget.LoginButton
+                android:id="@+id/facebook_login_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/profile_stats_header"
+                android:layout_below="@id/facebook_login_button"
                 android:layout_marginStart="4dp"
                 android:layout_marginLeft="4dp"
                 android:text="@string/profile_stats"

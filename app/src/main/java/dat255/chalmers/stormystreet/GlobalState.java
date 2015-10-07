@@ -4,6 +4,8 @@ import android.app.Application;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
+import com.facebook.FacebookSdk;
+
 import dat255.chalmers.stormystreet.controller.SQLiteDataSource;
 import dat255.chalmers.stormystreet.model.AppSQLiteWrapper;
 import dat255.chalmers.stormystreet.model.DataValue;
@@ -21,6 +23,9 @@ public class GlobalState extends Application {
     @Override
     public void onCreate(){
         super.onCreate();
+        // Initialize before usage
+        FacebookSdk.sdkInitialize(getApplicationContext());
+
         model = new MainModel();
         dataSource = new SQLiteDataSource(getApplicationContext());
         Log.i("Globalstate", "App started");
