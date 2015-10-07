@@ -94,6 +94,15 @@ public class MapsActivity extends AppCompatActivity implements BusPositionListen
         mMap.setOnMarkerClickListener(this);
         //Zoom over central Gothenburg and zoom enough to show the entire ElectriCity bus line
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(57.708870,11.974560),12.5f));
+        //Add markers for bus stops
+        Map<String, LatLng> busStops = Constants.getBusStopMap();
+        for(String stopName : busStops.keySet()){
+            MarkerOptions options = new MarkerOptions();
+            options.title(stopName);
+            options.position(busStops.get(stopName));
+            options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+            mMap.addMarker(options);
+        }
     }
 
     @Override
