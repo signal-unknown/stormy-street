@@ -51,4 +51,8 @@ public class User implements IUser {
     public void setCurrentBusNumber(int currentBusNumber) {
         this.currentBusNumber = currentBusNumber;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

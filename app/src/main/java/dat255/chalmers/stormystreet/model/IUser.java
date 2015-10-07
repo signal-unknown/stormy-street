@@ -14,4 +14,5 @@ public interface IUser {
     void setIsOnBus(boolean isOnBus);
     int getCurrentBusNumber();
     void setCurrentBusNumber(int currentBusNumber);
+    void setName(String name);
 }

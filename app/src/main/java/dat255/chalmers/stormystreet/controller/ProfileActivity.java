@@ -12,7 +12,6 @@ import android.support.v7.widget.Toolbar;
 import android.text.format.DateUtils;
 import android.view.Display;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.facebook.AccessToken;
@@ -95,6 +94,7 @@ public class ProfileActivity extends AppCompatActivity implements FacebookCallba
             facebookLoginButton.setVisibility(View.GONE);
             collapsingToolbarLayout.setTitle(Profile.getCurrentProfile().getName());
             profileImageView.setProfileId(Profile.getCurrentProfile().getId());
+            ((GlobalState)getApplication()).getModel().getCurrentUser().setName(Profile.getCurrentProfile().getName());
         }
     }
 
@@ -141,12 +141,11 @@ public class ProfileActivity extends AppCompatActivity implements FacebookCallba
 
     @Override
     public void onSuccess(LoginResult loginResult) {
+        ((GlobalState)getApplication()).getModel().getCurrentUser().setName(Profile.getCurrentProfile().getName());
         // Hides facebook button when logged in
-
-        // TODO: Update UI with facebook data
-
         facebookLoginButton.setVisibility(View.GONE);
         collapsingToolbarLayout.setTitle(Profile.getCurrentProfile().getName());
+        profileImageView.setProfileId(Profile.getCurrentProfile().getId());
     }
 
     @Override
