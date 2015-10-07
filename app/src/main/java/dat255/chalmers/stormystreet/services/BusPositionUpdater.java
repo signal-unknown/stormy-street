@@ -22,6 +22,7 @@ import javax.net.ssl.HttpsURLConnection;
 
 import dat255.chalmers.stormystreet.APIConstants;
 import dat255.chalmers.stormystreet.controller.BusPositionListener;
+import dat255.chalmers.stormystreet.utilities.APIProxy;
 import dat255.chalmers.stormystreet.utilities.TimedAndAngledPosition;
 
 /**
@@ -38,48 +39,7 @@ public class BusPositionUpdater extends AsyncTask<Void,Void,Map<TimedAndAngledPo
     protected Map<TimedAndAngledPosition, String> doInBackground(Void... params) {
         //TODO refactor this method, as it is way too big
 
-        //Create proper URL
-
-        //Base URL and parameter
-        String url = "https://ece01.ericsson.net:4443/ecity";
-        url += "?sensorSpec=Ericsson$GPS_NMEA";
-
-        //Get current time and a timestamp 10 seconds before that
-        long curTime = System.currentTimeMillis();
-        long oldTime = curTime - 10000;
-
-        //Add times to base URL
-        url += "&t1=" + oldTime + "&t2=" + curTime;
-
-        //I have no idea what i'm doing here
-        StringBuffer jsonGPSData = new StringBuffer("");
-        HttpsURLConnection http = null;
-        try {
-            URL urlLat = new URL(url);
-            http = (HttpsURLConnection) urlLat.openConnection();
-            http.setRequestProperty("Authorization", "Basic " + APIConstants.ELECTRICITY_API_KEY);
-            http.setRequestMethod("GET");
-            http.connect();
-            InputStream is = http.getInputStream();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-            String line = "";
-            while ((line = reader.readLine()) != null) {
-                jsonGPSData.append(line);
-            }
-
-            //Let's pray and hope this works
-
-        } catch (MalformedURLException e) {
-            //TODO deal with it
-            e.printStackTrace();
-        } catch (IOException e) {
-            //TODO deal with it
-            e.printStackTrace();
-        }
-
-        if(http!=null){
-            http.disconnect();
-        }
+        String jsonGPSData = APIProxy.getRawGpsData();
 
         //Parse data
 

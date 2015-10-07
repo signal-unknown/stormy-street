@@ -6,8 +6,10 @@ import org.json.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -80,5 +82,56 @@ public class APIProxy {
             }
         }
         return response.toString();
+    }
+
+    /**
+     * Gets the gps data for all busses
+     * @return The gps data for all busses
+     */
+    public static synchronized String getRawGpsData(){
+        //Create proper URL
+
+        //Base URL and parameter
+        String url = "https://ece01.ericsson.net:4443/ecity";
+        url += "?sensorSpec=Ericsson$GPS_NMEA";
+
+        //Get current time and a timestamp 10 seconds before that
+        long curTime = System.currentTimeMillis();
+        long oldTime = curTime - 10000;
+
+        //Add times to base URL
+        url += "&t1=" + oldTime + "&t2=" + curTime;
+
+        //I have no idea what i'm doing here
+        StringBuffer jsonGPSData = new StringBuffer("");
+        HttpsURLConnection http = null;
+        try {
+            URL urlLat = new URL(url);
+            http = (HttpsURLConnection) urlLat.openConnection();
+            http.setRequestProperty("Authorization", "Basic " + APIConstants.ELECTRICITY_API_KEY);
+            http.setRequestMethod("GET");
+            http.connect();
+            InputStream is = http.getInputStream();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+            String line = "";
+            while ((line = reader.readLine()) != null) {
+                jsonGPSData.append(line);
+            }
+
+            //Let's pray and hope this works
+
+        } catch (MalformedURLException e) {
+            //TODO deal with it
+            e.printStackTrace();
+        } catch (IOException e) {
+            //TODO deal with it
+            e.printStackTrace();
+        }
+
+        if(http!=null){
+            http.disconnect();
+        }
+
+        return jsonGPSData.toString();
     }
 }
