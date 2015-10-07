@@ -1,6 +1,9 @@
 package dat255.chalmers.stormystreet;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Maxim Goretskyy
@@ -13,6 +16,7 @@ public class Constants {
 
     public static final HashMap<Integer, String> busMacVin;
     private static final HashMap<Integer, String> busVinRegNr;
+    private static final Map<String, LatLng> busStops;//Contains all bus stops for the ElectriCity bus
     static{
         busMacVin  = new HashMap<>();
         busMacVin.put(100020, "00:13:95:13:49:f5");
@@ -48,6 +52,25 @@ public class Constants {
         busVinRegNr.put(171328,"EOG 627");
         busVinRegNr.put(171329,"EOG 631");
         busVinRegNr.put(171330,"EOG 634");
+
+        //Initialize map with bus stops names and positions
+        busStops = new HashMap<String, LatLng>();
+        busStops.put("Lindholmen", new LatLng(57.708099, 11.93801));
+        busStops.put("Teknikgatan", new LatLng(57.706913, 11.937230));
+        busStops.put("Lindholmsplatsen", new LatLng(57.707019, 11.938480));
+        busStops.put("Regnbågsgatan", new LatLng(57.710770, 11.942782));
+        busStops.put("Pumpgatan", new LatLng(57.712745, 11.946183));
+        busStops.put("Frihamnsporten", new LatLng(57.718182, 11.959530));
+        busStops.put("Lilla bommen", new LatLng(57.709145, 11.966777));
+        busStops.put("Brunnsparken", new LatLng(57.707204, 11.967815));
+        busStops.put("Kungsportsplatsen", new LatLng(57.704005, 11.969682));
+        busStops.put("Valand", new LatLng(57.700223, 11.975162));
+        busStops.put("Götaplatsen", new LatLng(57.697597, 11.979000));
+        busStops.put("Ålandsgatan", new LatLng(57.692238, 11.977710));
+        busStops.put("Chalmers tvärgatan", new LatLng(57.689735, 11.980320));
+        busStops.put("Sven Hultins plats", new LatLng(57.685809, 11.977190));
+        busStops.put("Chalmersplatsen", new LatLng(57.689315, 11.973429));
+        busStops.put("Kapellplatsen", new LatLng(57.693680, 11.973703));
     }
 
     /**
@@ -56,5 +79,9 @@ public class Constants {
     public static String vinToRegNr(Integer vin){
         String regNr = busVinRegNr.get(vin);
         return regNr;
+    }
+
+    public static Map<String, LatLng> getBusStopMap(){
+        return busStops;
     }
 }
