@@ -7,10 +7,15 @@ package dat255.chalmers.stormystreet.model;
 public class CurrentTrip {
     private long timestamp;
     private long distance;
+    private int currentVinNumber;
 
-    public CurrentTrip(long timestamp, long distance){
+    public CurrentTrip(long timestamp, int currentVinNumber){
         this.timestamp = timestamp;
-        this.distance = distance;
+        this.currentVinNumber = currentVinNumber;
+    }
+
+    public int getCurrentVinNumber(){
+        return this.currentVinNumber;
     }
 
     public long getTimestamp(){
@@ -19,6 +24,10 @@ public class CurrentTrip {
 
     public long getTime(){
         return this.timestamp > 0 ? System.currentTimeMillis() - this.timestamp : 0;
+    }
+
+    public void setDistance(long distance){
+        this.distance = distance;
     }
 
     public long getDistance(){
