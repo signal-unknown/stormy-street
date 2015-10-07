@@ -1,8 +1,8 @@
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:facebook="http://schemas.android.com/tools"
     android:fitsSystemWindows="true">
 
     <android.support.design.widget.AppBarLayout
@@ -22,12 +22,12 @@
             app:expandedTitleMarginEnd="16dp"
             android:fitsSystemWindows="true">
 
-            <ImageView
+            <com.facebook.login.widget.ProfilePictureView
                 android:id="@+id/profileImage"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:src="@drawable/drawer_header"
-                android:scaleType="centerCrop"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center"
+                facebook:preset_size="CUSTOM"
                 android:fitsSystemWindows="true"
                 app:layout_collapseMode="parallax"/>
 
