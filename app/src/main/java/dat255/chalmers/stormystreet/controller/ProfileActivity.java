@@ -75,6 +75,15 @@ public class ProfileActivity extends AppCompatActivity implements FacebookCallba
         profileImageView = (ProfilePictureView) findViewById(R.id.profileImage);
         profileImageView.setCropped(true);
 
+        final Bitmap defaultProfileImage = BitmapFactory.decodeResource(getResources(),
+                R.drawable.drawer_header);
+        profileImageView.post(new Runnable() {
+            @Override
+            public void run() {
+                profileImageView.setDefaultProfilePicture(defaultProfileImage);
+            }
+        });
+
         facebookCallbackManager = CallbackManager.Factory.create();
         facebookLoginButton.registerCallback(facebookCallbackManager, this);
 
