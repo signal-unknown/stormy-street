@@ -15,6 +15,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Timer;
@@ -31,12 +33,14 @@ public class MapsActivity extends AppCompatActivity implements BusPositionListen
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     private Toolbar toolbar;
     private boolean isVisible;
+    private List<Marker> busMarkers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         isVisible = true;
+        busMarkers = new ArrayList<Marker>();
 
         //Set up toolbar
         toolbar = (Toolbar) findViewById(R.id.toolbar_main);
@@ -108,8 +112,10 @@ public class MapsActivity extends AppCompatActivity implements BusPositionListen
     @Override
     public void updatePositions(Map<TimedAndAngledPosition, String> positions) {
         if(mMap!=null){
-            //Clear map of old markers
-            mMap.clear();
+            //Clear map of old bus markers
+            for(Marker oldMarker : busMarkers){
+                oldMarker.remove();
+            }
             //Add a marker for each bus
             Set<TimedAndAngledPosition> positionSet = positions.keySet();
             for(TimedAndAngledPosition position:positionSet){
@@ -120,7 +126,7 @@ public class MapsActivity extends AppCompatActivity implements BusPositionListen
                 options.icon(BitmapDescriptorFactory.fromResource(R.drawable.navigation));
                 options.anchor(0.5f,0.5f);
                 options.rotation((float)position.getAngle());
-                mMap.addMarker(options);
+                busMarkers.add(mMap.addMarker(options));
             }
         }
         //Get new positions after 500 millisconds if the activity is visible onscreen
