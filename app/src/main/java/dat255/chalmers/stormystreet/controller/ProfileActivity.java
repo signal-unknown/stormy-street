@@ -51,8 +51,8 @@ public class ProfileActivity extends AppCompatActivity implements FacebookCallba
         textCO2 = (TextView) findViewById(R.id.profile_stats_co2_value);
 
         setupToolbar();
+        setupDefaultProfile();
         setupFacebook();
-        setupProfile();
         setupStats();
     }
 
@@ -74,6 +74,7 @@ public class ProfileActivity extends AppCompatActivity implements FacebookCallba
             facebookLoginButton.setVisibility(View.VISIBLE);
         } else {
             facebookLoginButton.setVisibility(View.GONE);
+            collapsingToolbarLayout.setTitle(Profile.getCurrentProfile().getName());
         }
     }
 
@@ -84,13 +85,12 @@ public class ProfileActivity extends AppCompatActivity implements FacebookCallba
         textCO2.setText(Long.toString(CO2Util.getGramsSavedPerKm(model.getTotalScore().getValue(), CO2Util.CO2EmissionRegion.EU)));
     }
 
-    private void setupProfile() {
+    private void setupDefaultProfile() {
         Bitmap profileImage = BitmapFactory.decodeResource(getResources(),
                 R.drawable.drawer_header);
 
         profileImageView.setImageBitmap(profileImage);
-
-        //collapsingToolbarLayout.setTitle("John Doe");
+        collapsingToolbarLayout.setTitle("");
     }
 
     private void setupToolbar() {
