@@ -120,9 +120,9 @@ public class HomeFragment extends Fragment implements IModelListener{
         List<StatCardData> stats = new ArrayList<>();
         stats.add(new StatCardData(model.getTotalScore().toString(), getString(R.string.points), null));
 
-        if (model.getIsOnBus()) {
+        /*if (model.getIsOnBus()) {
             try {
-                IBus currentBus = model.getBus(model.getCurrentBusNumber());
+                IBus currentBus = model.getBus(model.getCurrentTrip().getCurrentVinNumber());
                 // Show next stop
                 stats.add(new StatCardData(currentBus.getNextStop(), getString(R.string.next_stop), null));
                 // Show current bus reg number
@@ -138,7 +138,7 @@ public class HomeFragment extends Fragment implements IModelListener{
             }
         } else {
             // TODO: Show other cards when not on bus
-        }
+        }*/
 
         recyclerViewAdapter = new BusStatListAdapter(stats);
         cardRecyclerView.setAdapter(recyclerViewAdapter);
