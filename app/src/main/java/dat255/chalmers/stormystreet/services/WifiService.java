@@ -133,13 +133,14 @@ public class WifiService extends IntentService {
                 scanMacs();
                 if(isNearBus() && startTime==0){
                     Log.d("Wifiservice", "On bus");
-                    startTime = System.currentTimeMillis()-DELAY_TIME;//compensating for delay
-                    Log.d("Wifiservice", startTime + " my starttime");
-                    ((GlobalState)getApplication()).getModel().setCurrentTrip(new CurrentTrip(startTime, 0)); //Set correct distance
                     if (!currMac.equals("")) {
                         Log.d("Wifiservice", "Mac inside " + currMac);
                         setCurrBus(currMac);
                     }
+                    startTime = System.currentTimeMillis()-DELAY_TIME;//compensating for delay
+                    Log.d("Wifiservice", startTime + " my starttime");
+                    Log.d("WifiService", "Current bus number new " + currBusNum);
+                    model.setCurrentTrip(new CurrentTrip(startTime, currBusNum)); //Set correct distance
                     setUserOnBus(true);
 
                 } else {
@@ -151,6 +152,12 @@ public class WifiService extends IntentService {
 
     }
     public synchronized void setUserOnBus(boolean isOn){
+        Intent currentTripIntent = new Intent(getApplicationContext(), CurrentTripService.class);
+        if(isOn){
+            getApplicationContext().startService(currentTripIntent);
+        }else{
+            getApplication().stopService(currentTripIntent);
+        }
         ((GlobalState)getApplication()).getModel().setIsOnBus(isOn);
     }
     public List<String> getMacAddresses(){

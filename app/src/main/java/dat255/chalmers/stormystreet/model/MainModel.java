@@ -1,9 +1,12 @@
 package dat255.chalmers.stormystreet.model;
 
+import android.util.Log;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import dat255.chalmers.stormystreet.GlobalState;
 import dat255.chalmers.stormystreet.model.bus.BusManager;
 import dat255.chalmers.stormystreet.model.bus.BusNotFoundException;
 import dat255.chalmers.stormystreet.model.bus.IBus;
@@ -54,10 +57,6 @@ public class MainModel {
         return busManager.getBus(dgwNumber);
     }
 
-    public CurrentTrip getCurrentTrip() {
-        return currentTrip;
-    }
-
     public IStatistics getUserStatistics(){
         return currentUser.getStatistics();
     }
@@ -85,24 +84,19 @@ public class MainModel {
     }
 
     public IScore getTotalScore(){
-        return currentUser.getStatistics().getTotalScore();
+        if(currentTrip == null){
+            return currentUser.getStatistics().getTotalScore();
+        }else {
+            return new Score(currentUser.getStatistics().getTotalScore().getValue() + getCurrentTrip().getDistance(), "m");
+        }
     }
 
     public String getCurrentUsername(){
         return currentUser.getName();
     }
 
-    public int getCurrentBusNumber(){
-        return currentUser.getCurrentBusNumber();
-    }
-
     public boolean getIsOnBus(){
         return currentUser.getIsOnBus();
-    }
-
-    public void setCurrentBusNumber(int currentBusNumber){
-        currentUser.setCurrentBusNumber(currentBusNumber);
-        notifyListeners();
     }
 
     public void setIsOnBus(boolean isOnBus){
@@ -112,6 +106,16 @@ public class MainModel {
 
     public void setCurrentTrip(CurrentTrip currentTrip) {
         this.currentTrip = currentTrip;
+        notifyListeners();
+    }
+
+    public CurrentTrip getCurrentTrip() {
+        return currentTrip;
+    }
+
+    public void setCurrentTripDistance(long distance){
+        Log.d("CurrentTrip", "Changed current distance to " + distance);
+        this.currentTrip.setDistance(distance);
         notifyListeners();
     }
 
