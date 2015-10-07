@@ -14,18 +14,20 @@ import dat255.chalmers.stormystreet.model.bus.IBusTrip;
 
 
 public class GlobalState extends Application {
-    MainModel model;
+    private MainModel model;
+    private SQLiteDataSource dataSource;
+
 
     @Override
     public void onCreate(){
         super.onCreate();
         model = new MainModel();
+        dataSource = new SQLiteDataSource(getApplicationContext());
         Log.i("Globalstate", "App started");
         loadModel();
     }
 
     public void loadModel(){
-        SQLiteDataSource dataSource = new SQLiteDataSource(getApplicationContext());
         dataSource.open();
         long startTime, endTime, distance;
         for(DataValue value:dataSource.getAllDataValues()){
@@ -38,7 +40,6 @@ public class GlobalState extends Application {
     }
 
     public void saveModel(){
-        SQLiteDataSource dataSource = new SQLiteDataSource(getApplicationContext());
         dataSource.open();
 
         DataValue value;
@@ -50,7 +51,6 @@ public class GlobalState extends Application {
                 dataSource.saveData(value);
             }
         }
-
         dataSource.close();
     }
 

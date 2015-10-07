@@ -35,7 +35,6 @@ public class SQLiteDataSource {
         appSQLiteWrapper.close();
     }
     public DataValue saveData(DataValue dataValue) {
-
         //Adds all the datavalues to a contentvalues object, if too many values are provided it logs an error
         ContentValues values  = new ContentValues();
         for(int i = 0; i < dataValue.getNumberOfValues(); i++){
@@ -107,6 +106,7 @@ public class SQLiteDataSource {
                 i++;
             } while (ti.moveToNext());
         }
+        ti.close();
         return i;
     }
 }
