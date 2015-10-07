@@ -94,7 +94,6 @@ public class ProfileActivity extends AppCompatActivity implements FacebookCallba
             facebookLoginButton.setVisibility(View.GONE);
             collapsingToolbarLayout.setTitle(Profile.getCurrentProfile().getName());
             profileImageView.setProfileId(Profile.getCurrentProfile().getId());
-            ((GlobalState)getApplication()).getModel().getCurrentUser().setName(Profile.getCurrentProfile().getName());
         }
     }
 
@@ -141,7 +140,6 @@ public class ProfileActivity extends AppCompatActivity implements FacebookCallba
 
     @Override
     public void onSuccess(LoginResult loginResult) {
-        ((GlobalState)getApplication()).getModel().getCurrentUser().setName(Profile.getCurrentProfile().getName());
         // Hides facebook button when logged in
         facebookLoginButton.setVisibility(View.GONE);
         collapsingToolbarLayout.setTitle(Profile.getCurrentProfile().getName());
