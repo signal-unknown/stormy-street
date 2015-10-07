@@ -51,7 +51,10 @@
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="@string/google_maps_key" />
-
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_api_id"
+            />
         <activity
             android:name=".controller.MapsActivity"
             android:label="@string/menu_drawer_bus_map"
@@ -69,9 +72,17 @@
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name=".controller.BusInfoActivity"
-            android:label="Bus_info" >
+        android:name=".controller.BusInfoActivity"
+        android:label="Bus_info" >
     </activity>
+        <activity
+            android:name=".controller.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:label="facebook_screen"
+            >
+
+        </activity>
     </application>
 
 </manifest>

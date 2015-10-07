@@ -38,10 +38,12 @@ public class MainModel {
 
     public void addBus(IBus bus){
         busManager.addBus(bus);
+        notifyListeners();
     }
 
     public void addBus(List<IBus> busses){
         busManager.addBus(busses);
+        notifyListeners();
     }
 
     public List<IBus> getAllBusses(){

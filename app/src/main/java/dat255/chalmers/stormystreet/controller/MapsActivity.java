@@ -21,6 +21,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import dat255.chalmers.stormystreet.Constants;
+import dat255.chalmers.stormystreet.GlobalState;
 import dat255.chalmers.stormystreet.R;
 import dat255.chalmers.stormystreet.services.BusPositionUpdater;
 import dat255.chalmers.stormystreet.utilities.TimedAndAngledPosition;
@@ -59,6 +60,7 @@ public class MapsActivity extends AppCompatActivity implements BusPositionListen
     protected void onResume() {
         super.onResume();
         setUpMapIfNeeded();
+        new BusPositionUpdater(this).execute();
         isVisible = true;
     }
 
@@ -66,6 +68,7 @@ public class MapsActivity extends AppCompatActivity implements BusPositionListen
     protected void onPause(){
         super.onPause();
         isVisible = false;
+        ((GlobalState)getApplication()).saveModel();
     }
 
 
@@ -105,6 +108,7 @@ public class MapsActivity extends AppCompatActivity implements BusPositionListen
                 options.position(position.getPosition());
                 options.flat(true);
                 options.title(positions.get(position));
+                options.anchor(0.5f, 0.5f);
                 options.icon(BitmapDescriptorFactory.fromResource(R.drawable.navigation));
                 options.anchor(0.5f,0.5f);
                 options.rotation((float)position.getAngle());

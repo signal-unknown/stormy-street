@@ -41,6 +41,12 @@ public class ProfileActivity extends AppCompatActivity {
         setupStats();
     }
 
+    @Override
+    public void onPause(){
+        super.onPause();
+        ((GlobalState)getApplication()).saveModel();
+    }
+
     private void setupStats() {
         MainModel model = ((GlobalState)getApplication()).getModel();
         textPoints.setText(model.getTotalScore().toString());

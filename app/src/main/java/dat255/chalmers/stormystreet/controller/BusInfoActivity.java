@@ -63,6 +63,7 @@ public class BusInfoActivity extends AppCompatActivity implements BusInfoUpdater
     protected void onPause(){
         super.onPause();
         isVisible = false;
+        ((GlobalState)getApplication()).saveModel();
     }
 
     private void getBusVIN() {
@@ -95,7 +96,10 @@ public class BusInfoActivity extends AppCompatActivity implements BusInfoUpdater
     }
 
     private void updateUI(final IBus bus) {
-        // TODO: Update the UI
+        if (bus != null) {
+            model.addBus(bus);
+            // TODO: Update the UI
+        }
     }
 
     @Override

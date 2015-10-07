@@ -47,6 +47,7 @@ public class APIProxy {
         try {
             requestURL = new URL(baseURL);
             con = (HttpsURLConnection) requestURL.openConnection();
+            Log.d("Apiproxy", "my url is " + requestURL);
             Log.d("Apiproxy", "opened connection");
             con.setRequestMethod("GET");
             Log.d("Apiproxy", "get request set");
@@ -79,35 +80,5 @@ public class APIProxy {
             }
         }
         return response.toString();
-    }
-    /*
-        All possible bus resources should be defined in BusResource Enum.
-        @return Latest updated value for a given bus, resource and timeframe.
-     */
-    public synchronized static String getBusResource(int busVin, long startTime, long endTime, BusResource busResource) throws IOException, JSONException{
-        String jsonAllData = APIProxy.getBusInfo(busVin, startTime, endTime);
-        List<String> result = new ArrayList<>();
-        try {
-            JSONArray jsonArray = new JSONArray(jsonAllData);
-            for(int i = 0; i < jsonArray.length(); i++){
-                JSONObject object = jsonArray.getJSONObject(i);
-                String resource = object.getString("resourceSpec");
-                switch(busResource){
-                    case Total_Vehicle_Distance_Value:
-                        if(resource.equals("Total_Vehicle_Distance_Value")){
-                            result.add(object.getString("value"));
-                        }
-                }
-
-            }
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        if(result.size() < 1){
-            throw new IllegalArgumentException("Non existing resource");
-        }
-        Log.d("Apiproxy", "Last updated value " + result.get(result.size()-1));
-        return result.get(result.size()-1);//get the last element, last updated value in the resource
     }
 }
