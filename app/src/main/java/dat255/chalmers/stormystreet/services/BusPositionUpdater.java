@@ -38,8 +38,6 @@ public class BusPositionUpdater extends AsyncTask<Void,Void,Map<TimedAndAngledPo
 
     @Override
     protected Map<TimedAndAngledPosition, String> doInBackground(Void... params) {
-        //TODO refactor this method, as it is way too big
-
         //Fetch data
         String rawGPSData = APIProxy.getRawGpsData();
 
@@ -50,10 +48,7 @@ public class BusPositionUpdater extends AsyncTask<Void,Void,Map<TimedAndAngledPo
         Set<String> iDs = tempMap.keySet();
         Map<TimedAndAngledPosition, String> map = new HashMap<TimedAndAngledPosition,String>();
         for(String iD:iDs){
-            // String regNr = Constants.vinToRegNr(Integer.parseInt(iD));
-
-            // Put the VIN in the title so the marker can later be identified
-            // The VIN will not be shown since the custom click listener should hide it
+            //Reverse mapping
             map.put(tempMap.get(iD),iD);
         }
         return map;
@@ -61,7 +56,6 @@ public class BusPositionUpdater extends AsyncTask<Void,Void,Map<TimedAndAngledPo
 
     @Override
     protected void onPostExecute(Map<TimedAndAngledPosition, String> map){
-        //TODO handle positions
         bpl.updatePositions(map);
     }
 }
