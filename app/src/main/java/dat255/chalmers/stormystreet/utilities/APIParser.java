@@ -80,56 +80,37 @@ public class APIParser {
         return result;
     }
 
+    /**
+     * Parses a string containing a JSONArray with NMEA GPS data from the ElectriCity API. The
+     * method assumes that the position is on the northern hemisphere and east
+     * of Greenwich, which always is the case in Sweden, at least for the coming
+     * few hundred million years or so, at which point the app should be updated
+     * @param rawGPSData A string containing a JSONArray with GPS data
+     * @return A map mapping bus VIN numbers with positions
+     */
     public synchronized static Map<String, TimedAndAngledPosition> getGPSMap(String rawGPSData){
         Map<String,TimedAndAngledPosition> map = new HashMap<String,TimedAndAngledPosition>();
         try {
+            //Create parsable array object
             JSONArray jsonArray = new JSONArray(rawGPSData);
+            //Parse relevant data for each bus in the array
             for(int i = 0; i < jsonArray.length(); i++){
                 JSONObject object = jsonArray.getJSONObject(i);
-
-                //The following assumes that the position is on the northern hemisphere and east
-                //of Greenwich, which always is the case in Sweden, at least for the coming
-                //few hundred million years or so, at which point the app should be updated
                 if(object.getString("resourceSpec").equals("RMC_Value") &&
                         object.getString("value").length() > 55 && //Ignore empty data
                         !object.getString("gatewayId").equals("Vin_Num_001")){//Ignore simulated bus
-                    String resource = object.getString("value");
-                    //If you don't understand what is happening here, please educate yourself on
-                    //marine GPS coordinates
+
+                    //Get the NMEA string
+                    String nMEAString = object.getString("value");
 
                     //Parse direction of the bus
-                    String trackAngle = resource;
-                    trackAngle = trackAngle.substring(trackAngle.indexOf("E") + 2);
-                    trackAngle = trackAngle.substring(trackAngle.indexOf(",") + 1);
-                    trackAngle = trackAngle.substring(0, trackAngle.indexOf(","));
-                    double angle = Double.parseDouble(trackAngle);
+                    double angle = nMEAStringToAngle(nMEAString);
 
                     //Parse decimal longitude and latitude
+                    LatLng position = nMEAStringToLatLng(nMEAString);
 
-                    //Remove unnecessary data
-                    int beginIndex = resource.indexOf("A") + 2;
-                    int lastIndex = resource.lastIndexOf("E") - 1;
-                    resource = resource.substring(beginIndex,lastIndex);
-
-                    //Separate longitude and latitude values (NMEA)
-                    String nMEALatitude = resource.substring(0,resource.indexOf("N")-1);
-                    String nMEALongitude = resource.substring(resource.lastIndexOf("N")+2);
-
-                    //Separate DMS values for latitude
-                    String latDegrees = nMEALatitude.substring(0,2);
-                    String latMinutes = nMEALatitude.substring(2,9);
-
-                    //Separate DMS values for longitude
-                    String lonDegrees = nMEALongitude.substring(0,3);
-                    String lonMinutes = nMEALongitude.substring(3,10);
-
-                    //Convert from degrees, minutes and seconds to decimal longitude and latitude
-                    double latitude = Double.parseDouble(latDegrees) + Double.parseDouble(latMinutes)/60.0D;
-                    double longitude = Double.parseDouble(lonDegrees) + Double.parseDouble(lonMinutes)/60.0D;
-
-                    LatLng position = new LatLng(latitude,longitude);
-
-                    //Find latest position from each bus
+                    //Add position to the map, if no newer data from the same bus is already
+                    //in the map
                     long timestamp = object.getLong("timestamp");
                     if(map.containsKey(object.getString("gatewayId"))){
                         if(map.get(object.getString("gatewayId")).isOlder(timestamp)){
@@ -147,5 +128,52 @@ public class APIParser {
             e.printStackTrace();
         }
         return map;
+    }
+
+    /**
+     * Parses a bus direction
+     * @param nMEAGPSString A NMEA formatted GPS string
+     * @return An angle in degrees deviating from north
+     */
+    private static double nMEAStringToAngle(String nMEAGPSString){
+        //Parse direction of the bus
+        String trackAngle = nMEAGPSString;
+        trackAngle = trackAngle.substring(trackAngle.indexOf("E") + 2);
+        trackAngle = trackAngle.substring(trackAngle.indexOf(",") + 1);
+        trackAngle = trackAngle.substring(0, trackAngle.indexOf(","));
+        double angle = Double.parseDouble(trackAngle);
+        return angle;
+    }
+
+    /**
+     * Parses a decimal latitude and longitude from a NMEA formatted GPS string
+     * @param nMEAGPSString A NMEA formatted GPS String
+     * @return A LatLng object with a parsed location
+     */
+    private static LatLng nMEAStringToLatLng(String nMEAGPSString){
+        //Remove unnecessary data
+        int beginIndex = nMEAGPSString.indexOf("A") + 2;
+        int lastIndex = nMEAGPSString.lastIndexOf("E") - 1;
+        nMEAGPSString = nMEAGPSString.substring(beginIndex,lastIndex);
+
+        //Separate longitude and latitude values (NMEA)
+        String nMEALatitude = nMEAGPSString.substring(0,nMEAGPSString.indexOf("N")-1);
+        String nMEALongitude = nMEAGPSString.substring(nMEAGPSString.lastIndexOf("N")+2);
+
+        //Separate DMS values for latitude
+        String latDegrees = nMEALatitude.substring(0,2);
+        String latMinutes = nMEALatitude.substring(2,9);
+
+        //Separate DMS values for longitude
+        String lonDegrees = nMEALongitude.substring(0,3);
+        String lonMinutes = nMEALongitude.substring(3,10);
+
+        //Convert from degrees, minutes and seconds to decimal longitude and latitude
+        double latitude = Double.parseDouble(latDegrees) + Double.parseDouble(latMinutes)/60.0D;
+        double longitude = Double.parseDouble(lonDegrees) + Double.parseDouble(lonMinutes)/60.0D;
+
+        LatLng position = new LatLng(latitude,longitude);
+
+        return position;
     }
 }
