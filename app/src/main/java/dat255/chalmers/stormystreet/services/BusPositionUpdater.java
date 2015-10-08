@@ -22,6 +22,7 @@ import javax.net.ssl.HttpsURLConnection;
 
 import dat255.chalmers.stormystreet.APIConstants;
 import dat255.chalmers.stormystreet.controller.BusPositionListener;
+import dat255.chalmers.stormystreet.utilities.APIParser;
 import dat255.chalmers.stormystreet.utilities.APIProxy;
 import dat255.chalmers.stormystreet.utilities.TimedAndAngledPosition;
 
@@ -39,75 +40,11 @@ public class BusPositionUpdater extends AsyncTask<Void,Void,Map<TimedAndAngledPo
     protected Map<TimedAndAngledPosition, String> doInBackground(Void... params) {
         //TODO refactor this method, as it is way too big
 
-        String jsonGPSData = APIProxy.getRawGpsData();
+        //Fetch data
+        String rawGPSData = APIProxy.getRawGpsData();
 
         //Parse data
-
-        Map<String,TimedAndAngledPosition> tempMap = new HashMap<String,TimedAndAngledPosition>();
-        try {
-            JSONArray jsonArray = new JSONArray(jsonGPSData.toString());
-            for(int i = 0; i < jsonArray.length(); i++){
-                JSONObject object = jsonArray.getJSONObject(i);
-
-                //The following assumes that the position is on the northern hemisphere and east
-                //of Greenwich, which always is the case in Sweden, at least for the coming
-                //few hundred million years or so, at which point the app should be updated
-                if(object.getString("resourceSpec").equals("RMC_Value") &&
-                        object.getString("value").length() > 55 && //Ignore empty data
-                        !object.getString("gatewayId").equals("Vin_Num_001")){//Ignore simulated bus
-                    String resource = object.getString("value");
-                    //If you don't understand what is happening here, please educate yourself on
-                    //marine GPS coordinates
-
-                    //Parse direction of the bus
-                    String trackAngle = resource;
-                    trackAngle = trackAngle.substring(trackAngle.indexOf("E") + 2);
-                    trackAngle = trackAngle.substring(trackAngle.indexOf(",") + 1);
-                    trackAngle = trackAngle.substring(0, trackAngle.indexOf(","));
-                    double angle = Double.parseDouble(trackAngle);
-
-                    //Parse decimal longitude and latitude
-
-                    //Remove unnecessary data
-                    int beginIndex = resource.indexOf("A") + 2;
-                    int lastIndex = resource.lastIndexOf("E") - 1;
-                    resource = resource.substring(beginIndex,lastIndex);
-
-                    //Separate longitude and latitude values (NMEA)
-                    String nMEALatitude = resource.substring(0,resource.indexOf("N")-1);
-                    String nMEALongitude = resource.substring(resource.lastIndexOf("N")+2);
-
-                    //Separate DMS values for latitude
-                    String latDegrees = nMEALatitude.substring(0,2);
-                    String latMinutes = nMEALatitude.substring(2,9);
-
-                    //Separate DMS values for longitude
-                    String lonDegrees = nMEALongitude.substring(0,3);
-                    String lonMinutes = nMEALongitude.substring(3,10);
-
-                    //Convert from degrees, minutes and seconds to decimal longitude and latitude
-                    double latitude = Double.parseDouble(latDegrees) + Double.parseDouble(latMinutes)/60.0D;
-                    double longitude = Double.parseDouble(lonDegrees) + Double.parseDouble(lonMinutes)/60.0D;
-
-                    LatLng position = new LatLng(latitude,longitude);
-
-                    //Find latest position from each bus
-                    long timestamp = object.getLong("timestamp");
-                    if(tempMap.containsKey(object.getString("gatewayId"))){
-                        if(tempMap.get(object.getString("gatewayId")).isOlder(timestamp)){
-                            TimedAndAngledPosition timedAndAngledPosition = new TimedAndAngledPosition(position, object.getLong("timestamp"), angle);
-                            tempMap.put(object.getString("gatewayId"), timedAndAngledPosition);
-                        }
-                    }else{
-                        TimedAndAngledPosition timedAndAngledPosition = new TimedAndAngledPosition(position, object.getLong("timestamp"), angle);
-                        tempMap.put(object.getString("gatewayId"), timedAndAngledPosition);
-                    }
-                }
-            }
-        } catch (JSONException e) {
-            //TODO Fucking handle it
-            e.printStackTrace();
-        }
+        Map<String, TimedAndAngledPosition> tempMap = APIParser.getGPSMap(rawGPSData);
 
         //Create correct map
         Set<String> iDs = tempMap.keySet();
