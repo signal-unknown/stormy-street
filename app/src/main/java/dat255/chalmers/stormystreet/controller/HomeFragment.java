@@ -5,17 +5,10 @@ import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Looper;
-import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.support.v7.widget.Toolbar;
-import android.test.mock.MockApplication;
-import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,14 +16,10 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
-import dat255.chalmers.stormystreet.BusResource;
-import dat255.chalmers.stormystreet.Constants;
 import dat255.chalmers.stormystreet.GlobalState;
 import dat255.chalmers.stormystreet.R;
 import dat255.chalmers.stormystreet.model.IModelListener;
 import dat255.chalmers.stormystreet.model.MainModel;
-import dat255.chalmers.stormystreet.model.bus.BusNotFoundException;
-import dat255.chalmers.stormystreet.model.bus.IBus;
 import dat255.chalmers.stormystreet.view.StatCardData;
 
 /**
@@ -118,7 +107,7 @@ public class HomeFragment extends Fragment implements IModelListener{
 
     public synchronized void updateCards(){
         List<StatCardData> stats = new ArrayList<>();
-        stats.add(new StatCardData(model.getTotalScore().toString(), getString(R.string.points), null));
+        stats.add(new StatCardData(model.getTotalPlusCurrentScore().toString(), getString(R.string.points), null));
 
         /*if (model.getIsOnBus()) {
             try {

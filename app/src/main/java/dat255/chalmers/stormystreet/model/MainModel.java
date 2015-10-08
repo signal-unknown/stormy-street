@@ -83,7 +83,13 @@ public class MainModel {
         return currentUser.getStatistics().getTimeSpentOnBus();
     }
 
+    //get only the score from the database
     public IScore getTotalScore(){
+        return currentUser.getStatistics().getTotalScore();
+    }
+
+    //Get score from database combined with the score of the current trip
+    public IScore getTotalPlusCurrentScore(){
         if(currentTrip == null){
             return currentUser.getStatistics().getTotalScore();
         }else {
