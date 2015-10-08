@@ -70,8 +70,54 @@ public class APIParser {
                 String resource = object.getString("resourceSpec");
                 if (resource.equals("Total_Vehicle_Distance_Value")) {
                     int distance = Integer.parseInt(object.getString("value"));//Todo errorcheck
-                    distance *=5; //compensate for API dividing it by 5
+                    distance *= 5; //compensate for API dividing it by 5
                     result.setTotalDistanceDriven(distance);//will automatically be latest value from API
+                } else if (resource.equals("Bus_Stop_Name_Value")) {
+                    result.setNextStop(result.getNextStop());
+                } else if (resource.equals(("Open_Door_Value"))) {
+                    result.setIsDoorOpen(result.isDoorOpen());
+                } else if (resource.equals("Position_Of_Doors_Value")) {
+                    result.setDoorsPosition(result.getDoorsPosition());
+                } else if (resource.equals("Pram_Request_Value")) {
+                    result.setPramRequest(result.getPramRequest());
+                } else if (resource.equals("Ramp_Wheel_Chair_Lift_Value")) {
+                    result.setRampWheelChairLift(result.getRampWheelChairLift());
+                } else if (resource.equals("Authenticated_Users_Value")) {
+                    result.setAuthenticatedUsers(result.getAuthenticatedUsers());
+                } else if (resource.equals("Cooling_Air_Conditioning_Value")) {
+                    result.setCoolingAirConditioning(result.getCoolingAirConditioning());
+                } else if (resource.equals("Driver_Cabin_Temperature")) {
+                    result.setDriverCabinTemperature(result.getDriverCabinTemperature());
+                } else if (resource.equals("Ambient_Temperature_Value")) {
+                    result.setAmbientTemperature(result.getAmbientTemperature());
+                } else if (resource.equals("Stop_Request_Value")) {
+                    result.setStopRequest(result.getStopRequest());
+                } else if (resource.equals("Stop_Pressed_Value")) {
+                    result.setIsStopPressed(result.isStopPressed());
+                }else if(resource.equals("Turn_signals_Value")) {
+                    result.setTurnSignals(result.getTurnSignals());
+                }else if(resource.equals("Accelerator_Pedal_Position_Value")) {
+                    result.setAcceleratorPedalPosition(result.getAcceleratorPedalPosition());
+                }else if(resource.equals("Fms_Sw_Version_Supported_Value")) {
+                    result.setFmsVersionSupported(result.getFmsVersionSupported());
+                }else if(resource.equals("Journey_Name_Value")) {
+                    result.setJourneyInfo(result.getJourneyInfo());
+                }else if(resource.equals("Mobile_Network_Cell_Info_Value")) {
+                    result.setMobileNetworkCellInfo(result.getMobileNetworkCellInfo());
+                }else if(resource.equals("Mobile_Network_Signal_Strength_Value")) {
+                    result.setMobileNetworkSignalStrength(result.getMobileNetworkSignalStrength());
+                }else if(resource.equals("Total_Online_Users_Value")|| resource.equals("Authenticated_Users_Value")) {
+                    result.setOnlineUsers(result.getOnlineUsers());
+                }else if(resource.equals("Rssi_Value")) {
+                    result.setWlanRsslValue(result.getWlanRsslValue());
+                }else if(resource.equals("Rssi2_Value")){
+                    result.setWlanRssl2Value(result.getWlanRssl2Value());
+                }else if(resource.equals("Cell_Id_Value")){
+                    result.setWlanCellIdValue(result.getWlanCellIdValue());
+                }else if(resource.equals("Cell_Id2_Value")) {
+                    result.setWlanCellId2Value(result.getWlanCellId2Value());
+                }else if(resource.equals("RMC_Value")){
+                    result.setGPSPosition(result.getGPSPosition());
                 }
             }
         }catch (JSONException ex){
