@@ -102,7 +102,7 @@ public class APIProxy {
         //Add times to base URL
         url += "&t1=" + oldTime + "&t2=" + curTime;
 
-        //I have no idea what i'm doing here
+        //Connect to server and fetch data
         StringBuffer jsonGPSData = new StringBuffer("");
         HttpsURLConnection http = null;
         try {
@@ -117,8 +117,6 @@ public class APIProxy {
             while ((line = reader.readLine()) != null) {
                 jsonGPSData.append(line);
             }
-
-            //Let's pray and hope this works
 
         } catch (MalformedURLException e) {
             //TODO deal with it
