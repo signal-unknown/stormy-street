@@ -19,9 +19,12 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.Profile;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.facebook.login.widget.ProfilePictureView;
+
+import java.util.Arrays;
 
 import dat255.chalmers.stormystreet.GlobalState;
 import dat255.chalmers.stormystreet.R;
@@ -85,6 +88,7 @@ public class ProfileActivity extends AppCompatActivity implements FacebookCallba
 
         facebookCallbackManager = CallbackManager.Factory.create();
         facebookLoginButton.registerCallback(facebookCallbackManager, this);
+        facebookLoginButton.setReadPermissions("user_friends", "user_games_activity");
 
         AccessToken facebookToken = AccessToken.getCurrentAccessToken();
         if (facebookToken == null || facebookToken.isExpired()) {
@@ -144,6 +148,7 @@ public class ProfileActivity extends AppCompatActivity implements FacebookCallba
         facebookLoginButton.setVisibility(View.GONE);
         collapsingToolbarLayout.setTitle(Profile.getCurrentProfile().getName());
         profileImageView.setProfileId(Profile.getCurrentProfile().getId());
+        LoginManager.getInstance().logInWithPublishPermissions(this, Arrays.asList("publish_actions"));
     }
 
     @Override
