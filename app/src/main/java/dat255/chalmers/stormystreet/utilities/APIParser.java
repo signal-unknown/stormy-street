@@ -25,6 +25,7 @@ import dat255.chalmers.stormystreet.model.bus.JourneyInfo;
 public class APIParser {
 
     private static final String API_VALUE_IDENTIFIER = "value";
+    private static final int BUS_INFO_UPDATE_INTERVAL = 180000;
 
     private APIParser(){
 
@@ -62,7 +63,7 @@ public class APIParser {
         Get latest info about the bus and return the bus.
      */
     public synchronized static IBus getBusInfo(int busVin){
-        long startTime = System.currentTimeMillis() - 20000;
+        long startTime = System.currentTimeMillis() - BUS_INFO_UPDATE_INTERVAL;
         long endTime = System.currentTimeMillis();
         String jsonData = APIProxy.getBusInfo(busVin, startTime, endTime);
         IBus result = new BusModel();
@@ -89,10 +90,10 @@ public class APIParser {
                     result.setAuthenticatedUsers(object.getInt(API_VALUE_IDENTIFIER));
                 } else if (resource.equals("Cooling_Air_Conditioning_Value")) {
                     result.setCoolingAirConditioning(object.getInt(API_VALUE_IDENTIFIER));
-                } else if (resource.equals("Driver_Cabin_Temperature")) {
-                    result.setDriverCabinTemperature(object.getInt(API_VALUE_IDENTIFIER));
+                } else if (resource.equals("Driver_Cabin_Temperature_Value")) {
+                    result.setDriverCabinTemperature(object.getDouble(API_VALUE_IDENTIFIER));
                 } else if (resource.equals("Ambient_Temperature_Value")) {
-                    result.setAmbientTemperature(object.getInt(API_VALUE_IDENTIFIER));
+                    result.setAmbientTemperature(object.getDouble(API_VALUE_IDENTIFIER));
                 } else if (resource.equals("Stop_Request_Value")) {
                     result.setStopRequest(object.getInt(API_VALUE_IDENTIFIER));
                 } else if (resource.equals("Stop_Pressed_Value")) {
@@ -116,9 +117,9 @@ public class APIParser {
                 }else if(resource.equals("Rssi2_Value")){
                     result.setWlanRssl2Value(object.getInt(API_VALUE_IDENTIFIER));
                 }else if(resource.equals("Cell_Id_Value")){
-                    result.setWlanCellIdValue(object.getInt(API_VALUE_IDENTIFIER));
+                    result.setWlanCellIdValue(Integer.parseInt(object.getString(API_VALUE_IDENTIFIER), 16));
                 }else if(resource.equals("Cell_Id2_Value")) {
-                    result.setWlanRssl2Value(object.getInt(API_VALUE_IDENTIFIER));
+                    result.setWlanRssl2Value(Integer.parseInt(object.getString(API_VALUE_IDENTIFIER), 16));
                 }
             }
         }catch (JSONException ex){
