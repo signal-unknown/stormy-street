@@ -118,7 +118,7 @@ public class BusInfoActivity extends AppCompatActivity implements BusInfoUpdater
             List<StatCardData> stats = new ArrayList<>();
 
 
-            stats.add(new StatCardData(bus.getNextStop(), getString(R.string.next_stop), null));
+            stats.add(new StatCardData(bus.getNextStop(), getString(R.string.towards) + " " + bus.getDestination(), null));
             stats.add(new StatCardData(Double.toString(bus.getDriverCabinTemperature()), null, celsiusIcon));
 
 

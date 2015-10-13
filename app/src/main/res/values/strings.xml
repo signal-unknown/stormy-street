@@ -30,6 +30,7 @@
 
     <string name="points">Points</string>
     <string name="next_stop">Next stop</string>
+    <string name="towards">Towards</string>
     <string name="kmh">km/h</string>
     <string name="current_bus">Current bus</string>
     <string name="on_wifi">On wifi</string>

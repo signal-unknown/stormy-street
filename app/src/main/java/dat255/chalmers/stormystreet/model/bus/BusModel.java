@@ -195,6 +195,9 @@ public class BusModel implements IBus{
     }
 
     public synchronized void setNextStop(String nextStop) {
+        if (Character.isUpperCase(nextStop.charAt(nextStop.length() -1))) {
+            nextStop = nextStop.substring(0, nextStop.length() - 1);
+        }
         this.nextStop = nextStop;
     }
 
@@ -263,6 +266,6 @@ public class BusModel implements IBus{
     }
 
     public synchronized void setIsAtStop(boolean isAtStop) {
-        isAtStop = isAtStop;
+        this.isAtStop = isAtStop;
     }
 }

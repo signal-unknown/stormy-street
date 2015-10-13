@@ -104,7 +104,7 @@ public class APIParser {
                     result.setAcceleratorPedalPosition(object.getInt(API_VALUE_IDENTIFIER));
                 }else if(resource.equals("Fms_Sw_Version_Supported_Value")) {
                     result.setFmsVersionSupported(object.getInt(API_VALUE_IDENTIFIER));
-                }else if(resource.equals("Journey_Name_Value")) {
+                }else if(resource.equals("Destination_Value")) {
                     result.setDestination(object.getString(API_VALUE_IDENTIFIER));
                 }else if(resource.equals("Mobile_Network_Cell_Info_Value")) {
                     result.setMobileNetworkCellInfo(object.getString(API_VALUE_IDENTIFIER));
