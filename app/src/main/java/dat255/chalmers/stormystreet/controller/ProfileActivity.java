@@ -10,6 +10,7 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.widget.TextView;
@@ -43,6 +44,10 @@ public class ProfileActivity extends AppCompatActivity implements FacebookCallba
     private TextView textPoints, textTime, textCO2;
 
     private CallbackManager facebookCallbackManager;
+
+    private static final String FACEBOOK_PUBLISH_ACTIONS = "publish_actions";
+    private static final String FACEBOOK_USER_FRIENDS = "user_friends";
+    private static final String FACEBOOK_USER_GAMES = "user_games_activity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,16 +93,25 @@ public class ProfileActivity extends AppCompatActivity implements FacebookCallba
 
         facebookCallbackManager = CallbackManager.Factory.create();
         facebookLoginButton.registerCallback(facebookCallbackManager, this);
-        facebookLoginButton.setReadPermissions("user_friends", "user_games_activity");
+        facebookLoginButton.setReadPermissions(FACEBOOK_USER_FRIENDS, FACEBOOK_USER_GAMES);
 
         AccessToken facebookToken = AccessToken.getCurrentAccessToken();
-        if (facebookToken == null || facebookToken.isExpired()) {
+        if (facebookToken != null && !facebookToken.isExpired()) {
+            facebookLoginButton.setVisibility(View.GONE);
+            Profile facebookProfile = Profile.getCurrentProfile();
+            if (facebookProfile != null) {
+                collapsingToolbarLayout.setTitle(Profile.getCurrentProfile().getName());
+                profileImageView.setProfileId(Profile.getCurrentProfile().getId());
+            } else {
+                Log.e("PROFILE", "Facebbok profile is null");
+            }
+
+            if (!facebookToken.getPermissions().contains(FACEBOOK_PUBLISH_ACTIONS)) {
+                LoginManager.getInstance().logInWithPublishPermissions(this, Arrays.asList(FACEBOOK_PUBLISH_ACTIONS));
+            }
+        } else {
             facebookLoginButton.setVisibility(View.VISIBLE);
             profileImageView.setProfileId(null);
-        } else {
-            facebookLoginButton.setVisibility(View.GONE);
-            collapsingToolbarLayout.setTitle(Profile.getCurrentProfile().getName());
-            profileImageView.setProfileId(Profile.getCurrentProfile().getId());
         }
     }
 
@@ -146,7 +160,6 @@ public class ProfileActivity extends AppCompatActivity implements FacebookCallba
     public void onSuccess(LoginResult loginResult) {
         // Hides facebook button when logged in
         facebookLoginButton.setVisibility(View.GONE);
-        LoginManager.getInstance().logInWithPublishPermissions(this, Arrays.asList("publish_actions"));
         Intent intent = getIntent();
         finish();
         startActivity(intent);
