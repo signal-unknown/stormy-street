@@ -11,10 +11,10 @@ import dat255.chalmers.stormystreet.model.NotYetImplementedException;
 public class BusModel implements IBus{
     private int dgwNumber;
     private int acceleratorPedalPosition;
-    private int ambientTemperature;
+    private double ambientTemperature;
     private boolean isAtStop;
     private int coolingAirConditioning;
-    private int driverCabinTemperature;
+    private double driverCabinTemperature;
     private IGpsCoord gpsPosition;
     private int fmsVersionSupported;
     private String mobileNetworkCellInfo;
@@ -49,7 +49,7 @@ public class BusModel implements IBus{
         return this.acceleratorPedalPosition;
     }
 
-    public int getAmbientTemperature() {
+    public double getAmbientTemperature() {
         return this.ambientTemperature;
     }
 
@@ -61,7 +61,7 @@ public class BusModel implements IBus{
         return this.coolingAirConditioning;
     }
 
-    public int getDriverCabinTemperature() {
+    public double getDriverCabinTemperature() {
         return this.driverCabinTemperature;
     }
 
@@ -166,7 +166,7 @@ public class BusModel implements IBus{
         this.acceleratorPedalPosition = acceleratorPedalPosition;
     }
 
-    public synchronized void setAmbientTemperature(int ambientTemperature) {
+    public synchronized void setAmbientTemperature(double ambientTemperature) {
         this.ambientTemperature = ambientTemperature;
     }
 
@@ -174,7 +174,7 @@ public class BusModel implements IBus{
         this.coolingAirConditioning = coolingAirConditioning;
     }
 
-    public synchronized void setDriverCabinTemperature(int driverCabinTemperature) {
+    public synchronized void setDriverCabinTemperature(double driverCabinTemperature) {
         this.driverCabinTemperature = driverCabinTemperature;
     }
 
