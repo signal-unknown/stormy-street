@@ -29,6 +29,9 @@
                 <action android:name="android.net.wifi.supplicant.CONNECTION_CHANGE" />
             </intent-filter>
         </receiver>
+        <reciever
+            android:name=".reciever.FacebookScoreUpdaterService">
+        </reciever>
 
         <service
             android:name=".services.WifiService"
