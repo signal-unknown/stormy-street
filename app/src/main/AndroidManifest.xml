@@ -30,7 +30,7 @@
             </intent-filter>
         </receiver>
         <reciever
-            android:name=".reciever.FacebookScoreUpdaterService">
+            android:name=".reciever.AlarmReciever">
         </reciever>
 
         <service

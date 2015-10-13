@@ -19,7 +19,7 @@ import dat255.chalmers.stormystreet.model.MainModel;
  * Service that updates the users score to facebook
  * @author Alexander Karlsson
  */
-public class FacebookScoreUpdaterService extends BroadcastReceiver {
+public class AlarmReciever extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
