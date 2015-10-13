@@ -44,6 +44,7 @@ public class BusInfoActivity extends AppCompatActivity implements BusInfoUpdater
     private RecyclerView.LayoutManager recycleViewManager;
 
     private Bitmap celsiusIcon;
+    private Bitmap speedoIcon;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,6 +54,7 @@ public class BusInfoActivity extends AppCompatActivity implements BusInfoUpdater
         isVisible = true;
 
         celsiusIcon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_temperature_celsius_black_24dp);
+        speedoIcon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_speedometer_black_24dp);
 
         setupToolbar();
         setupRecyclerView();
@@ -119,9 +121,12 @@ public class BusInfoActivity extends AppCompatActivity implements BusInfoUpdater
 
 
             stats.add(new StatCardData(bus.getNextStop(), getString(R.string.towards) + " " + bus.getDestination(), null));
+            if (bus.isStopPressed()) {
+                stats.add(new StatCardData(getString(R.string.stopping),null, null));
+            }
             stats.add(new StatCardData(Double.toString(bus.getDriverCabinTemperature()), null, celsiusIcon));
 
-
+            stats.add(new StatCardData(bus.getAcceleratorPedalPosition() + "% ", null, speedoIcon));
 
             recyclerViewAdapter = new BusStatListAdapter(stats);
             cardRecyclerView.setAdapter(recyclerViewAdapter);
