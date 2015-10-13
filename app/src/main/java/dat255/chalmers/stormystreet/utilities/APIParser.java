@@ -16,12 +16,15 @@ import java.util.Map;
 import dat255.chalmers.stormystreet.BusResource;
 import dat255.chalmers.stormystreet.model.bus.BusModel;
 import dat255.chalmers.stormystreet.model.bus.IBus;
+import dat255.chalmers.stormystreet.model.bus.JourneyInfo;
 
 /**@author Maxim Goretskyy
  * 
  * Created by maxim on 2015-10-06.
  */
 public class APIParser {
+
+    private static final String API_VALUE_IDENTIFIER = "value";
 
     private APIParser(){
 
@@ -69,59 +72,57 @@ public class APIParser {
                 JSONObject object = jsonArray.getJSONObject(i);
                 String resource = object.getString("resourceSpec");
                 if (resource.equals("Total_Vehicle_Distance_Value")) {
-                    int distance = Integer.parseInt(object.getString("value"));//Todo errorcheck
+                    int distance = Integer.parseInt(object.getString(API_VALUE_IDENTIFIER));
                     distance *= 5; //compensate for API dividing it by 5
                     result.setTotalDistanceDriven(distance);//will automatically be latest value from API
                 } else if (resource.equals("Bus_Stop_Name_Value")) {
-                    result.setNextStop(result.getNextStop());
+                    result.setNextStop(object.getString(API_VALUE_IDENTIFIER));
                 } else if (resource.equals(("Open_Door_Value"))) {
-                    result.setIsDoorOpen(result.isDoorOpen());
+                    result.setIsDoorOpen(object.getBoolean(API_VALUE_IDENTIFIER));
                 } else if (resource.equals("Position_Of_Doors_Value")) {
-                    result.setDoorsPosition(result.getDoorsPosition());
+                    result.setDoorsPosition(object.getInt(API_VALUE_IDENTIFIER));
                 } else if (resource.equals("Pram_Request_Value")) {
-                    result.setPramRequest(result.getPramRequest());
+                    result.setPramRequest(object.getInt(API_VALUE_IDENTIFIER));
                 } else if (resource.equals("Ramp_Wheel_Chair_Lift_Value")) {
-                    result.setRampWheelChairLift(result.getRampWheelChairLift());
+                    result.setRampWheelChairLift(object.getInt(API_VALUE_IDENTIFIER));
                 } else if (resource.equals("Authenticated_Users_Value")) {
-                    result.setAuthenticatedUsers(result.getAuthenticatedUsers());
+                    result.setAuthenticatedUsers(object.getInt(API_VALUE_IDENTIFIER));
                 } else if (resource.equals("Cooling_Air_Conditioning_Value")) {
-                    result.setCoolingAirConditioning(result.getCoolingAirConditioning());
+                    result.setCoolingAirConditioning(object.getInt(API_VALUE_IDENTIFIER));
                 } else if (resource.equals("Driver_Cabin_Temperature")) {
-                    result.setDriverCabinTemperature(result.getDriverCabinTemperature());
+                    result.setDriverCabinTemperature(object.getInt(API_VALUE_IDENTIFIER));
                 } else if (resource.equals("Ambient_Temperature_Value")) {
-                    result.setAmbientTemperature(result.getAmbientTemperature());
+                    result.setAmbientTemperature(object.getInt(API_VALUE_IDENTIFIER));
                 } else if (resource.equals("Stop_Request_Value")) {
-                    result.setStopRequest(result.getStopRequest());
+                    result.setStopRequest(object.getInt(API_VALUE_IDENTIFIER));
                 } else if (resource.equals("Stop_Pressed_Value")) {
-                    result.setIsStopPressed(result.isStopPressed());
+                    result.setIsStopPressed(object.getBoolean(API_VALUE_IDENTIFIER));
                 }else if(resource.equals("Turn_signals_Value")) {
-                    result.setTurnSignals(result.getTurnSignals());
+                    result.setTurnSignals(object.getInt(API_VALUE_IDENTIFIER));
                 }else if(resource.equals("Accelerator_Pedal_Position_Value")) {
-                    result.setAcceleratorPedalPosition(result.getAcceleratorPedalPosition());
+                    result.setAcceleratorPedalPosition(object.getInt(API_VALUE_IDENTIFIER));
                 }else if(resource.equals("Fms_Sw_Version_Supported_Value")) {
-                    result.setFmsVersionSupported(result.getFmsVersionSupported());
+                    result.setFmsVersionSupported(object.getInt(API_VALUE_IDENTIFIER));
                 }else if(resource.equals("Journey_Name_Value")) {
-                    result.setJourneyInfo(result.getJourneyInfo());
+                    result.setDestination(object.getString(API_VALUE_IDENTIFIER));
                 }else if(resource.equals("Mobile_Network_Cell_Info_Value")) {
-                    result.setMobileNetworkCellInfo(result.getMobileNetworkCellInfo());
+                    result.setMobileNetworkCellInfo(object.getString(API_VALUE_IDENTIFIER));
                 }else if(resource.equals("Mobile_Network_Signal_Strength_Value")) {
-                    result.setMobileNetworkSignalStrength(result.getMobileNetworkSignalStrength());
-                }else if(resource.equals("Total_Online_Users_Value")|| resource.equals("Authenticated_Users_Value")) {
-                    result.setOnlineUsers(result.getOnlineUsers());
+                    result.setMobileNetworkSignalStrength(object.getString(API_VALUE_IDENTIFIER));
+                }else if(resource.equals("Total_Online_Users_Value")) {
+                    result.setOnlineUsers(object.getInt(API_VALUE_IDENTIFIER));
                 }else if(resource.equals("Rssi_Value")) {
-                    result.setWlanRsslValue(result.getWlanRsslValue());
+                    result.setWlanRsslValue(object.getInt(API_VALUE_IDENTIFIER));
                 }else if(resource.equals("Rssi2_Value")){
-                    result.setWlanRssl2Value(result.getWlanRssl2Value());
+                    result.setWlanRssl2Value(object.getInt(API_VALUE_IDENTIFIER));
                 }else if(resource.equals("Cell_Id_Value")){
-                    result.setWlanCellIdValue(result.getWlanCellIdValue());
+                    result.setWlanCellIdValue(object.getInt(API_VALUE_IDENTIFIER));
                 }else if(resource.equals("Cell_Id2_Value")) {
-                    result.setWlanCellId2Value(result.getWlanCellId2Value());
-                }else if(resource.equals("RMC_Value")){
-                    result.setGPSPosition(result.getGPSPosition());
+                    result.setWlanRssl2Value(object.getInt(API_VALUE_IDENTIFIER));
                 }
             }
         }catch (JSONException ex){
-
+            Log.e("API_PARSER", "Couldn't parse JSON.\n" + ex.getMessage());
         }
         return result;
     }
