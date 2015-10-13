@@ -17,7 +17,6 @@ public class BusModel implements IBus{
     private int driverCabinTemperature;
     private IGpsCoord gpsPosition;
     private int fmsVersionSupported;
-    private IJourneyInfo journeyInfo;
     private String mobileNetworkCellInfo;
     private String mobileNetworkSignalStrength;
     private String nextStop;
@@ -36,6 +35,7 @@ public class BusModel implements IBus{
     private int wlanRssl2Value;
     private int wlanCellIdValue;
     private int wlanCellId2Value;
+    private String destination;
 
     //#######################################
     //          GETTERS
@@ -74,8 +74,8 @@ public class BusModel implements IBus{
         return this.gpsPosition.clone();
     }
 
-    public IJourneyInfo getJourneyInfo() {
-        return this.journeyInfo.clone();
+    public String getDestination() {
+        return this.destination;
     }
 
     public String getMobileNetworkCellInfo() {
@@ -186,10 +186,6 @@ public class BusModel implements IBus{
         this.fmsVersionSupported = fmsVersionSupported;
     }
 
-    public synchronized void setJourneyInfo(IJourneyInfo journeyInfo) {
-        this.journeyInfo = journeyInfo;
-    }
-
     public synchronized void setMobileNetworkCellInfo(String mobileNetworkCellInfo) {
         this.mobileNetworkCellInfo = mobileNetworkCellInfo;
     }
@@ -260,6 +256,10 @@ public class BusModel implements IBus{
 
     public synchronized void setWlanCellId2Value(int wlanCellId2Value) {
         this.wlanCellId2Value = wlanCellId2Value;
+    }
+
+    public synchronized void setDestination(String destination) {
+        this.destination = destination;
     }
 
     public synchronized void setIsAtStop(boolean isAtStop) {

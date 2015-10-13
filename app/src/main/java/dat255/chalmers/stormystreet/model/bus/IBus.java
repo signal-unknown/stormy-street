@@ -18,7 +18,7 @@ public interface IBus {
     int getDriverCabinTemperature();
     int getFmsVersionSupported(); //Not yet active in the API as of 2015-09-23
     IGpsCoord getGPSPosition();
-    IJourneyInfo getJourneyInfo();
+    String getDestination();
     String getMobileNetworkCellInfo(); //Not yet active in the API as of 2015-09-23
     String getMobileNetworkSignalStrength(); //Not yet active in the API as of 2015-09-23
     String getNextStop();
@@ -46,7 +46,7 @@ public interface IBus {
     void setDriverCabinTemperature(int driverCabinTemperature);
     void setFmsVersionSupported(int fmsVersionSupported); //Not yet active in the API as of 2015-09-23
     void setGPSPosition(IGpsCoord gpsPosition);
-    void setJourneyInfo(IJourneyInfo journeyInfo);
+    void setDestination(String destination);
     void setMobileNetworkCellInfo(String mobileNetworkCellInfo); //Not yet active in the API as of 2015-09-23
     void setMobileNetworkSignalStrength(String mobileNetworkSignalStrength); //Not yet active in the API as of 2015-09-23
     void setNextStop(String nextStop);
