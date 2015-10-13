@@ -39,6 +39,7 @@ public class Constants {
         busMacVin.put(171327, "04:f0:21:10:09:53");
         busMacVin.put(171328, "04:f0:21:10:09:b9");
         busMacVin.put(171330, "04:f0:21:10:09:b7");
+        busMacVin.put(171234, "04:f0:21:10:09:e7");
 
         //Initialize map with bus vin numbers and registration numbers
         busVinRegNr = new HashMap<Integer, String>();
