@@ -12,10 +12,10 @@ import dat255.chalmers.stormystreet.model.IJourneyInfo;
 public interface IBus {
     int getDgwNumber();
     int getAcceleratorPedalPosition();
-    int getAmbientTemperature();
+    double getAmbientTemperature();
     boolean isAtStop();
     int getCoolingAirConditioning();
-    int getDriverCabinTemperature();
+    double getDriverCabinTemperature();
     int getFmsVersionSupported(); //Not yet active in the API as of 2015-09-23
     IGpsCoord getGPSPosition();
     String getDestination();
@@ -40,10 +40,10 @@ public interface IBus {
 
     void setDgwNumber(int dgwNumber);
     void setAcceleratorPedalPosition(int acceleratorPedalPosition);
-    void setAmbientTemperature(int ambientTemperature);
+    void setAmbientTemperature(double ambientTemperature);
     void setIsAtStop(boolean isAtStop);
     void setCoolingAirConditioning(int coolingAirConditioning);
-    void setDriverCabinTemperature(int driverCabinTemperature);
+    void setDriverCabinTemperature(double driverCabinTemperature);
     void setFmsVersionSupported(int fmsVersionSupported); //Not yet active in the API as of 2015-09-23
     void setGPSPosition(IGpsCoord gpsPosition);
     void setDestination(String destination);
