@@ -35,7 +35,6 @@ public class HomeFragment extends Fragment implements IModelListener{
     private MainModel model;
 
     private Bitmap personIcon;
-    private Bitmap speedometerIcon;
     private Bitmap celsiusIcon;
 
 
@@ -51,8 +50,7 @@ public class HomeFragment extends Fragment implements IModelListener{
         super.onViewCreated(view, savedInstanceState);
 
         personIcon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_person_black_24dp);
-        speedometerIcon = BitmapFactory.decodeResource(getResources(), R.drawable.speedometer);
-        celsiusIcon = BitmapFactory.decodeResource(getResources(), R.drawable.temperature_celsius);
+        celsiusIcon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_temperature_celsius_black_24dp);
 
         ((GlobalState)getActivity().getApplication()).getModel().addListener(this);
         setupRecyclerView(view);
@@ -117,7 +115,7 @@ public class HomeFragment extends Fragment implements IModelListener{
                 // Show current bus reg number
                 stats.add(new StatCardData(Constants.vinToRegNr(currentBus.getDgwNumber()), getString(R.string.current_bus), null));
                 // Show bus speed
-                stats.add(new StatCardData(Double.toString(currentBus.getGPSPosition().getSpeed()), getString(R.string.kmh), speedometerIcon));
+                stats.add(new StatCardData(Double.toString(currentBus.getGPSPosition().getSpeed()), getString(R.string.kmh), null));
                 // Show degrees in bus
                 stats.add(new StatCardData(Integer.toString(currentBus.getDriverCabinTemperature()), null, celsiusIcon));
                 // Show how many are using wifi

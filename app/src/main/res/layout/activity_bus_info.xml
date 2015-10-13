@@ -15,20 +15,21 @@
 
         <android.support.v7.widget.Toolbar
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="?android:attr/actionBarSize"
+            android:layout_height="?android:attr/actionBarSize"
             android:id="@+id/toolbar_main"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
     </android.support.design.widget.AppBarLayout>
 
 
-    <RelativeLayout
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/businfo_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fitsSystemWindows="true"
-        android:id="@+id/main_layout">
-    </RelativeLayout>
+        android:layout_height="match_parent"
+        android:layout_marginTop="?android:attr/actionBarSize"
+        android:scrollbars="vertical"
+        android:padding="4dp"
+        android:clipToPadding="false" />
 
 
 

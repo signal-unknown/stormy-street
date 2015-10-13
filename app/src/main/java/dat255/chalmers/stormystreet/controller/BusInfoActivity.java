@@ -1,13 +1,18 @@
 package dat255.chalmers.stormystreet.controller;
 
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -18,6 +23,7 @@ import dat255.chalmers.stormystreet.model.MainModel;
 import dat255.chalmers.stormystreet.model.bus.BusNotFoundException;
 import dat255.chalmers.stormystreet.model.bus.IBus;
 import dat255.chalmers.stormystreet.services.BusInfoUpdater;
+import dat255.chalmers.stormystreet.view.StatCardData;
 
 /**
  * @author David Fogelberg, Alexander Håkansson
@@ -33,6 +39,12 @@ public class BusInfoActivity extends AppCompatActivity implements BusInfoUpdater
 
     private int busVin = -1;
 
+    private RecyclerView cardRecyclerView;
+    private RecyclerView.Adapter recyclerViewAdapter;
+    private RecyclerView.LayoutManager recycleViewManager;
+
+    private Bitmap celsiusIcon;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +52,10 @@ public class BusInfoActivity extends AppCompatActivity implements BusInfoUpdater
 
         isVisible = true;
 
+        celsiusIcon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_temperature_celsius_black_24dp);
+
         setupToolbar();
+        setupRecyclerView();
         getBusVIN();
 
         // The activity might be finishing if it can't get the bus with the VIN number provided
@@ -99,8 +114,17 @@ public class BusInfoActivity extends AppCompatActivity implements BusInfoUpdater
     private void updateUI(final IBus bus) {
         if (bus != null) {
             model.addBus(bus);
-            // TODO: Update the UI
-            Toast.makeText(this, Long.toString(bus.getTotalDistanceDriven()), Toast.LENGTH_SHORT).show();
+
+            List<StatCardData> stats = new ArrayList<>();
+
+
+            stats.add(new StatCardData(bus.getNextStop(), getString(R.string.next_stop), null));
+            stats.add(new StatCardData(Double.toString(bus.getDriverCabinTemperature()), null, celsiusIcon));
+
+
+
+            recyclerViewAdapter = new BusStatListAdapter(stats);
+            cardRecyclerView.setAdapter(recyclerViewAdapter);
         }
     }
 
@@ -126,5 +150,13 @@ public class BusInfoActivity extends AppCompatActivity implements BusInfoUpdater
                 }
             }, UPDATE_INTERVAL);
         }
+    }
+
+    private void setupRecyclerView() {
+        cardRecyclerView = (RecyclerView) findViewById(R.id.businfo_list);
+
+        recycleViewManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+
+        cardRecyclerView.setLayoutManager(recycleViewManager);
     }
 }
