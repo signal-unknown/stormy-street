@@ -146,9 +146,10 @@ public class ProfileActivity extends AppCompatActivity implements FacebookCallba
     public void onSuccess(LoginResult loginResult) {
         // Hides facebook button when logged in
         facebookLoginButton.setVisibility(View.GONE);
-        collapsingToolbarLayout.setTitle(Profile.getCurrentProfile().getName());
-        profileImageView.setProfileId(Profile.getCurrentProfile().getId());
         LoginManager.getInstance().logInWithPublishPermissions(this, Arrays.asList("publish_actions"));
+        Intent intent = getIntent();
+        finish();
+        startActivity(intent);
     }
 
     @Override
