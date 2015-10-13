@@ -15,7 +15,11 @@
             android:icon="@drawable/ic_directions_bus_black_24dp"/>
         <item
             android:id="@+id/menu_drawer_save"
-            android:title="Save_data"
+            android:title="Save data"
             android:icon="@drawable/ic_directions_bus_black_24dp"/>
+        <item
+            android:id="@+id/menu_drawer_highscore"
+            android:title="Highscore"
+            android:icon="@drawable/ic_cast_dark"/>
     </group>
 </menu>
