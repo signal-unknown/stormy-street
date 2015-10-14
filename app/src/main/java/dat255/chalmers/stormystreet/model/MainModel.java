@@ -2,6 +2,7 @@ package dat255.chalmers.stormystreet.model;
 
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -22,12 +23,14 @@ public class MainModel {
     private CurrentTrip currentTrip;
     private IUser currentUser;
     private Set<IModelListener> listeners;
+    private List<FacebookFriend> highscoreList;
 
     public MainModel(){
         this.busManager = new BusManager();
         this.currentUser = new User("Dummy namn");
         this.listeners = new HashSet<>();
         this.currentTrip = new CurrentTrip(0,0);
+        highscoreList = new ArrayList<>();
     }
 
     public BusManager getBusManager() {
@@ -132,6 +135,16 @@ public class MainModel {
     public void setCurrentUser(IUser currentUser) {
         this.currentUser = currentUser;
         notifyListeners();
+    }
+
+    public List<FacebookFriend> getHighscoreList(){
+        return this.highscoreList;
+    }
+
+    public void setHighscoreList(List<FacebookFriend> input){
+        this.highscoreList = input;
+        notifyListeners();
+
     }
 
     public void addListener(IModelListener listener){
