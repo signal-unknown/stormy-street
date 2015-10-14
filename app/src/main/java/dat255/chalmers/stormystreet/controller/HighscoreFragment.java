@@ -1,9 +1,8 @@
 package dat255.chalmers.stormystreet.controller;
 
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +14,7 @@ import java.util.List;
 import dat255.chalmers.stormystreet.GlobalState;
 import dat255.chalmers.stormystreet.R;
 import dat255.chalmers.stormystreet.model.MainModel;
-import dat255.chalmers.stormystreet.view.StatCardData;
+import dat255.chalmers.stormystreet.view.HighscoreCardData;
 
 /**
  * @author Kevin Hoogendijk  and David Fogelberg
@@ -26,7 +25,7 @@ public class HighscoreFragment extends Fragment {
 
     private RecyclerView cardRecyclerView;
     private RecyclerView.Adapter recyclerViewAdapter;
-    private GridLayoutManager recycleViewManager;
+    private LinearLayoutManager recycleViewManager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,33 +44,19 @@ public class HighscoreFragment extends Fragment {
         model = ((GlobalState) getActivity().getApplication()).getModel();
         cardRecyclerView = (RecyclerView) view.findViewById(R.id.higscore_recyclerview);
 
-        // use a linear layout manager
-        if (getResources().getConfiguration().orientation != Configuration.ORIENTATION_LANDSCAPE) {
-            recycleViewManager = new GridLayoutManager(getActivity(), 2); // 2 columns if vertical
-        } else {
-            recycleViewManager = new GridLayoutManager(getActivity(), 3); // 3 columns if horizontal
-        }
-
-        recycleViewManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-            @Override
-            public int getSpanSize(int position) {
-                if (position == 0) {
-                    return 2;
-                } else {
-                    return 1;
-                }
-            }
-        });
-
+        recycleViewManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         cardRecyclerView.setLayoutManager(recycleViewManager);
         updateCards();
     }
 
     public synchronized void updateCards(){
-        List<StatCardData> stats = new ArrayList<>();
-        stats.add(new StatCardData("1337 looool", null, null));
-
-        recyclerViewAdapter = new BusStatListAdapter(stats);
+        List<HighscoreCardData> stats = new ArrayList<>();
+        stats.add(new HighscoreCardData(1, "Kevin", 1000));
+        stats.add(new HighscoreCardData(2, "Maxim", 730));
+        stats.add(new HighscoreCardData(3, "Alexander", 700));
+        stats.add(new HighscoreCardData(3, "Alexander2", 400));
+        stats.add(new HighscoreCardData(3, "David", 200));
+        recyclerViewAdapter = new HighscoreListAdapter(stats);
         cardRecyclerView.setAdapter(recyclerViewAdapter);
     }
 }
