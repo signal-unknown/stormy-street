@@ -14,8 +14,7 @@ public class FacebookFriend {
     private int metersTraveled;
 
 
-    public FacebookFriend(URL profilePicture, String name, int metersTraveled){
-        this.profilePicture = profilePicture;
+    public FacebookFriend(String name, int metersTraveled){
         this.name = name;
         this.metersTraveled = metersTraveled;
 
@@ -36,12 +35,8 @@ public class FacebookFriend {
         this.metersTraveled = metersTraveled;
     }
 
-    public URL getProfilePicture() {
-        return profilePicture;
-    }
-
-    public void setProfilePicture(URL profilePicture) {
-        this.profilePicture = profilePicture;
+    public String toString(){
+        return "Name is " + this.name + " score is " + this.metersTraveled;
     }
 
 }
