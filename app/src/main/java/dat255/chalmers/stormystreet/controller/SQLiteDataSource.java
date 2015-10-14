@@ -3,6 +3,7 @@ package dat255.chalmers.stormystreet.controller;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.CursorIndexOutOfBoundsException;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.ContactsContract;
@@ -90,7 +91,7 @@ public class SQLiteDataSource {
         return dataList;
     }
 
-    public long getLastTimeStamp(){
+    public long getLastTimeStamp() throws CursorIndexOutOfBoundsException{
         Cursor cursor = database.rawQuery("SELECT * FROM _value ORDER BY end_time DESC LIMIT 1", null);
         cursor.moveToFirst();
         long timestamp = cursor.getLong(2);

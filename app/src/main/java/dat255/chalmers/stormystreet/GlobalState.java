@@ -1,6 +1,7 @@
 package dat255.chalmers.stormystreet;
 
 import android.app.Application;
+import android.database.CursorIndexOutOfBoundsException;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
@@ -46,10 +47,15 @@ public class GlobalState extends Application {
 
     public void saveModel(){
         dataSource.open();
-
+        long lastEndTime = 0;
         DataValue value;
+        try {
+            lastEndTime= dataSource.getLastTimeStamp();
+        }catch(CursorIndexOutOfBoundsException ex){
+
+        }
         for(IBusTrip trip:model.getAllBusTrips()){
-            long lastEndTime = dataSource.getLastTimeStamp();
+
             if(trip.getStartTime() > lastEndTime) {
                 value = new DataValue();
                 value.addValues(Long.toString(trip.getStartTime()), Long.toString(trip.getEndTime()), Long.toString(trip.getDistance()));

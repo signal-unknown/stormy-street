@@ -1,5 +1,6 @@
 package dat255.chalmers.stormystreet.services;
 
+import android.app.ActivityManager;
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
@@ -144,7 +145,7 @@ public class WifiService extends IntentService {
                     setUserOnBus(true);
 
                 } else {
-                    setUserOnBus(false);
+                    //setUserOnBus(false);
                 }
             }
         };
@@ -153,13 +154,18 @@ public class WifiService extends IntentService {
     }
     public synchronized void setUserOnBus(boolean isOn){
         Intent currentTripIntent = new Intent(getApplicationContext(), CurrentTripService.class);
+
         if(isOn){
+            currentTripIntent.setAction("Turnon");
             getApplicationContext().startService(currentTripIntent);
         }else{
-            getApplication().stopService(currentTripIntent);
+            currentTripIntent.setAction("Turnoff");
+            getApplicationContext().startService(currentTripIntent);
+
         }
         ((GlobalState)getApplication()).getModel().setIsOnBus(isOn);
     }
+
     public List<String> getMacAddresses(){
         return this.macAddresses;
     }

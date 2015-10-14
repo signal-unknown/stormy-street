@@ -39,7 +39,13 @@ public class CurrentTripService extends IntentService{
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        runUpdate();
+
+        if((intent.getAction()).equals("Turnoff")){
+            isFinished = true;
+            this.stopSelf();
+        }else if((intent.getAction()).equals("Turnon")){
+            runUpdate();
+        }
     }
 
     public void runUpdate(){
@@ -64,15 +70,15 @@ public class CurrentTripService extends IntentService{
     public void updateCurrentTrip(){
         Log.d("CurrentTripService", "running update");
         MainModel model = ((GlobalState) getApplication()).getModel();
-        Log.d("CurrentTrip", "Vin number " + model.getCurrentTrip().getCurrentVinNumber());
-        Log.d("CurrentTrip", "Timestamp " + model.getCurrentTrip().getTimestamp());
-
-        try {
-            long startDistance = Long.parseLong(APIParser.getBusResource(model.getCurrentTrip().getCurrentVinNumber(), model.getCurrentTrip().getTimestamp() - 60000, model.getCurrentTrip().getTimestamp(), BusResource.Total_Vehicle_Distance_Value));
-            long endDistance = Long.parseLong(APIParser.getBusResource(model.getCurrentTrip().getCurrentVinNumber(), System.currentTimeMillis() - 60000, System.currentTimeMillis(), BusResource.Total_Vehicle_Distance_Value));
-            model.setCurrentTripDistance((endDistance-startDistance)*5);
-        }catch(IllegalArgumentException e){
-            isFinished = true;
+        if(model.getCurrentTrip() != null){
+            try {
+                long startDistance = Long.parseLong(APIParser.getBusResource(model.getCurrentTrip().getCurrentVinNumber(), model.getCurrentTrip().getTimestamp() - 60000, model.getCurrentTrip().getTimestamp(), BusResource.Total_Vehicle_Distance_Value));
+                long endDistance = Long.parseLong(APIParser.getBusResource(model.getCurrentTrip().getCurrentVinNumber(), System.currentTimeMillis() - 60000, System.currentTimeMillis(), BusResource.Total_Vehicle_Distance_Value));
+                model.setCurrentTripDistance((endDistance-startDistance)*5);
+            }catch(IllegalArgumentException e){
+                isFinished = true;
+            }
         }
+
     }
 }
