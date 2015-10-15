@@ -24,9 +24,7 @@ public class AlarmReciever extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
         GraphRequest request = null;
-        Bundle bundle = intent.getExtras();
-        MainModel model = (MainModel) bundle.get("MainModel");
-        final long score = model.getTotalScore().getValue();
+        final long score = 12;//model.getTotalScore().getValue();
 
         if(accessToken != null && !accessToken.isExpired()) {
             try {
