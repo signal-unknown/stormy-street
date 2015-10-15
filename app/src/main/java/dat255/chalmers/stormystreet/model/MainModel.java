@@ -74,7 +74,7 @@ public class MainModel {
         notifyListeners();
     }
 
-    public IScore getWeeklyAverageScore(){
+    public long getWeeklyAverageScore(){
         return currentUser.getStatistics().getWeeklyAverageScore();
     }
 

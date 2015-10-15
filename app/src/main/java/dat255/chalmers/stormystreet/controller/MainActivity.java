@@ -87,6 +87,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (drawerToggle.onOptionsItemSelected(item)) {
             // Open the navigation drawer
             return true;
+        } else if (item.getItemId() == R.id.action_settings) {
+            ((GlobalState)getApplication()).getModel().getUserStatistics().getWeeklyAverageScore();
         }
 
         return super.onOptionsItemSelected(item);

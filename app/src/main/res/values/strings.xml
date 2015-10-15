@@ -37,4 +37,5 @@
     <string name="current_bus">Current bus</string>
     <string name="on_wifi">On wifi</string>
     <string name="facebook_api_id">733566680083257</string>
+    <string name="points_per_week">Points/Week</string>
 </resources>

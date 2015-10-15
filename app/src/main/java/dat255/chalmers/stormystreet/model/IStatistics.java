@@ -1,5 +1,7 @@
 package dat255.chalmers.stormystreet.model;
 
+import android.content.Context;
+
 import java.util.List;
 
 import dat255.chalmers.stormystreet.model.bus.IBusTrip;
@@ -12,7 +14,7 @@ import dat255.chalmers.stormystreet.model.bus.IBusTrip;
 
 public interface IStatistics{
     IScore getTotalScore();
-    IScore getWeeklyAverageScore();
+    long getWeeklyAverageScore();
     long getTimeSpentOnBus();
     List<IBusTrip> getAllBusTrips();
     void addBusTrip(IBusTrip busTrip);
