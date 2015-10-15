@@ -18,6 +18,7 @@
     <string name="profile_stats_time">Hours</string>
     <string name="profile_stats_co2">Grams CO2 saved</string>
 
+    <string name="highscore_title">Highscore</string>
 
     <string name="wifi_alert_title">Wifi is disabled</string>
     <string name="wifi_alert_text">Do you want to enable wifi?</string>

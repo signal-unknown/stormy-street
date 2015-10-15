@@ -4,6 +4,17 @@
     android:layout_height="match_parent"
     tools:context="dat255.chalmers.stormystreet.controller.HighscoreFragment">
 
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/highscore_facebook_login_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp" />
     <android.support.v7.widget.RecyclerView
         android:id="@+id/higscore_recyclerview"
         android:scrollbars="vertical"
