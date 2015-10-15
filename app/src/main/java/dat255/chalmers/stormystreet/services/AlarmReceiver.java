@@ -21,30 +21,32 @@ import dat255.chalmers.stormystreet.model.MainModel;
  */
 public class AlarmReceiver extends BroadcastReceiver {
     private static MainModel model;
-    
+
     @Override
     public void onReceive(Context context, Intent intent) {
-        AccessToken accessToken = AccessToken.getCurrentAccessToken();
-        GraphRequest request = null;
-        final long score = model.getTotalScore().getValue();
+        if(model != null) {
+            AccessToken accessToken = AccessToken.getCurrentAccessToken();
+            GraphRequest request = null;
+            final long score = model.getTotalScore().getValue();
 
-        if(accessToken != null && !accessToken.isExpired()) {
-            try {
-                request = GraphRequest.newPostRequest(
-                        accessToken,
-                        "/me/scores",
-                        new JSONObject("{\"score\":\"" + score + "\"}"),
-                        new GraphRequest.Callback() {
-                            @Override
-                            public void onCompleted(GraphResponse response) {
-                                Log.d("FacebookSUS", "Updated facebook with the score " + score);
-                            }
-                        });
-            } catch (JSONException e) {
-                //Should never occur
-                e.printStackTrace();
+            if (accessToken != null && !accessToken.isExpired()) {
+                try {
+                    request = GraphRequest.newPostRequest(
+                            accessToken,
+                            "/me/scores",
+                            new JSONObject("{\"score\":\"" + score + "\"}"),
+                            new GraphRequest.Callback() {
+                                @Override
+                                public void onCompleted(GraphResponse response) {
+                                    Log.d("FacebookSUS", "Updated facebook with the score " + score);
+                                }
+                            });
+                } catch (JSONException e) {
+                    //Should never occur
+                    e.printStackTrace();
+                }
+                request.executeAsync();
             }
-            request.executeAsync();
         }
     }
 
