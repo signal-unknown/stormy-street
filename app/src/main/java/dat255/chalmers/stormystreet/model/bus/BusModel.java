@@ -183,7 +183,9 @@ public class BusModel implements IBus{
     }
 
     public synchronized void setGPSPosition(IGpsCoord gpsPosition) {
-        this.gpsPosition = gpsPosition;
+        if (gpsPosition != null) {
+            this.gpsPosition = gpsPosition;
+        }
     }
 
     public synchronized void setFmsVersionSupported(int fmsVersionSupported) {
@@ -191,18 +193,24 @@ public class BusModel implements IBus{
     }
 
     public synchronized void setMobileNetworkCellInfo(String mobileNetworkCellInfo) {
-        this.mobileNetworkCellInfo = mobileNetworkCellInfo;
+        if (mobileNetworkCellInfo != null) {
+            this.mobileNetworkCellInfo = mobileNetworkCellInfo;
+        }
     }
 
     public synchronized void setMobileNetworkSignalStrength(String mobileNetworkSignalStrength) {
-        this.mobileNetworkSignalStrength = mobileNetworkSignalStrength;
+        if (mobileNetworkSignalStrength != null) {
+            this.mobileNetworkSignalStrength = mobileNetworkSignalStrength;
+        }
     }
 
     public synchronized void setNextStop(String nextStop) {
-        if (Character.isUpperCase(nextStop.charAt(nextStop.length() -1))) {
-            nextStop = nextStop.substring(0, nextStop.length() - 1);
+        if (nextStop != null) {
+            if (Character.isUpperCase(nextStop.charAt(nextStop.length() - 1))) {
+                nextStop = nextStop.substring(0, nextStop.length() - 1);
+            }
+            this.nextStop = nextStop;
         }
-        this.nextStop = nextStop;
     }
 
     public synchronized void setIsOffroute(boolean isOffroute) {
@@ -266,7 +274,9 @@ public class BusModel implements IBus{
     }
 
     public synchronized void setDestination(String destination) {
-        this.destination = destination;
+        if (destination != null) {
+            this.destination = destination;
+        }
     }
 
     public synchronized void setIsAtStop(boolean isAtStop) {
