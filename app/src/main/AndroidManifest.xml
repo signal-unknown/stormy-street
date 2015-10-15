@@ -30,7 +30,7 @@
             </intent-filter>
         </receiver>
         <reciever
-            android:name=".services.AlarmReciever">
+            android:name=".services.AlarmReceiver">
         </reciever>
 
         <service
