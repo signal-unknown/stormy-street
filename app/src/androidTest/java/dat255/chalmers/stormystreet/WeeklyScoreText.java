@@ -15,7 +15,7 @@ public class WeeklyScoreText extends ActivityTestCase {
         model.addBusTrip(new BusTrip(System.currentTimeMillis(), System.currentTimeMillis() + 5000, 50));
         model.addBusTrip(new BusTrip(System.currentTimeMillis() - 7 * 24 * 60 * 60 * 1000, System.currentTimeMillis() - 7 * 24 * 60 * 60 * 1000 + 5000, 100));
         model.addBusTrip(new BusTrip(System.currentTimeMillis() - 14 * 24 * 60 * 60 * 1000, System.currentTimeMillis() - 14 * 24 * 60 * 60 * 1000 + 5000, 250));
-        long expectedAverage = (50 + 100 + 250) / 3;
+        long expectedAverage = Math.round((50 + 100 + 250) / (double) 3);
 
         assertEquals("Average should be " + expectedAverage, expectedAverage, model.getWeeklyAverageScore());
     }
