@@ -76,7 +76,7 @@ public class HomeFragment extends Fragment implements IModelListener, BusInfoUpd
         recycleViewManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
-                if (position == 0) {
+                if (position == 0 || position == 1) {
                     return 2;
                 } else {
                     return 1;
@@ -96,14 +96,44 @@ public class HomeFragment extends Fragment implements IModelListener, BusInfoUpd
         if (model.getIsOnBus()) {
             // Starting thread for getting data from model
             new BusInfoUpdater(this).execute(model.getCurrentTrip().getCurrentVinNumber());
+        } else {
+            if (Looper.myLooper() == Looper.getMainLooper()) {
+                updatePoints();
+            } else {
+                Activity activity = getActivity();
+                if (activity != null) {
+                    activity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            updatePoints();
+                        }
+                    });
+                }
+            }
         }
     }
+
+    public synchronized void updatePoints() {
+        List<StatCardData> stats = new ArrayList<>();
+
+        stats.add(new StatCardData(model.getTotalPlusCurrentScore().toString(), getString(R.string.points), null));
+
+        recyclerViewAdapter = new BusStatListAdapter(stats);
+        cardRecyclerView.setAdapter(recyclerViewAdapter);
+    }
+
 
     public synchronized void updateCards(final IBus bus){
         if (bus != null) {
             model.addBus(bus);
 
-            recyclerViewAdapter = new BusStatListAdapter(BusStatsUtil.getBusStatCards(getActivity(), bus));
+            List<StatCardData> stats = new ArrayList<>();
+
+            stats.add(new StatCardData(model.getTotalPlusCurrentScore().toString(), getString(R.string.points), null));;
+
+            stats.addAll(BusStatsUtil.getBusStatCards(getActivity(), bus));
+
+            recyclerViewAdapter = new BusStatListAdapter(stats);
             cardRecyclerView.setAdapter(recyclerViewAdapter);
         }
     }
