@@ -31,7 +31,7 @@ import dat255.chalmers.stormystreet.view.StatCardData;
  */
 public class BusInfoActivity extends AppCompatActivity implements BusInfoUpdater.IBusInfoListener {
 
-    private static final int UPDATE_INTERVAL = 3000; // How often the bus info will update
+    private static final int UPDATE_INTERVAL = 1500; // How often the bus info will update
 
     private Toolbar toolbar;
 
