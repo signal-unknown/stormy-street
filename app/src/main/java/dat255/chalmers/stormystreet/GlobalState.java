@@ -1,6 +1,9 @@
 package dat255.chalmers.stormystreet;
 
+import android.app.AlarmManager;
 import android.app.Application;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.database.CursorIndexOutOfBoundsException;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,6 +17,7 @@ import dat255.chalmers.stormystreet.model.MainModel;
 import dat255.chalmers.stormystreet.model.bus.BusTrip;
 import dat255.chalmers.stormystreet.model.bus.IBus;
 import dat255.chalmers.stormystreet.model.bus.IBusTrip;
+import dat255.chalmers.stormystreet.services.AlarmReceiver;
 
 
 public class GlobalState extends Application {
@@ -31,6 +35,8 @@ public class GlobalState extends Application {
         dataSource = new SQLiteDataSource(getApplicationContext());
         Log.i("Globalstate", "App started");
         loadModel();
+
+        startFacebookScoreUpdater();
     }
 
     public void loadModel(){
@@ -67,5 +73,15 @@ public class GlobalState extends Application {
 
     public MainModel getModel(){
         return this.model;
+    }
+
+    private void startFacebookScoreUpdater(){
+        AlarmReceiver.setModel(model);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        Intent intent = new Intent(this, AlarmReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this,0,intent,0);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,System.currentTimeMillis(),900000,
+                pendingIntent);
+        Log.d("GlobalState", "Started facebook updating");
     }
 }
