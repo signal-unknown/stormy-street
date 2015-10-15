@@ -5,11 +5,12 @@ package dat255.chalmers.stormystreet.view;
  * @since 2015-10-14
  */
 public class HighscoreCardData {
-    private String name;
+    private String name, id;
     private int score, place;
 
-    public HighscoreCardData(int place, String name, int score){
+    public HighscoreCardData(int place, String name, String id, int score){
         this.name = name;
+        this.id = id;
         this.score = score;
         this.place = place;
     }
@@ -24,5 +25,9 @@ public class HighscoreCardData {
 
     public String getName() {
         return name;
+    }
+
+    public String getId(){
+        return id;
     }
 }

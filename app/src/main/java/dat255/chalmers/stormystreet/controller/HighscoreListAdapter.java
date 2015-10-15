@@ -43,6 +43,7 @@ public class HighscoreListAdapter extends RecyclerView.Adapter<HighscoreListAdap
         holder.card.setPlace(data.getPlace());
         holder.card.setName(data.getName());
         holder.card.setScore(data.getScore());
+        holder.card.setFacebookId(data.getId());
     }
 
     @Override

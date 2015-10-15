@@ -55,8 +55,9 @@ public class FacebookAPIProxy {
                                     String user = dataArr.getJSONObject(i).getString("user");
                                     int score = Integer.parseInt(tempScore);
                                     JSONObject tempObj = new JSONObject(user);
+                                    String userId = tempObj.getString("id");
                                     String name = tempObj.getString("name");
-                                    result.add(new FacebookFriend(name, score));
+                                    result.add(new FacebookFriend(name, userId, score));
                                     Log.d("facebook", "result in proxy " + result.toString());
                                     //Log.d("FacebookAPIProxy", "score is " + score + " name is " + name );
                                 }
@@ -75,6 +76,5 @@ public class FacebookAPIProxy {
         request.executeAsync();
 
         Log.d("facebook", "i got here yolo");
-
     }
 }

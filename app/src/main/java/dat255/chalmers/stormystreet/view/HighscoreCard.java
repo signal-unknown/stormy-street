@@ -7,6 +7,8 @@ import android.util.TypedValue;
 import android.view.View;
 import android.widget.TextView;
 
+import com.facebook.login.widget.ProfilePictureView;
+
 import dat255.chalmers.stormystreet.R;
 
 /**
@@ -15,6 +17,7 @@ import dat255.chalmers.stormystreet.R;
  */
 public class HighscoreCard extends CardView {
     private TextView placeView, nameView, scoreView;
+    private ProfilePictureView pictureView;
 
     public HighscoreCard(Context context) {
         super(context);
@@ -31,6 +34,8 @@ public class HighscoreCard extends CardView {
         placeView = (TextView) findViewById(R.id.highscorecard_place);
         nameView = (TextView) findViewById(R.id.highscorecard_username);
         scoreView = (TextView) findViewById(R.id.highscorecard_score);
+        pictureView = (ProfilePictureView) findViewById(R.id.highscorecard_picture);
+        pictureView.setProfileId("1186655771349239");
     }
 
     public void setPlace(int place){
@@ -54,10 +59,11 @@ public class HighscoreCard extends CardView {
         }
     }
 
-    public void setLarge(){
-        setPadding(16, 16, 16, 16);
-        placeView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 40);
-        nameView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 40);
-        scoreView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 40);
+    public void setFacebookId(String id){
+        if(id != null){
+            this.pictureView.setProfileId(id);
+            this.pictureView.setVisibility(View.VISIBLE);
+        }
     }
+
 }

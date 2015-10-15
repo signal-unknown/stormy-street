@@ -10,12 +10,13 @@ import java.net.URL;
 public class FacebookFriend {
 
     private URL profilePicture;
-    private String name;
+    private String name, id;
     private int metersTraveled;
 
 
-    public FacebookFriend(String name, int metersTraveled){
+    public FacebookFriend(String name, String id, int metersTraveled){
         this.name = name;
+        this.id = id;
         this.metersTraveled = metersTraveled;
 
     }
@@ -25,6 +26,10 @@ public class FacebookFriend {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getId(){
+        return this.id;
     }
 
     public int getMetersTraveled() {

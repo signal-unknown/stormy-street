@@ -62,7 +62,7 @@ public class HighscoreFragment extends Fragment implements IModelListener {
         Collections.sort(friends, new ScoreComparator());
         for(int i = 0; i < friends.size(); i++){
             FacebookFriend friend = friends.get(i);
-            stats.add(new HighscoreCardData(i+1, friend.getName(), friend.getMetersTraveled()));
+            stats.add(new HighscoreCardData(i+1, friend.getName(), friend.getId(), friend.getMetersTraveled()));
         }
         recyclerViewAdapter = new HighscoreListAdapter(stats);
         cardRecyclerView.setAdapter(recyclerViewAdapter);
