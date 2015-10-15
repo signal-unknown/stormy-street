@@ -24,6 +24,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        Log.d("FacebookSUS", "Received alarm");
         if(model != null) {
             AccessToken accessToken = AccessToken.getCurrentAccessToken();
             GraphRequest request = null;
