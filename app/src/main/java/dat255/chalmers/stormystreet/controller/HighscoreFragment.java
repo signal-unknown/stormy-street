@@ -1,5 +1,6 @@
 package dat255.chalmers.stormystreet.controller;
 
+import android.hardware.camera2.params.Face;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,18 +10,23 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import dat255.chalmers.stormystreet.GlobalState;
 import dat255.chalmers.stormystreet.R;
+import dat255.chalmers.stormystreet.model.FacebookFriend;
+import dat255.chalmers.stormystreet.model.IModelListener;
 import dat255.chalmers.stormystreet.model.MainModel;
+import dat255.chalmers.stormystreet.utilities.FacebookAPIProxy;
 import dat255.chalmers.stormystreet.view.HighscoreCardData;
 
 /**
  * @author Kevin Hoogendijk  and David Fogelberg
  * @since 2015-10-13
  */
-public class HighscoreFragment extends Fragment {
+public class HighscoreFragment extends Fragment implements IModelListener {
     private MainModel model;
 
     private RecyclerView cardRecyclerView;
@@ -36,7 +42,9 @@ public class HighscoreFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        model = ((GlobalState)getActivity().getApplication()).getModel();
+        model.addListener(this);
+        FacebookAPIProxy.getScores(model);
         setupRecyclerView(view);
     }
 
@@ -46,17 +54,29 @@ public class HighscoreFragment extends Fragment {
 
         recycleViewManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         cardRecyclerView.setLayoutManager(recycleViewManager);
-        updateCards();
     }
 
     public synchronized void updateCards(){
         List<HighscoreCardData> stats = new ArrayList<>();
-        stats.add(new HighscoreCardData(1, "Kevin", 1000));
-        stats.add(new HighscoreCardData(2, "Maxim", 730));
-        stats.add(new HighscoreCardData(3, "Alexander", 700));
-        stats.add(new HighscoreCardData(3, "Alexander2", 400));
-        stats.add(new HighscoreCardData(3, "David", 200));
+        List<FacebookFriend> friends = model.getHighscoreList();
+        Collections.sort(friends, new ScoreComparator());
+        for(int i = 0; i < friends.size(); i++){
+            FacebookFriend friend = friends.get(i);
+            stats.add(new HighscoreCardData(i+1, friend.getName(), friend.getMetersTraveled()));
+        }
         recyclerViewAdapter = new HighscoreListAdapter(stats);
         cardRecyclerView.setAdapter(recyclerViewAdapter);
+    }
+
+    @Override
+    public void modelUpdated() {
+        updateCards();
+    }
+
+    class ScoreComparator implements Comparator<FacebookFriend>{
+        @Override
+        public int compare(FacebookFriend lhs, FacebookFriend rhs) {
+            return rhs.getMetersTraveled() - lhs.getMetersTraveled();
+        }
     }
 }

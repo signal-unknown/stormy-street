@@ -43,9 +43,6 @@ public class HighscoreListAdapter extends RecyclerView.Adapter<HighscoreListAdap
         holder.card.setPlace(data.getPlace());
         holder.card.setName(data.getName());
         holder.card.setScore(data.getScore());
-        if(position == 0){
-            holder.card.setLarge();
-        }
     }
 
     @Override
