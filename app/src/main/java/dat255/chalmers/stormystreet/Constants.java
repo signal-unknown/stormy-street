@@ -19,17 +19,6 @@ public class Constants {
     private static final Map<String, LatLng> busStops;//Contains all bus stops for the ElectriCity bus
     static{
         busMacVin  = new HashMap<>();
-        busMacVin.put(100020, "00:13:95:13:49:f5");
-        busMacVin.put(100021, "00:13:95:13:4b:be");
-        busMacVin.put(100022, "00:13:95:14:3b:f0");
-        busMacVin.put(171164, "00:13:95:14:69:8a");
-        busMacVin.put(171234, "00:13:95:13:49:f7");
-        busMacVin.put(171235, "00:13:95:0f:92:a4");
-        busMacVin.put(171327, "00:13:95:13:62:96");
-        busMacVin.put(171328, "00:13:95:13:4b:bc");
-        busMacVin.put(171329, "00:13:95:14:3b:f2");
-        busMacVin.put(171330, "00:13:95:13:5f:20");
-
         //Updated BSSIDs below
         busMacVin.put(100020, "04:f0:21:10:0a:07");
         busMacVin.put(100021, "04:f0:21:10:09:df");
