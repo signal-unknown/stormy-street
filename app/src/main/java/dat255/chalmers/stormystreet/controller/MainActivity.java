@@ -130,8 +130,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.menu_drawer_highscore:
                 switchFragment(TAG_HIGHSCORE, false);
-                navigationView.getMenu().findItem(R.id.menu_drawer_highscore).setChecked(true);
-                menuItem.setChecked(false);
+                menuItem.setChecked(true);
                 break;
         }
         return true;
@@ -166,7 +165,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     break;
                 case TAG_HIGHSCORE:
                     fragment = new HighscoreFragment();
-                    Log.d("MainActivty", TAG_HIGHSCORE);
                     break;
                 case TAG_PROFILE_SCREEN:
                     Intent profile = new Intent(this, ProfileActivity.class);
