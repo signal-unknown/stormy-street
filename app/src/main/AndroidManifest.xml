@@ -29,9 +29,9 @@
                 <action android:name="android.net.wifi.supplicant.CONNECTION_CHANGE" />
             </intent-filter>
         </receiver>
-        <reciever
+        <receiver
             android:name=".services.AlarmReceiver">
-        </reciever>
+        </receiver>
 
         <service
             android:name=".services.WifiService"
