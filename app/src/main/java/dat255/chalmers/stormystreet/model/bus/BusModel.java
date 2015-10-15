@@ -71,7 +71,11 @@ public class BusModel implements IBus{
     }
 
     public IGpsCoord getGPSPosition() {
-        return this.gpsPosition.clone();
+        if (gpsPosition != null) {
+            return this.gpsPosition.clone();
+        } else {
+            return null;
+        }
     }
 
     public String getDestination() {

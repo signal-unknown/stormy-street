@@ -8,9 +8,9 @@ public class GpsCoord implements IGpsCoord {
     private double latitude;
     private double longitude;
     private double speed;
-    private int direction;
+    private double direction;
 
-    public GpsCoord(double latitude, double longitude, double speed, int direction){
+    public GpsCoord(double latitude, double longitude, double speed, double direction){
         this.latitude = latitude;
         this.longitude = longitude;
         this.speed = speed;
@@ -30,7 +30,7 @@ public class GpsCoord implements IGpsCoord {
     }
 
     //The direction in degrees with north being 0
-    public int getDirection() {
+    public double getDirection() {
         return this.direction;
     }
 

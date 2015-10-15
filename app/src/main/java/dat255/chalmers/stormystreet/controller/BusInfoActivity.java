@@ -19,6 +19,7 @@ import java.util.TimerTask;
 import dat255.chalmers.stormystreet.Constants;
 import dat255.chalmers.stormystreet.GlobalState;
 import dat255.chalmers.stormystreet.R;
+import dat255.chalmers.stormystreet.model.IGpsCoord;
 import dat255.chalmers.stormystreet.model.MainModel;
 import dat255.chalmers.stormystreet.model.bus.BusNotFoundException;
 import dat255.chalmers.stormystreet.model.bus.IBus;
@@ -119,14 +120,18 @@ public class BusInfoActivity extends AppCompatActivity implements BusInfoUpdater
 
             List<StatCardData> stats = new ArrayList<>();
 
-
             stats.add(new StatCardData(bus.getNextStop(), getString(R.string.towards) + " " + bus.getDestination(), null));
             if (bus.isStopPressed()) {
-                stats.add(new StatCardData(getString(R.string.stopping),null, null));
+                stats.add(new StatCardData(getString(R.string.stopping).toUpperCase(),null, null));
             }
             stats.add(new StatCardData(Double.toString(bus.getDriverCabinTemperature()), null, celsiusIcon));
 
             stats.add(new StatCardData(bus.getAcceleratorPedalPosition() + "% ", null, speedoIcon));
+
+            IGpsCoord busPos = bus.getGPSPosition();
+            if (busPos != null) {
+                stats.add(new StatCardData(Double.toString(Math.round(bus.getGPSPosition().getSpeed())), getString(R.string.kmh), null));
+            }
 
             recyclerViewAdapter = new BusStatListAdapter(stats);
             cardRecyclerView.setAdapter(recyclerViewAdapter);

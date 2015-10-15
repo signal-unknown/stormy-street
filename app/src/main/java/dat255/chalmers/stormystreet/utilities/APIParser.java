@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.Map;
 
 import dat255.chalmers.stormystreet.BusResource;
+import dat255.chalmers.stormystreet.model.GpsCoord;
+import dat255.chalmers.stormystreet.model.IGpsCoord;
 import dat255.chalmers.stormystreet.model.bus.BusModel;
 import dat255.chalmers.stormystreet.model.bus.IBus;
 import dat255.chalmers.stormystreet.model.bus.JourneyInfo;
@@ -69,6 +71,9 @@ public class APIParser {
         IBus result = new BusModel();
         try {
             JSONArray jsonArray = new JSONArray(jsonData);
+
+            IGpsCoord joinedCoord = new GpsCoord(0, 0, 0, 0);
+
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject object = jsonArray.getJSONObject(i);
                 String resource = object.getString("resourceSpec");
@@ -120,6 +125,18 @@ public class APIParser {
                     result.setWlanCellIdValue(Integer.parseInt(object.getString(API_VALUE_IDENTIFIER), 16));
                 }else if(resource.equals("Cell_Id2_Value")) {
                     result.setWlanRssl2Value(Integer.parseInt(object.getString(API_VALUE_IDENTIFIER), 16));
+                } else if (resource.equals("Speed2_Value")) {
+                    joinedCoord = new GpsCoord(joinedCoord.getLat(), joinedCoord.getLong(), object.getDouble(API_VALUE_IDENTIFIER) * 3.6, joinedCoord.getDirection());
+                    result.setGPSPosition(joinedCoord);
+                } else if (resource.equals("Latitude2_Value")) {
+                    joinedCoord = new GpsCoord(object.getDouble(API_VALUE_IDENTIFIER), joinedCoord.getLong(), joinedCoord.getSpeed(), joinedCoord.getDirection());
+                    result.setGPSPosition(joinedCoord);
+                } else if (resource.equals("Longitude2_Value")) {
+                    joinedCoord = new GpsCoord(joinedCoord.getLat(), object.getDouble(API_VALUE_IDENTIFIER), joinedCoord.getSpeed(), joinedCoord.getDirection());
+                    result.setGPSPosition(joinedCoord);
+                } else if (resource.equals("Course2_Value")) {
+                    joinedCoord = new GpsCoord(joinedCoord.getLat(), joinedCoord.getLong(), joinedCoord.getSpeed(), object.getDouble(API_VALUE_IDENTIFIER));
+                    result.setGPSPosition(joinedCoord);
                 }
             }
         }catch (JSONException ex){
