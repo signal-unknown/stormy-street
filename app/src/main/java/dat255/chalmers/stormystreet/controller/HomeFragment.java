@@ -23,6 +23,7 @@ import dat255.chalmers.stormystreet.model.IModelListener;
 import dat255.chalmers.stormystreet.model.MainModel;
 import dat255.chalmers.stormystreet.model.bus.IBus;
 import dat255.chalmers.stormystreet.services.BusInfoUpdater;
+import dat255.chalmers.stormystreet.utilities.BusStatsUtil;
 import dat255.chalmers.stormystreet.view.StatCardData;
 
 /**
@@ -37,11 +38,6 @@ public class HomeFragment extends Fragment implements IModelListener, BusInfoUpd
 
     private MainModel model;
 
-    private Bitmap personIcon;
-    private Bitmap celsiusIcon;
-    private Bitmap speedoIcon;
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -52,10 +48,6 @@ public class HomeFragment extends Fragment implements IModelListener, BusInfoUpd
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        personIcon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_person_black_24dp);
-        celsiusIcon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_temperature_celsius_black_24dp);
-        speedoIcon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_speedometer_black_24dp);
 
         ((GlobalState)getActivity().getApplication()).getModel().addListener(this);
         setupRecyclerView(view);
@@ -111,22 +103,7 @@ public class HomeFragment extends Fragment implements IModelListener, BusInfoUpd
         if (bus != null) {
             model.addBus(bus);
 
-            List<StatCardData> stats = new ArrayList<>();
-
-            stats.add(new StatCardData(bus.getNextStop(), getString(R.string.towards) + " " + bus.getDestination(), null));
-            if (bus.isStopPressed()) {
-                stats.add(new StatCardData(getString(R.string.stopping).toUpperCase(),null, null));
-            }
-            stats.add(new StatCardData(Double.toString(bus.getDriverCabinTemperature()), null, celsiusIcon));
-
-            stats.add(new StatCardData(bus.getAcceleratorPedalPosition() + "% ", null, speedoIcon));
-
-            IGpsCoord busPos = bus.getGPSPosition();
-            if (busPos != null) {
-                stats.add(new StatCardData(Double.toString(Math.round(bus.getGPSPosition().getSpeed())), getString(R.string.kmh), null));
-            }
-
-            recyclerViewAdapter = new BusStatListAdapter(stats);
+            recyclerViewAdapter = new BusStatListAdapter(BusStatsUtil.getBusStatCards(getActivity(), bus));
             cardRecyclerView.setAdapter(recyclerViewAdapter);
         }
     }

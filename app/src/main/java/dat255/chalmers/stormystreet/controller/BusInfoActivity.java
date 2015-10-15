@@ -24,6 +24,7 @@ import dat255.chalmers.stormystreet.model.MainModel;
 import dat255.chalmers.stormystreet.model.bus.BusNotFoundException;
 import dat255.chalmers.stormystreet.model.bus.IBus;
 import dat255.chalmers.stormystreet.services.BusInfoUpdater;
+import dat255.chalmers.stormystreet.utilities.BusStatsUtil;
 import dat255.chalmers.stormystreet.view.StatCardData;
 
 /**
@@ -44,18 +45,12 @@ public class BusInfoActivity extends AppCompatActivity implements BusInfoUpdater
     private RecyclerView.Adapter recyclerViewAdapter;
     private RecyclerView.LayoutManager recycleViewManager;
 
-    private Bitmap celsiusIcon;
-    private Bitmap speedoIcon;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bus_info);
 
         isVisible = true;
-
-        celsiusIcon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_temperature_celsius_black_24dp);
-        speedoIcon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_speedometer_black_24dp);
 
         setupToolbar();
         setupRecyclerView();
@@ -118,22 +113,7 @@ public class BusInfoActivity extends AppCompatActivity implements BusInfoUpdater
         if (bus != null) {
             model.addBus(bus);
 
-            List<StatCardData> stats = new ArrayList<>();
-
-            stats.add(new StatCardData(bus.getNextStop(), getString(R.string.towards) + " " + bus.getDestination(), null));
-            if (bus.isStopPressed()) {
-                stats.add(new StatCardData(getString(R.string.stopping).toUpperCase(),null, null));
-            }
-            stats.add(new StatCardData(Double.toString(bus.getDriverCabinTemperature()), null, celsiusIcon));
-
-            stats.add(new StatCardData(bus.getAcceleratorPedalPosition() + "% ", null, speedoIcon));
-
-            IGpsCoord busPos = bus.getGPSPosition();
-            if (busPos != null) {
-                stats.add(new StatCardData(Double.toString(Math.round(bus.getGPSPosition().getSpeed())), getString(R.string.kmh), null));
-            }
-
-            recyclerViewAdapter = new BusStatListAdapter(stats);
+            recyclerViewAdapter = new BusStatListAdapter(BusStatsUtil.getBusStatCards(this, bus));
             cardRecyclerView.setAdapter(recyclerViewAdapter);
         }
     }
