@@ -19,6 +19,7 @@ public class BusStatsUtil {
 
     private static Bitmap celsiusIcon;
     private static Bitmap speedoIcon;
+    private static Bitmap personIcon;
 
     private static final String NOT_IN_TRAFFIC = "ej i trafik";
 
@@ -30,6 +31,7 @@ public class BusStatsUtil {
 
         celsiusIcon = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_temperature_celsius_black_24dp);
         speedoIcon = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_speedometer_black_24dp);
+        personIcon = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_person_black_24dp);
 
         List<StatCardData> stats = new ArrayList<>();
 
@@ -52,6 +54,8 @@ public class BusStatsUtil {
         if (busPos != null) {
             stats.add(new StatCardData(Double.toString(Math.round(bus.getGPSPosition().getSpeed())), context.getString(R.string.kmh), null));
         }
+
+        stats.add(new StatCardData(Integer.toString(bus.getOnlineUsers()), null, personIcon));
 
         return stats;
     }
