@@ -22,6 +22,9 @@ import dat255.chalmers.stormystreet.model.MainModel;
 public class AlarmReceiver extends BroadcastReceiver {
     private static MainModel model;
 
+    /**
+     * Updates the users current score to Facebook when a broadcast is received
+     */
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.d("FacebookSUS", "Received alarm");
@@ -29,7 +32,7 @@ public class AlarmReceiver extends BroadcastReceiver {
             AccessToken accessToken = AccessToken.getCurrentAccessToken();
             GraphRequest request = null;
             final long score = model.getTotalScore().getValue();
-
+            //Check if the user is logged in to Facebook and update the score
             if (accessToken != null && !accessToken.isExpired()) {
                 try {
                     request = GraphRequest.newPostRequest(
@@ -43,7 +46,7 @@ public class AlarmReceiver extends BroadcastReceiver {
                                 }
                             });
                 } catch (JSONException e) {
-                    //Should never occur
+                    //Will never occur
                     e.printStackTrace();
                 }
                 request.executeAsync();
@@ -51,6 +54,9 @@ public class AlarmReceiver extends BroadcastReceiver {
         }
     }
 
+    /**
+     * Sets the model object from which the score will be read
+     */
     public static void setModel(MainModel model){
         AlarmReceiver.model = model;
     }

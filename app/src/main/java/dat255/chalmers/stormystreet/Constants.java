@@ -57,7 +57,7 @@ public class Constants {
         busStops.put("Valand", new LatLng(57.700223, 11.975162));
         busStops.put("Götaplatsen", new LatLng(57.697597, 11.979000));
         busStops.put("Ålandsgatan", new LatLng(57.692238, 11.977710));
-        busStops.put("Chalmers tvärgatan", new LatLng(57.689735, 11.980320));
+        busStops.put("Chalmers tvärgata", new LatLng(57.689735, 11.980320));
         busStops.put("Sven Hultins plats", new LatLng(57.685809, 11.977190));
         busStops.put("Chalmersplatsen", new LatLng(57.689315, 11.973429));
         busStops.put("Kapellplatsen", new LatLng(57.693680, 11.973703));
@@ -71,6 +71,10 @@ public class Constants {
         return regNr;
     }
 
+    /**
+     * Returns a map containing names mapped to the positions of busstops of bus 55 in Gothenburg
+     * @return A map containing names mapped to the positions of busstops of bus 55 in Gothenburg
+     */
     public static Map<String, LatLng> getBusStopMap(){
         return busStops;
     }

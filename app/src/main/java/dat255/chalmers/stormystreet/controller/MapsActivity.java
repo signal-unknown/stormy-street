@@ -109,6 +109,10 @@ public class MapsActivity extends AppCompatActivity implements BusPositionListen
         }
     }
 
+    /**
+     * Updates the positions of the busses
+     * @param positions A map containing positions mapped to a proper bus VIN number
+     */
     @Override
     public void updatePositions(Map<TimedAndAngledPosition, String> positions) {
         if(mMap!=null){
@@ -124,8 +128,8 @@ public class MapsActivity extends AppCompatActivity implements BusPositionListen
                 options.flat(true);
                 options.title(positions.get(position));
                 options.icon(BitmapDescriptorFactory.fromResource(R.drawable.navigation));
-                options.anchor(0.5f,0.5f);
-                options.rotation((float)position.getAngle());
+                options.anchor(0.5f,0.5f);//Rotate around center of icon
+                options.rotation((float)position.getAngle());//Rotate depending on direction of the bus
                 busMarkers.add(mMap.addMarker(options));
             }
         }
@@ -140,9 +144,13 @@ public class MapsActivity extends AppCompatActivity implements BusPositionListen
         }
     }
 
+    /**
+     * Will take the user to a screen with info about a bus if a bus's marker is pressed onscreen
+     * @param marker The marker that was pressed
+     */
     @Override
     public boolean onMarkerClick(Marker marker) {
-        if(busMarkers.contains(marker)) {
+        if(busMarkers.contains(marker)) {//Check if the marker pressed was a bus or a bus stop
             Intent busInfo = new Intent(this, BusInfoActivity.class);
             busInfo.putExtra(Constants.EXTRA_BUS_INFO_BUS_ID, Integer.parseInt(marker.getTitle()));
             startActivity(busInfo);

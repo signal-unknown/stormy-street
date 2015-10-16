@@ -36,6 +36,11 @@ public class BusPositionUpdater extends AsyncTask<Void,Void,Map<TimedAndAngledPo
         this.bpl = bpl;
     }
 
+    /**
+     * Will fetch the positions of all active ElectriCity busses and create a map of their most
+     * recent positions and the VIN number associated with the bus
+     * @return A map with positions and VIN numbers of busses
+     */
     @Override
     protected Map<TimedAndAngledPosition, String> doInBackground(Void... params) {
         //Fetch data
@@ -54,6 +59,10 @@ public class BusPositionUpdater extends AsyncTask<Void,Void,Map<TimedAndAngledPo
         return map;
     }
 
+    /**
+     * Update all listeners with the data that was fetched
+     * @param map The map that will be sent to the listeners. The result of doInBackground();
+     */
     @Override
     protected void onPostExecute(Map<TimedAndAngledPosition, String> map){
         bpl.updatePositions(map);

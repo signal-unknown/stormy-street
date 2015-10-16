@@ -106,11 +106,13 @@ public class APIProxy {
         StringBuffer jsonGPSData = new StringBuffer("");
         HttpsURLConnection http = null;
         try {
+            //Initialize, authorize and open connection to the ElectriCity API
             URL urlLat = new URL(url);
             http = (HttpsURLConnection) urlLat.openConnection();
             http.setRequestProperty("Authorization", "Basic " + APIConstants.ELECTRICITY_API_KEY);
             http.setRequestMethod("GET");
             http.connect();
+            //Read the data from the server
             InputStream is = http.getInputStream();
             BufferedReader reader = new BufferedReader(new InputStreamReader(is));
             String line = "";
@@ -119,10 +121,10 @@ public class APIProxy {
             }
 
         } catch (MalformedURLException e) {
-            //TODO deal with it
+            //Should never occur
             e.printStackTrace();
         } catch (IOException e) {
-            //TODO deal with it
+            //TODO handle this, will occur when user has no internet or the ElectriCity servers are down
             e.printStackTrace();
         }
 

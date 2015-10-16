@@ -75,6 +75,10 @@ public class GlobalState extends Application {
         return this.model;
     }
 
+    /**
+     * Starts sending the AlarmReceiver an alarm ever fifteen minutes which in turn
+     * updates the users current score to facebook
+     */
     private void startFacebookScoreUpdater(){
         AlarmReceiver.setModel(model);
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
