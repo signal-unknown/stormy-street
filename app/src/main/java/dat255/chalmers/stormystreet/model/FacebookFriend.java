@@ -1,15 +1,15 @@
 package dat255.chalmers.stormystreet.model;
 
-import com.facebook.AccessToken;
-
 import java.net.URL;
 
 /**
     @author Alexander Karlsson && Maxim Goretskyy
+
+    Class describing FacebookFriends, they are identified by a name, id and their score/meterstraveled
+    in the application.
  */
 public class FacebookFriend {
-
-    private URL profilePicture;
+    
     private String name, id;
     private int metersTraveled;
 
