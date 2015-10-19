@@ -35,7 +35,6 @@ public class HighscoreCard extends CardView {
         nameView = (TextView) findViewById(R.id.highscorecard_username);
         scoreView = (TextView) findViewById(R.id.highscorecard_score);
         pictureView = (ProfilePictureView) findViewById(R.id.highscorecard_picture);
-        pictureView.setProfileId("1186655771349239");
     }
 
     public void setPlace(int place){
@@ -53,10 +52,8 @@ public class HighscoreCard extends CardView {
     }
 
     public void setScore(int score){
-        if(score != 0){
             this.scoreView.setText(Integer.toString(score));
             this.scoreView.setVisibility(View.VISIBLE);
-        }
     }
 
     public void setFacebookId(String id){
