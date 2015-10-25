@@ -18,6 +18,9 @@ import dat255.chalmers.stormystreet.utilities.APIParser;
 import dat255.chalmers.stormystreet.utilities.APIProxy;
 
 /**
+ * Service that constantly updates the currenttip.
+ * This is to ensure the model always has the right distance even though the bustrip is not saved
+ * to the database
  * @author Kevin Hoogendijk
  * @since 2015-10-05
  */
@@ -67,6 +70,12 @@ public class CurrentTripService extends IntentService{
         };
         mHandler.post(mRun);
     }
+
+    /**
+     * Each time it is updated it fetches the score from the electricity api
+     * and parses it into a distance
+     * the model gets updated with the new distance
+     */
     public void updateCurrentTrip(){
         Log.d("CurrentTripService", "running update");
         MainModel model = ((GlobalState) getApplication()).getModel();
