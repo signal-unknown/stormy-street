@@ -1,6 +1,8 @@
 package dat255.chalmers.stormystreet.model;
 
 /**
+ * Representing the current trip that you are on right now
+ * This trip only requires a start timestamp and vin number
  * @author Kevin Hoogendijk
  * @since 2015-09-28
  */

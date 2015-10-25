@@ -1,6 +1,8 @@
 package dat255.chalmers.stormystreet.model;
 
 /**
+ * Representing a user and all that is related to it for example which bus he/she is on
+ * Also holds statistics for the user
  * @author Kevin Hoogendijk
  * @since 2015-09-29
  */

@@ -32,6 +32,8 @@ import dat255.chalmers.stormystreet.utilities.FacebookAPIProxy;
 import dat255.chalmers.stormystreet.view.HighscoreCardData;
 
 /**
+ * Fragment that listens to the model and updates highscore list whenever model is changed
+ * The score is fetched froom facebook after login is done
  * @author Kevin Hoogendijk  and David Fogelberg
  * @since 2015-10-13
  */
@@ -72,7 +74,10 @@ public class HighscoreFragment extends Fragment implements IModelListener, Faceb
         recycleViewManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         cardRecyclerView.setLayoutManager(recycleViewManager);
     }
-
+    /**
+     * updates all the cards in the view by creating a new list with stats and adding all
+     * FacebookFriends to it
+     */
     public synchronized void updateCards(){
         List<HighscoreCardData> stats = new ArrayList<>();
         List<FacebookFriend> friends = model.getHighscoreList();
@@ -88,6 +93,11 @@ public class HighscoreFragment extends Fragment implements IModelListener, Faceb
         cardRecyclerView.setAdapter(recyclerViewAdapter);
     }
 
+    /**
+     * A setup for the facebook login button and session
+     * If there already is a facebook session, the button will not be visible and the
+     * highscores will be loaded immediately
+     */
     private void setupFacebook() {
         int buttonPadding = getResources().getDimensionPixelSize(R.dimen.facebook_button_padding);
         facebookLoginButton.setPadding(buttonPadding, buttonPadding, buttonPadding, buttonPadding);

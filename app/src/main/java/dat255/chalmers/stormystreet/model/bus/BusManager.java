@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Keeps track of all the busses, has methods for getting and setting and so on
  * @author Kevin Hoogendijk
  * @since 2015-09-24
  */

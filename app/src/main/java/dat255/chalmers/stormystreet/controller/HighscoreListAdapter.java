@@ -11,6 +11,7 @@ import dat255.chalmers.stormystreet.view.HighscoreCard;
 import dat255.chalmers.stormystreet.view.HighscoreCardData;
 
 /**
+ * Adapter for manageing highscore cards
  * @author Kevin Hoogendijk
  * @since 2015-10-14
  */
@@ -37,6 +38,11 @@ public class HighscoreListAdapter extends RecyclerView.Adapter<HighscoreListAdap
         return new ViewHolder(card);
     }
 
+    /**
+     * Fills the card with data if it is active
+     * @param holder A viewholder that holds the card
+     * @param position the what card is activated
+     */
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         HighscoreCardData data = dataset.get(position);

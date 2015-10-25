@@ -12,6 +12,7 @@ import com.facebook.login.widget.ProfilePictureView;
 import dat255.chalmers.stormystreet.R;
 
 /**
+ * This is a class for displaying highscore cards in the highscore view
  * @author Kevin Hoogendijk
  * @since 2015-10-14
  */

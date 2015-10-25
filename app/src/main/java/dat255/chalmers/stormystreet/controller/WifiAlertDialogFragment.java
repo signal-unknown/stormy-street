@@ -15,6 +15,8 @@ import android.widget.Toast;
 import dat255.chalmers.stormystreet.R;
 
 /**
+ * Alert window that is displayed when the device has wifi disabled
+ * Since the app is dependent on wifi, this was neccessary
  * @author Kevin Hoogendijk
  * @since 2015-10-02
  */
@@ -22,8 +24,10 @@ public class WifiAlertDialogFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(final Bundle savedInstanceState){
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
         builder.setTitle(R.string.wifi_alert_title)
                 .setMessage(R.string.wifi_alert_text)
+                //Sets the buttons
                 .setPositiveButton(R.string.wifi_alert_positive, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

@@ -14,9 +14,9 @@ import dat255.chalmers.stormystreet.model.bus.IBus;
 import dat255.chalmers.stormystreet.model.bus.IBusTrip;
 
 /**
+ * The toplevel model of the app
  * @author Kevin Hoogendijk
  * @since 2015-09-24
- * The toplevel model of the app
  */
 public class MainModel {
     private BusManager busManager;

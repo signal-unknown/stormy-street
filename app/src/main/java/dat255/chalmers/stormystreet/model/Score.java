@@ -1,6 +1,7 @@
 package dat255.chalmers.stormystreet.model;
 
 /**
+ * Class representing score in any way
  * @author Kevin Hoogendijk
  * @since 2015-09-28
  */

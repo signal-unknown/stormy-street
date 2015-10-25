@@ -1,6 +1,8 @@
 package dat255.chalmers.stormystreet.model;
 
 /**
+ * Representiing a gps coordinate with long, lat, speed and direction
+ * Useful for storing coordinates after parsing
  * @author Kevin Hoogendijk
  * @since 2015-09-28
  */

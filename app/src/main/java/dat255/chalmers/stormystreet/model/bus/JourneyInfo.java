@@ -3,6 +3,7 @@ package dat255.chalmers.stormystreet.model.bus;
 import dat255.chalmers.stormystreet.model.IJourneyInfo;
 
 /**
+ * This is a class representing a destination
  * @author Kevin Hoogendijk
  * @since 2015-09-28
  */

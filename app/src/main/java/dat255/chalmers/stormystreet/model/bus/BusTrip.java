@@ -1,6 +1,7 @@
 package dat255.chalmers.stormystreet.model.bus;
 
 /**
+ * Model class representing a bustrip this is so we can get interesting data like average score
  * @author Kevin Hoogendijk
  * @since 2015-09-29
  */

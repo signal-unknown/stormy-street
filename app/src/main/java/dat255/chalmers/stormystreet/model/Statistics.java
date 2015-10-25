@@ -35,6 +35,10 @@ public class Statistics implements IStatistics{
         this.busTrips = new ArrayList<>();
     }
 
+    /**
+     * Sums the total score of all bustrips and returns it
+     * @return total score
+     */
     public IScore getTotalScore() {
         long totalScore = 0;
         for(IBusTrip busTrip:busTrips){
@@ -43,6 +47,13 @@ public class Statistics implements IStatistics{
         return new Score(totalScore, "km");
     }
 
+    /**
+     * Not yet used in the app but more of a proof of concept
+     * This function also need refactoring
+     * It checks all of the bustrips of a user and calculates the amount of score the user collects
+     * in average during a week
+     * @return
+     */
     public long getWeeklyAverageScore() {
 
         List<IBusTrip> trips = getAllBusTrips();
@@ -63,11 +74,13 @@ public class Statistics implements IStatistics{
 
         long tempWeekStart = startOfWeek;
 
+        //Creates a list with the timestamp of the first day in each week starting from the first
         do {
             weeklyTrips.put(tempWeekStart, new ArrayList<IBusTrip>());
             tempWeekStart = tempWeekStart + 7 * 24 * 60 * 60 * 1000;
         } while (tempWeekStart < System.currentTimeMillis());
 
+        //Places each bustrip in the correct week
         for (IBusTrip trip : getAllBusTrips()) {
             List<Long> weekStarts = new ArrayList<>(weeklyTrips.keySet());
             Collections.sort(weekStarts, new WeekStartSetComparator());
@@ -80,6 +93,7 @@ public class Statistics implements IStatistics{
             }
         }
 
+        //Calculates the sujm of each week
         List<Long> weekSum = new ArrayList<>();
         for (List<IBusTrip> tripList : weeklyTrips.values()) {
             long sum = 0;
@@ -89,14 +103,20 @@ public class Statistics implements IStatistics{
             weekSum.add(sum);
         }
 
+        //Calculates the total sum of all weeks
         long totalSum = 0;
         for (long sum : weekSum) {
             totalSum += sum;
         }
 
+        //Returns the average score
         return Math.round((double)totalSum / weekSum.size());
     }
 
+    /**
+     * Get the total time spent on a bus
+     * @return total time spent
+     */
     public long getTimeSpentOnBus() {
         long totaltimeSpent = 0;
         for(IBusTrip busTrip:busTrips){
