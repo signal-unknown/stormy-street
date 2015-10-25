@@ -100,10 +100,6 @@ public class MainModel {
         }
     }
 
-    public String getCurrentUsername(){
-        return currentUser.getName();
-    }
-
     public boolean getIsOnBus(){
         return currentUser.getIsOnBus();
     }
