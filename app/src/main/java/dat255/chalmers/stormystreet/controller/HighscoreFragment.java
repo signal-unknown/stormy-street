@@ -3,6 +3,7 @@ package dat255.chalmers.stormystreet.controller;
 import android.content.Intent;
 import android.hardware.Camera;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -32,10 +34,10 @@ import dat255.chalmers.stormystreet.utilities.FacebookAPIProxy;
 import dat255.chalmers.stormystreet.view.HighscoreCardData;
 
 /**
- * Fragment that listens to the model and updates highscore list whenever model is changed
- * The score is fetched froom facebook after login is done
- * @author Kevin Hoogendijk  and David Fogelberg
- * @since 2015-10-13
+ * This view represents a highscore list that will show a list of the user's Facebook friends and
+ * their respective score. The people are sorted based on their score.
+ *
+ * @author Kevin Hoogendijk, David Fogelberg
  */
 public class HighscoreFragment extends Fragment implements IModelListener, FacebookCallback<LoginResult> {
     private MainModel model;
@@ -47,6 +49,7 @@ public class HighscoreFragment extends Fragment implements IModelListener, Faceb
 
     private CallbackManager facebookCallbackManager;
 
+    // Permissions for facebook API
     private static final String FACEBOOK_USER_FRIENDS = "user_friends";
     private static final String FACEBOOK_USER_GAMES = "user_games_activity";
 
@@ -60,9 +63,12 @@ public class HighscoreFragment extends Fragment implements IModelListener, Faceb
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         facebookLoginButton = (LoginButton) view.findViewById(R.id.highscore_facebook_login_button);
+
         model = ((GlobalState)getActivity().getApplication()).getModel();
-        model.addListener(this);
+        model.addListener(this); // Listen to score updates in the model
         FacebookAPIProxy.getScores(model);
+
+        // Setup view components
         setupRecyclerView(view);
         setupFacebook();
     }
@@ -119,6 +125,7 @@ public class HighscoreFragment extends Fragment implements IModelListener, Faceb
 
     @Override
     public void modelUpdated() {
+        // New data from model, update UI
         updateCards();
     }
 
@@ -126,7 +133,7 @@ public class HighscoreFragment extends Fragment implements IModelListener, Faceb
     public void onSuccess(LoginResult loginResult) {
         facebookLoginButton.setVisibility(View.GONE);
         cardRecyclerView.setVisibility(View.VISIBLE);
-        FacebookAPIProxy.getScores(((GlobalState)getActivity().getApplication()).getModel());
+        FacebookAPIProxy.getScores(((GlobalState) getActivity().getApplication()).getModel());
         updateCards();
     }
 
@@ -138,14 +145,22 @@ public class HighscoreFragment extends Fragment implements IModelListener, Faceb
 
     @Override
     public void onCancel() {
-
+        if (getView() != null) {
+            Snackbar.make(getView(), getString(R.string.error_facebook_cancel), Snackbar.LENGTH_LONG).show();
+        }
     }
 
     @Override
     public void onError(FacebookException e) {
-
+        Log.e("HIGHSCORE", e.getMessage());
+        if (getView() != null) {
+            Snackbar.make(getView(), getString(R.string.error_facebook_onError), Snackbar.LENGTH_LONG).show();
+        }
     }
 
+    /**
+     * This comparator sorts facebook friends based on their app score
+     */
     class ScoreComparator implements Comparator<FacebookFriend>{
         @Override
         public int compare(FacebookFriend lhs, FacebookFriend rhs) {

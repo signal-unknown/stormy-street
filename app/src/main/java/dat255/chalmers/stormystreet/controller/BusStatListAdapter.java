@@ -11,8 +11,9 @@ import dat255.chalmers.stormystreet.view.StatCardData;
 import dat255.chalmers.stormystreet.view.StatCard;
 
 /**
+ * This implementation handles bus info cards that will be shown in a RecyclerView (list).
+ *
  * @author Alexander Håkansson
- * @since 2015-09-24
  */
 public class BusStatListAdapter extends RecyclerView.Adapter<BusStatListAdapter.ViewHolder> {
 

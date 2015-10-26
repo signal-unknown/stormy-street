@@ -24,8 +24,10 @@ import dat255.chalmers.stormystreet.utilities.BusStatsUtil;
 import dat255.chalmers.stormystreet.view.StatCardData;
 
 /**
+ * This view represents the home screen. It shows the uses score and info about the current bus
+ * that the user is on (if on any).
+ *
  * @author Alexander Håkansson
- * @since 2015-09-22
  */
 public class HomeFragment extends Fragment implements IModelListener, BusInfoUpdater.IBusInfoListener{
 
@@ -39,7 +41,6 @@ public class HomeFragment extends Fragment implements IModelListener, BusInfoUpd
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_home, container, false);
-
     }
 
     @Override
@@ -63,7 +64,7 @@ public class HomeFragment extends Fragment implements IModelListener, BusInfoUpd
         model = ((GlobalState) getActivity().getApplication()).getModel();
         cardRecyclerView = (RecyclerView) view.findViewById(R.id.home_recyclerview);
 
-        // use a linear layout manager
+        // use a grid layout manager
         if (getResources().getConfiguration().orientation != Configuration.ORIENTATION_LANDSCAPE) {
             recycleViewManager = new GridLayoutManager(getActivity(), 2); // 2 columns if vertical
         } else {
@@ -74,7 +75,7 @@ public class HomeFragment extends Fragment implements IModelListener, BusInfoUpd
             @Override
             public int getSpanSize(int position) {
                 if (position == 0 || position == 1) {
-                    return 2;
+                    return 2; // The first and second card should be larger
                 } else {
                     return 1;
                 }
@@ -83,6 +84,7 @@ public class HomeFragment extends Fragment implements IModelListener, BusInfoUpd
 
         cardRecyclerView.setLayoutManager(recycleViewManager);
 
+        // Force update UI
         modelUpdated();
     }
 
@@ -94,6 +96,7 @@ public class HomeFragment extends Fragment implements IModelListener, BusInfoUpd
             // Starting thread for getting data from model
             new BusInfoUpdater(this).execute(model.getCurrentTrip().getCurrentVinNumber());
         } else {
+            // Must run on UI thread
             if (Looper.myLooper() == Looper.getMainLooper()) {
                 updatePoints();
             } else {
@@ -120,14 +123,12 @@ public class HomeFragment extends Fragment implements IModelListener, BusInfoUpd
     }
 
 
-    public synchronized void updateCards(final IBus bus){
+    private synchronized void updateCards(final IBus bus){
         if (bus != null) {
             model.addBus(bus);
 
             List<StatCardData> stats = new ArrayList<>();
-
             stats.add(new StatCardData(model.getTotalPlusCurrentScore().toString(), getString(R.string.points), null));;
-
             stats.addAll(BusStatsUtil.getBusStatCards(getActivity(), bus));
 
             recyclerViewAdapter = new BusStatListAdapter(stats);

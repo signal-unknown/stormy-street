@@ -1,8 +1,6 @@
 package dat255.chalmers.stormystreet.controller;
 
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
@@ -11,28 +9,28 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import dat255.chalmers.stormystreet.Constants;
 import dat255.chalmers.stormystreet.GlobalState;
 import dat255.chalmers.stormystreet.R;
-import dat255.chalmers.stormystreet.model.IGpsCoord;
 import dat255.chalmers.stormystreet.model.MainModel;
 import dat255.chalmers.stormystreet.model.bus.BusNotFoundException;
 import dat255.chalmers.stormystreet.model.bus.IBus;
 import dat255.chalmers.stormystreet.services.BusInfoUpdater;
 import dat255.chalmers.stormystreet.utilities.BusStatsUtil;
-import dat255.chalmers.stormystreet.view.StatCardData;
 
 /**
+ * This class if for representing information about bus collected from the ElectriCity API. The bus
+ * to collect info from is identified by its VIN number (from the API) which must be sent in a bundle
+ * as the activity intent is launched.
+ *
  * @author David Fogelberg, Alexander Håkansson
  */
 public class BusInfoActivity extends AppCompatActivity implements BusInfoUpdater.IBusInfoListener {
 
-    private static final int UPDATE_INTERVAL = 1500; // How often the bus info will update
+    private static final int UPDATE_INTERVAL = 1500; // How often the bus info will update from the API
 
     private Toolbar toolbar;
 
@@ -52,8 +50,10 @@ public class BusInfoActivity extends AppCompatActivity implements BusInfoUpdater
 
         isVisible = true;
 
+        // Setup view components
         setupToolbar();
         setupRecyclerView();
+
         getBusVIN();
 
         // The activity might be finishing if it can't get the bus with the VIN number provided
@@ -109,6 +109,7 @@ public class BusInfoActivity extends AppCompatActivity implements BusInfoUpdater
         }
     }
 
+    // Updates the UI with the bus info
     private void updateUI(final IBus bus) {
         if (bus != null) {
             model.addBus(bus);
@@ -120,6 +121,7 @@ public class BusInfoActivity extends AppCompatActivity implements BusInfoUpdater
 
     @Override
     public void busUpdated(final IBus bus) {
+        // Check if on UI thread
         if (Looper.myLooper() == Looper.getMainLooper()) {
             updateUI(bus);
         } else {
@@ -144,9 +146,7 @@ public class BusInfoActivity extends AppCompatActivity implements BusInfoUpdater
 
     private void setupRecyclerView() {
         cardRecyclerView = (RecyclerView) findViewById(R.id.businfo_list);
-
         recycleViewManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-
         cardRecyclerView.setLayoutManager(recycleViewManager);
     }
 }

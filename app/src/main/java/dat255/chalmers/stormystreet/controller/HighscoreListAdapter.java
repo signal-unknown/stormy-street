@@ -11,9 +11,10 @@ import dat255.chalmers.stormystreet.view.HighscoreCard;
 import dat255.chalmers.stormystreet.view.HighscoreCardData;
 
 /**
- * Adapter for manageing highscore cards
+ * This list adapter implementation handles the users facebook friends in a RecyclerView
+ *
  * @author Kevin Hoogendijk
- * @since 2015-10-14
+ * @see RecyclerView
  */
 public class HighscoreListAdapter extends RecyclerView.Adapter<HighscoreListAdapter.ViewHolder>{
 

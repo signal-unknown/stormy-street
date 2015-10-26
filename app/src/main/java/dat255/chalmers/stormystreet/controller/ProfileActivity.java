@@ -7,6 +7,7 @@ import android.graphics.Point;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateUtils;
@@ -39,6 +40,8 @@ public class ProfileActivity extends AppCompatActivity implements FacebookCallba
     private ProfilePictureView profileImageView;
     private AppBarLayout appBarLayout;
 
+    private View rootView;
+
     private LoginButton facebookLoginButton;
 
     private TextView textPoints, textTime, textCO2;
@@ -53,6 +56,8 @@ public class ProfileActivity extends AppCompatActivity implements FacebookCallba
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+        rootView = findViewById(R.id.profile_activity_root);
 
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         appBarLayout = (AppBarLayout) findViewById(R.id.app_bar_layout);
@@ -167,11 +172,12 @@ public class ProfileActivity extends AppCompatActivity implements FacebookCallba
 
     @Override
     public void onCancel() {
-
+        Snackbar.make(rootView, getString(R.string.error_facebook_cancel), Snackbar.LENGTH_LONG).show();
     }
 
     @Override
     public void onError(FacebookException e) {
-
+        Log.e("HIGHSCORE", e.getMessage());
+        Snackbar.make(rootView, getString(R.string.error_facebook_onError), Snackbar.LENGTH_LONG).show();
     }
 }

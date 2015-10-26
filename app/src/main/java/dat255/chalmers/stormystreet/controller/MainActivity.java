@@ -24,6 +24,12 @@ import android.view.View;
 import dat255.chalmers.stormystreet.GlobalState;
 import dat255.chalmers.stormystreet.R;
 
+/**
+ * This activity acts as the root of the app. It will contain the menu and handles the navigation
+ * between screens.
+ *
+ * @author Alexander Håkansson
+ */
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private FragmentManager fragmentManager;
@@ -53,9 +59,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         setupFragments();
 
+        // Check if WiFi is enabled, otherwise prompt to start it
+        WifiManager wifi = (WifiManager)getSystemService(Context.WIFI_SERVICE);
+        if (!wifi.isWifiEnabled()){
+            WifiAlertDialogFragment alert = new WifiAlertDialogFragment();
+            alert.show(fragmentManager, "Wifi alert");
+        }
+
         toolbar = (Toolbar) findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
         setupNavigationDrawer();
+
+        // Need to check for specific permission in Android Marshmallow and higher
         if (android.os.Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1) {
             checkPermissions();
         }
@@ -75,22 +90,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         if (drawerToggle.onOptionsItemSelected(item)) {
             // Open the navigation drawer
             return true;
-        } else if (item.getItemId() == R.id.action_settings) {
-            ((GlobalState)getApplication()).getModel().getUserStatistics().getWeeklyAverageScore();
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -112,20 +116,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout.closeDrawers();
         switch (menuItem.getItemId()) {
             case R.id.menu_drawer_home:
-                switchFragment(TAG_HOME_SCREEN, false);
+                switchFragment(TAG_HOME_SCREEN);
+                menuItem.setChecked(true);
                 break;
             case R.id.menu_drawer_profile:
-                switchFragment(TAG_PROFILE_SCREEN, false);
+                switchFragment(TAG_PROFILE_SCREEN);
                 navigationView.getMenu().findItem(R.id.menu_drawer_home).setChecked(true);
                 menuItem.setChecked(false);
                 break;
             case R.id.menu_drawer_map:
-                switchFragment(TAG_MAP_SCREEN, false);
+                switchFragment(TAG_MAP_SCREEN);
                 navigationView.getMenu().findItem(R.id.menu_drawer_home).setChecked(true);
                 menuItem.setChecked(false);
                 break;
             case R.id.menu_drawer_highscore:
-                switchFragment(TAG_HIGHSCORE, false);
+                switchFragment(TAG_HIGHSCORE);
                 menuItem.setChecked(true);
                 break;
         }
@@ -138,7 +143,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         outState.putString(KEY_CURRENT_FRAGMENT_TAG, currentFragmentTag);
     }
 
-    private void switchFragment(final String fragmentTag, final boolean addToBackStack) {
+    private void switchFragment(final String fragmentTag) {
         fragmentManager = getSupportFragmentManager();
 
         currentFragmentTag = fragmentTag;
@@ -176,11 +181,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     break;
             }
         }
-        WifiManager wifi = (WifiManager)getSystemService(Context.WIFI_SERVICE);
-        if(!wifi.isWifiEnabled()){
-            WifiAlertDialogFragment alert = new WifiAlertDialogFragment();
-            alert.show(fragmentManager, "Wifi alert");
-        }
+
         transaction.replace(R.id.fragment_container, fragment, currentFragmentTag);
         transaction.addToBackStack(null);
         transaction.commit();
@@ -215,21 +216,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @TargetApi(Build.VERSION_CODES.M)
     public void checkPermissions(){
-        if(checkSelfPermission(android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+        if (checkSelfPermission(android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
             requestPermissions(new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSION_LOCATION);
 
         }
     }
 
-    public void onRequestPermissionResult(int requestCode,
-                                          String permissions[], int[] grantResults){
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch(requestCode){
             case MY_PERMISSION_LOCATION:{
-                //close application if permission isnt granted
-                if(!(grantResults[0] == PackageManager.PERMISSION_GRANTED)){
-                    //android.os.Process.killProcess(android.os.Process.myPid());
+                // Attempt to close app if permission not granted
+                if (!(grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                    finish();
                 }
-                return;
             }
         }
     }

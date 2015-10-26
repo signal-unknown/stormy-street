@@ -28,12 +28,20 @@ import dat255.chalmers.stormystreet.R;
 import dat255.chalmers.stormystreet.services.BusPositionUpdater;
 import dat255.chalmers.stormystreet.utilities.TimedAndAngledPosition;
 
+/**
+ * This screen represents a map with all the buses connected to the ElectriCity API pointed out.
+ * Their position will live update and show detailed information when pressed on.
+ *
+ * @author Alexander Karlsson
+ */
 public class MapsActivity extends AppCompatActivity implements BusPositionListener, GoogleMap.OnMarkerClickListener {
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     private Toolbar toolbar;
     private boolean isVisible;
     private List<Marker> busMarkers;
+
+    private static final int UPDATE_INTERVAL = 500;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,11 +123,12 @@ public class MapsActivity extends AppCompatActivity implements BusPositionListen
      */
     @Override
     public void updatePositions(Map<TimedAndAngledPosition, String> positions) {
-        if(mMap!=null){
+        if(mMap != null){
             //Clear map of old bus markers
-            for(Marker oldMarker : busMarkers){
+            for (Marker oldMarker : busMarkers) {
                 oldMarker.remove();
             }
+
             //Add a marker for each bus
             Set<TimedAndAngledPosition> positionSet = positions.keySet();
             for(TimedAndAngledPosition position:positionSet){
@@ -133,14 +142,14 @@ public class MapsActivity extends AppCompatActivity implements BusPositionListen
                 busMarkers.add(mMap.addMarker(options));
             }
         }
-        //Get new positions after 500 millisconds if the activity is visible onscreen
+        //Get new positions after the specified interval if the activity is visible onscreen
         if(isVisible) {
             new Timer().schedule(new TimerTask() {
                 @Override
                 public void run() {
                     new BusPositionUpdater(MapsActivity.this).execute();
                 }
-            }, 500);
+            }, UPDATE_INTERVAL);
         }
     }
 
@@ -150,12 +159,14 @@ public class MapsActivity extends AppCompatActivity implements BusPositionListen
      */
     @Override
     public boolean onMarkerClick(Marker marker) {
-        if(busMarkers.contains(marker)) {//Check if the marker pressed was a bus or a bus stop
+        //Check if the marker pressed was a bus or a bus stop
+        if (busMarkers.contains(marker)) {
+            // Open a new screen with detailed bus info
             Intent busInfo = new Intent(this, BusInfoActivity.class);
-            busInfo.putExtra(Constants.EXTRA_BUS_INFO_BUS_ID, Integer.parseInt(marker.getTitle()));
+            busInfo.putExtra(Constants.EXTRA_BUS_INFO_BUS_ID, Integer.parseInt(marker.getTitle())); // Add the bus VIN so it can be identified in the next screen
             startActivity(busInfo);
             return true;
-        }else{
+        } else {
             return false;
         }
     }

@@ -27,6 +27,9 @@
     <string name="wifi_alert_neutral">Enable</string>
     <string name="wifi_alert_negative_toast">Bus Battle requires WiFi enabled to work</string>
 
+    <string name="error_facebook_cancel">You need to login for highscores to work.</string>
+    <string name="error_facebook_onError">Something went wrong, try again.</string>
+
     <string name="bus">Bus</string>
 
     <string name="points">Points</string>

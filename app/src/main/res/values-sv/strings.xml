@@ -28,4 +28,6 @@
     <string name="wifi_alert_positive">Inställningar</string>
     <string name="wifi_alert_text">Will du aktivera WiFi</string>
     <string name="wifi_alert_title">WiFi är avaktiverat</string>
+    <string name="error_facebook_cancel">Du måste logga in för att topplistan ska fungera.</string>
+    <string name="error_facebook_onError">Något gick fel, försök igen.</string>
 </resources>
