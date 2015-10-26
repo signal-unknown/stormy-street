@@ -4,6 +4,8 @@ import com.google.android.gms.maps.model.LatLng;
 
 /**
  * Class for handling GPS positions with timestamps and angles
+ *
+ * @author Alexander Karlsson
  */
 public class TimedAndAngledPosition {
 

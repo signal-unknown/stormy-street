@@ -32,9 +32,9 @@ public class APIParser {
     private APIParser(){
 
     }
-    /*
-        All possible bus resources should be defined in BusResource Enum.
-        @return Latest updated value for a given bus, resource and timeframe.
+    /**
+     *  All possible bus resources should be defined in BusResource Enum.
+     *  @return Latest updated value for a given bus, resource and timeframe.
      */
     public synchronized static String getBusResource(int busVin, long startTime, long endTime, BusResource busResource){
         String jsonAllData = APIProxy.getBusInfo(busVin, startTime, endTime);
@@ -61,8 +61,8 @@ public class APIParser {
         Log.d("Apiproxy", "Last updated value " + result.get(result.size() - 1));
         return result.get(result.size()-1);//get the last element, last updated value in the resource
     }
-    /*
-        Get latest info about the bus and return the bus.
+    /**
+     *  Get latest info about the bus and return the bus.
      */
     public synchronized static IBus getBusInfo(int busVin){
         long startTime = System.currentTimeMillis() - BUS_INFO_UPDATE_INTERVAL;

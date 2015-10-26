@@ -13,6 +13,9 @@ import dat255.chalmers.stormystreet.model.bus.IBus;
 import dat255.chalmers.stormystreet.view.StatCardData;
 
 /**
+ * A utility class for turning bus data into view cards that can be shown in a recycler view. This
+ * is needed in multiple points in the app, which is why it's in a separate class.
+ *
  * @author Alexander Håkansson
  */
 public class BusStatsUtil {

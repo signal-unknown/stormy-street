@@ -1,6 +1,5 @@
 package dat255.chalmers.stormystreet.services;
 
-import android.app.ActivityManager;
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
@@ -54,11 +53,11 @@ public class WifiService extends IntentService {
     }
 
 
-    /*
-        Receives intent from WifiReceiver.
-        If you are near a bus (by MAC-address range) then start counting, otherwise stop counting
-        incase you moved away from a bus and finished your trip.
-        If your wifi state changed, check if you finished your trip as well. AKA Wifi turned off.
+    /**
+     *  Receives intent from WifiReceiver.
+     *  If you are near a bus (by MAC-address range) then start counting, otherwise stop counting
+     *  incase you moved away from a bus and finished your trip.
+     *  If your wifi state changed, check if you finished your trip as well. AKA Wifi turned off.
      */
     @Override
     protected synchronized void onHandleIntent(Intent intent) {
@@ -83,8 +82,9 @@ public class WifiService extends IntentService {
             checkEndPoint();
         }
     }
-    /*
-        Checks if you are near a bus.
+
+    /**
+     *   Checks if you are near a bus.
      */
     public synchronized boolean isNearBus(){
         for(String mac : Constants.busMacVin.values()){
@@ -98,8 +98,8 @@ public class WifiService extends IntentService {
     }
 
 
-    /*
-        Scan BSSIDs/MACs around you.
+    /**
+     *   Scan BSSIDs/MACs around you.
      */
     public synchronized void scanMacs(){
         mWifiManager = (WifiManager)getSystemService(Context.WIFI_SERVICE);
@@ -112,11 +112,11 @@ public class WifiService extends IntentService {
         }
 
     }
-    /*
-    Starts count if you have been near the same bus after 30 seconds since the first time.
-    Same bus is determined by the uniquenees of the mac/bssid.
-    Tells model to start a new currentTrip if succeeded.
 
+    /**
+    *   Starts count if you have been near the same bus after 30 seconds since the first time.
+    *   Same bus is determined by the uniquenees of the mac/bssid.
+    *   Tells model to start a new currentTrip if succeeded.
     */
     public synchronized void startCount(){
         hThread = new HandlerThread("WifiService");
@@ -146,11 +146,11 @@ public class WifiService extends IntentService {
         mHandler.postDelayed(mRun, DELAY_TIME);
 
     }
-    /*
-        Checks if you're done with your trip.
-        If you finished the trip, it tells model to add a new finished busTrip.
-        And reset currentTrip as well as timestamps.
 
+    /**
+     *   Checks if you're done with your trip.
+     *   If you finished the trip, it tells model to add a new finished busTrip.
+     *   And reset currentTrip as well as timestamps.
      */
     public synchronized void checkEndPoint(){
         Log.d("Wifiservice", "Inside checkendpoint");
@@ -168,9 +168,9 @@ public class WifiService extends IntentService {
             setUserOnBus(false);
         }
     }
-    /*
-    Sets the bus-VIN number of the current bus you are on.
-    */
+    /**
+     *  Sets the bus-VIN number of the current bus you are on.
+     */
     public synchronized void setCurrBus(String mac){
         for(Map.Entry<Integer, String> entry : Constants.busMacVin.entrySet()){
             if(entry.getValue().equals(mac)){
@@ -180,10 +180,10 @@ public class WifiService extends IntentService {
         }
     }
 
-    /*
-        Handles logic when the CurrentTripService should be active or not.
-        If you are on bus, the CurrentTripService is active and should be turned on, otherwise it
-        should be turnedo off.
+    /**
+     *  Handles logic when the CurrentTripService should be active or not.
+     *  If you are on bus, the CurrentTripService is active and should be turned on, otherwise it
+     *  should be turnedo off.
      */
     public synchronized void setUserOnBus(boolean isOn){
         Intent currentTripIntent = new Intent(getApplicationContext(), CurrentTripService.class);

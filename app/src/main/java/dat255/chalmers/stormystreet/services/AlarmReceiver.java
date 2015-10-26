@@ -16,7 +16,7 @@ import org.json.JSONObject;
 import dat255.chalmers.stormystreet.model.MainModel;
 
 /**
- * Service that updates the users score to facebook
+ * Service that sends the user's score to facebook
  * @author Alexander Karlsson
  */
 public class AlarmReceiver extends BroadcastReceiver {

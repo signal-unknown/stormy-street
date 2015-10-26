@@ -6,6 +6,9 @@ import dat255.chalmers.stormystreet.model.bus.IBus;
 import dat255.chalmers.stormystreet.utilities.APIParser;
 
 /**
+ * This task gets information about a specified bus in the background and then updates the model with
+ * the new information.
+ *
  * @author Alexander Håkansson
  */
 public class BusInfoUpdater extends AsyncTask<Integer, Void, IBus> {

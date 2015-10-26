@@ -1,11 +1,9 @@
 package dat255.chalmers.stormystreet.utilities;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 
 import com.facebook.AccessToken;
-import com.facebook.FacebookCallback;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 
@@ -16,7 +14,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import dat255.chalmers.stormystreet.GlobalState;
 import dat255.chalmers.stormystreet.model.FacebookFriend;
 import dat255.chalmers.stormystreet.model.MainModel;
 
@@ -27,10 +24,12 @@ public class FacebookAPIProxy {
     private FacebookAPIProxy(){
 
     }
+    // Our facebook API, this is not secret
     private static final long APP_ID = 733566680083257L;
-    /*
-        Get scores of your friends for this application.
-        Creates a list of FacebookFriends and sets to model upon success.
+
+    /**
+     *  Get scores of your friends for this application.
+     *  Creates a list of FacebookFriends and sets to model upon success.
      */
     public static void getScores(MainModel input){
         final List<FacebookFriend> result = new ArrayList<>();

@@ -13,6 +13,8 @@ import android.widget.TextView;
 import dat255.chalmers.stormystreet.R;
 
 /**
+ * This view is a card that represents data from an ElectriCity 
+ *
  * @author Alexander Håkansson
  * @since 2015-09-24
  */

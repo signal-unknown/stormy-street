@@ -19,7 +19,12 @@ import dat255.chalmers.stormystreet.model.bus.IBus;
 import dat255.chalmers.stormystreet.model.bus.IBusTrip;
 import dat255.chalmers.stormystreet.services.AlarmReceiver;
 
-
+/**
+ * This is a singleton class that will be created by created by the system when the app launches.
+ * It represents the whole application and since it's globally available within the app it also
+ * hold our app model. The GlobalState class handles loading and saving the model from and to
+ * persistent data storage.
+ */
 public class GlobalState extends Application {
     private MainModel model;
     private SQLiteDataSource dataSource;

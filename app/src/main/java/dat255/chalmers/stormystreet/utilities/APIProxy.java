@@ -1,4 +1,5 @@
 package dat255.chalmers.stormystreet.utilities;
+
 import android.util.Log;
 
 import org.json.*;
@@ -30,9 +31,10 @@ public class APIProxy {
     private APIProxy(){
         //prevent from creating outside
     }
-    /*
-        Gets all resources given a busVin number and a timeframe in milliseconds.
-        @returns String representation of response from server.
+
+    /**
+     *  Gets all resources given a busVin number and a timeframe in milliseconds.
+     *  @return String representation of response from server.
      */
     public synchronized static String getBusInfo(int busVIN, long startTime, long endTime){
         String baseURL = "https://ece01.ericsson.net:4443/ecity";
