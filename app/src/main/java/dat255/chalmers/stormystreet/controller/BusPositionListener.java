@@ -2,7 +2,7 @@ package dat255.chalmers.stormystreet.controller;
 
 import java.util.Map;
 
-import dat255.chalmers.stormystreet.utilities.TimedAndAngledPosition;
+import dat255.chalmers.stormystreet.model.GpsCoord;
 
 /**
  * Interface for classes listening to the positions of different buses
@@ -10,5 +10,5 @@ import dat255.chalmers.stormystreet.utilities.TimedAndAngledPosition;
  * @author Alexander Karlsson
  */
 public interface BusPositionListener {
-    void updatePositions(Map<TimedAndAngledPosition, String> positions);
+    void updatePositions(Map<GpsCoord, String> positions);
 }

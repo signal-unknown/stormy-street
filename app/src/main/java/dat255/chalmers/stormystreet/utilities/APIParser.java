@@ -155,8 +155,8 @@ public class APIParser {
      * @param rawGPSData A string containing a JSONArray with GPS data
      * @return A map mapping bus VIN numbers with positions
      */
-    public synchronized static Map<String, TimedAndAngledPosition> getGPSMap(String rawGPSData){
-        Map<String,TimedAndAngledPosition> map = new HashMap<String,TimedAndAngledPosition>();
+    public synchronized static Map<String, GpsCoord> getGPSMap(String rawGPSData){
+        Map<String,GpsCoord> map = new HashMap<String,GpsCoord>();
         try {
             //Create parsable array object
             JSONArray jsonArray = new JSONArray(rawGPSData);
@@ -181,12 +181,12 @@ public class APIParser {
                     long timestamp = object.getLong("timestamp");
                     if(map.containsKey(object.getString("gatewayId"))){
                         if(map.get(object.getString("gatewayId")).isOlder(timestamp)){
-                            TimedAndAngledPosition timedAndAngledPosition = new TimedAndAngledPosition(position, object.getLong("timestamp"), angle);
-                            map.put(object.getString("gatewayId"), timedAndAngledPosition);
+                            GpsCoord GpsCoord = new GpsCoord(position.latitude, position.longitude, angle, object.getLong("timestamp"));
+                            map.put(object.getString("gatewayId"), GpsCoord);
                         }
                     }else{
-                        TimedAndAngledPosition timedAndAngledPosition = new TimedAndAngledPosition(position, object.getLong("timestamp"), angle);
-                        map.put(object.getString("gatewayId"), timedAndAngledPosition);
+                        GpsCoord GpsCoord = new GpsCoord(position.latitude, position.longitude, angle, object.getLong("timestamp"));
+                        map.put(object.getString("gatewayId"), GpsCoord);
                     }
                 }
             }

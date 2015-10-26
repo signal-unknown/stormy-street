@@ -1,7 +1,5 @@
 package dat255.chalmers.stormystreet.model;
 
-import com.google.android.gms.maps.model.LatLng;
-
 /**
  * Representing a gps coordinate with long, lat, speed and direction. Useful for storing coordinates
  * after parsing
@@ -32,11 +30,11 @@ public class GpsCoord implements IGpsCoord {
         this.timestamp = timestamp;
     }
 
-    public GpsCoord(LatLng position, long timestamp, double angle){
-        this.latitude = position.latitude;
-        this.longitude = position.longitude;
+    public GpsCoord(double latitude, double longitude, double direction, long timestamp){
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.direction = direction;
         this.timestamp = timestamp;
-        this.direction = angle;
     }
 
     /**
@@ -53,14 +51,6 @@ public class GpsCoord implements IGpsCoord {
      */
     public double getLong() {
         return this.longitude;
-    }
-
-    /**
-     * Returns a LatLng representation of the GpsCoord
-     * @return A LatLng representation of the GpsCoord
-     */
-    public LatLng getPosition(){
-        return new LatLng(latitude, longitude);
     }
 
     /**

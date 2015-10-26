@@ -25,8 +25,8 @@ import java.util.TimerTask;
 import dat255.chalmers.stormystreet.Constants;
 import dat255.chalmers.stormystreet.GlobalState;
 import dat255.chalmers.stormystreet.R;
+import dat255.chalmers.stormystreet.model.GpsCoord;
 import dat255.chalmers.stormystreet.services.BusPositionUpdater;
-import dat255.chalmers.stormystreet.utilities.TimedAndAngledPosition;
 
 /**
  * This screen represents a map with all the buses connected to the ElectriCity API pointed out.
@@ -122,7 +122,7 @@ public class MapsActivity extends AppCompatActivity implements BusPositionListen
      * @param positions A map containing positions mapped to a proper bus VIN number
      */
     @Override
-    public void updatePositions(Map<TimedAndAngledPosition, String> positions) {
+    public void updatePositions(Map<GpsCoord, String> positions) {
         if(mMap != null){
             //Clear map of old bus markers
             for (Marker oldMarker : busMarkers) {
@@ -130,10 +130,10 @@ public class MapsActivity extends AppCompatActivity implements BusPositionListen
             }
 
             //Add a marker for each bus
-            Set<TimedAndAngledPosition> positionSet = positions.keySet();
-            for(TimedAndAngledPosition position:positionSet){
+            Set<GpsCoord> positionSet = positions.keySet();
+            for(GpsCoord position:positionSet){
                 MarkerOptions options = new MarkerOptions();
-                options.position(position.getPosition());
+                options.position(new LatLng(position.getLat(), position.getLong()));
                 options.flat(true);
                 options.title(positions.get(position));
                 options.icon(BitmapDescriptorFactory.fromResource(R.drawable.navigation));

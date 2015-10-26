@@ -22,14 +22,14 @@ import javax.net.ssl.HttpsURLConnection;
 
 import dat255.chalmers.stormystreet.APIConstants;
 import dat255.chalmers.stormystreet.controller.BusPositionListener;
+import dat255.chalmers.stormystreet.model.GpsCoord;
 import dat255.chalmers.stormystreet.utilities.APIParser;
 import dat255.chalmers.stormystreet.utilities.APIProxy;
-import dat255.chalmers.stormystreet.utilities.TimedAndAngledPosition;
 
 /**
  * Task for fetching and parsing GPS data from ElectriCitys API
  */
-public class BusPositionUpdater extends AsyncTask<Void,Void,Map<TimedAndAngledPosition, String>>{
+public class BusPositionUpdater extends AsyncTask<Void,Void,Map<GpsCoord, String>>{
     private BusPositionListener bpl;
 
     public BusPositionUpdater(BusPositionListener bpl){
@@ -42,16 +42,16 @@ public class BusPositionUpdater extends AsyncTask<Void,Void,Map<TimedAndAngledPo
      * @return A map with positions and VIN numbers of busses
      */
     @Override
-    protected Map<TimedAndAngledPosition, String> doInBackground(Void... params) {
+    protected Map<GpsCoord, String> doInBackground(Void... params) {
         //Fetch data
         String rawGPSData = APIProxy.getRawGpsData();
 
         //Parse data
-        Map<String, TimedAndAngledPosition> tempMap = APIParser.getGPSMap(rawGPSData);
+        Map<String, GpsCoord> tempMap = APIParser.getGPSMap(rawGPSData);
 
         //Create correct map
         Set<String> iDs = tempMap.keySet();
-        Map<TimedAndAngledPosition, String> map = new HashMap<TimedAndAngledPosition,String>();
+        Map<GpsCoord, String> map = new HashMap<GpsCoord,String>();
         for(String iD:iDs){
             //Reverse mapping
             map.put(tempMap.get(iD),iD);
@@ -64,7 +64,7 @@ public class BusPositionUpdater extends AsyncTask<Void,Void,Map<TimedAndAngledPo
      * @param map The map that will be sent to the listeners. The result of doInBackground();
      */
     @Override
-    protected void onPostExecute(Map<TimedAndAngledPosition, String> map){
+    protected void onPostExecute(Map<GpsCoord, String> map){
         bpl.updatePositions(map);
     }
 }
