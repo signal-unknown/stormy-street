@@ -189,10 +189,10 @@ public class WifiService extends IntentService {
         Intent currentTripIntent = new Intent(getApplicationContext(), CurrentTripService.class);
 
         if(isOn){
-            currentTripIntent.setAction("Turnon");
+            currentTripIntent.setAction(CurrentTripService.ACTION_TURN_ON);
             getApplicationContext().startService(currentTripIntent);
         }else{
-            currentTripIntent.setAction("Turnoff");
+            currentTripIntent.setAction(CurrentTripService.ACTION_TURN_OFF);
             getApplicationContext().startService(currentTripIntent);
 
         }

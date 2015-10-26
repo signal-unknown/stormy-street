@@ -28,6 +28,10 @@ public class CurrentTripService extends IntentService{
     private HandlerThread hThread;
     private boolean isFinished = false;
     private static final int DELAY_TIME = 1000;
+
+    public static final String ACTION_TURN_ON = "ACTION_TURN_ON";
+    public static final String ACTION_TURN_OFF = "ACTION_TURN_OFF";
+
     public CurrentTripService() {
         super("dat255.chalmers.stormystreet.services.WifiService");
     }
@@ -43,10 +47,10 @@ public class CurrentTripService extends IntentService{
     @Override
     protected void onHandleIntent(Intent intent) {
 
-        if((intent.getAction()).equals("Turnoff")){
+        if((intent.getAction()).equals(ACTION_TURN_OFF)){
             isFinished = true;
             this.stopSelf();
-        }else if((intent.getAction()).equals("Turnon")){
+        }else if((intent.getAction()).equals(ACTION_TURN_ON)){
             runUpdate();
         }
     }
