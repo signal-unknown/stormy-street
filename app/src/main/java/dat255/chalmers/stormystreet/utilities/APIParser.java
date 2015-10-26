@@ -19,8 +19,8 @@ import dat255.chalmers.stormystreet.model.IGpsCoord;
 import dat255.chalmers.stormystreet.model.bus.BusModel;
 import dat255.chalmers.stormystreet.model.bus.IBus;
 
-/**@author Maxim Goretskyy
- * 
+/**
+ * @author Maxim Goretskyy
  * Created by maxim on 2015-10-06.
  */
 public class APIParser {
