@@ -39,7 +39,7 @@ public class BusStatsUtil {
         List<StatCardData> stats = new ArrayList<>();
 
         String towards;
-        if (bus.getDestination().toLowerCase().equals(NOT_IN_TRAFFIC)) {
+        if (bus.getDestination() != null && bus.getDestination().toLowerCase().equals(NOT_IN_TRAFFIC)) {
             towards = bus.getDestination();
         } else {
             towards = context.getString(R.string.towards) + " " + bus.getDestination();

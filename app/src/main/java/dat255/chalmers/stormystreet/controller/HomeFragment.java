@@ -124,16 +124,14 @@ public class HomeFragment extends Fragment implements IModelListener, BusInfoUpd
 
 
     private synchronized void updateCards(final IBus bus){
+        List<StatCardData> stats = new ArrayList<>();
+        stats.add(new StatCardData(model.getTotalPlusCurrentScore().toString(), getString(R.string.points), null));
         if (bus != null) {
             model.addBus(bus);
-
-            List<StatCardData> stats = new ArrayList<>();
-            stats.add(new StatCardData(model.getTotalPlusCurrentScore().toString(), getString(R.string.points), null));;
             stats.addAll(BusStatsUtil.getBusStatCards(getActivity(), bus));
-
-            recyclerViewAdapter = new BusStatListAdapter(stats);
-            cardRecyclerView.setAdapter(recyclerViewAdapter);
         }
+        recyclerViewAdapter = new BusStatListAdapter(stats);
+        cardRecyclerView.setAdapter(recyclerViewAdapter);
     }
 
     @Override

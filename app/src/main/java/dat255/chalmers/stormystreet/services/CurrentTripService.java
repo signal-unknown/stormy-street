@@ -88,7 +88,7 @@ public class CurrentTripService extends IntentService{
                 long startDistance = Long.parseLong(APIParser.getBusResource(model.getCurrentTrip().getCurrentVinNumber(), model.getCurrentTrip().getTimestamp() - 60000, model.getCurrentTrip().getTimestamp(), BusResource.Total_Vehicle_Distance_Value));
                 long endDistance = Long.parseLong(APIParser.getBusResource(model.getCurrentTrip().getCurrentVinNumber(), System.currentTimeMillis() - 60000, System.currentTimeMillis(), BusResource.Total_Vehicle_Distance_Value));
                 model.setCurrentTripDistance((endDistance-startDistance)*5);
-            }catch(IllegalArgumentException e){
+            }catch(APIParser.NoBusResourceException ex){
                 isFinished = true;
             }
         }

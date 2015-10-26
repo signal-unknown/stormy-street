@@ -34,7 +34,12 @@ public class BusInfoUpdater extends AsyncTask<Integer, Void, IBus> {
     }
 
     private IBus getBusForVin(int vin) {
-        return APIParser.getBusInfo(vin);
+        try {
+            return APIParser.getBusInfo(vin);
+        } catch (APIParser.NoBusResourceException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
