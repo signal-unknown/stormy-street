@@ -1,8 +1,10 @@
 package dat255.chalmers.stormystreet.controller;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.hardware.Camera;
 import android.os.Bundle;
+import android.os.Looper;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -125,8 +127,20 @@ public class HighscoreFragment extends Fragment implements IModelListener, Faceb
 
     @Override
     public void modelUpdated() {
-        // New data from model, update UI
-        updateCards();
+        // Must update UI from UI thread
+        if (Looper.myLooper() == Looper.getMainLooper()) {
+            updateCards();
+        } else {
+            Activity activity = getActivity();
+            if (activity != null) {
+                activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        updateCards();
+                    }
+                });
+            }
+        }
     }
 
     @Override
