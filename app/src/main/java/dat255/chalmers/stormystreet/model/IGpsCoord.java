@@ -9,6 +9,6 @@ public interface IGpsCoord {
     double getLat();
     double getLong();
     double getSpeed();
-    double getDirection();
+    double getAngle();
     IGpsCoord clone();
 }

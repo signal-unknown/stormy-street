@@ -18,7 +18,6 @@ import dat255.chalmers.stormystreet.model.GpsCoord;
 import dat255.chalmers.stormystreet.model.IGpsCoord;
 import dat255.chalmers.stormystreet.model.bus.BusModel;
 import dat255.chalmers.stormystreet.model.bus.IBus;
-import dat255.chalmers.stormystreet.model.bus.JourneyInfo;
 
 /**@author Maxim Goretskyy
  * 
@@ -128,13 +127,13 @@ public class APIParser {
                 }else if(resource.equals("Cell_Id2_Value")) {
                     result.setWlanRssl2Value(Integer.parseInt(object.getString(API_VALUE_IDENTIFIER), 16));
                 } else if (resource.equals("Speed2_Value")) {
-                    joinedCoord = new GpsCoord(joinedCoord.getLat(), joinedCoord.getLong(), object.getDouble(API_VALUE_IDENTIFIER) * 3.6, joinedCoord.getDirection());
+                    joinedCoord = new GpsCoord(joinedCoord.getLat(), joinedCoord.getLong(), object.getDouble(API_VALUE_IDENTIFIER) * 3.6, joinedCoord.getAngle());
                     result.setGPSPosition(joinedCoord);
                 } else if (resource.equals("Latitude2_Value")) {
-                    joinedCoord = new GpsCoord(object.getDouble(API_VALUE_IDENTIFIER), joinedCoord.getLong(), joinedCoord.getSpeed(), joinedCoord.getDirection());
+                    joinedCoord = new GpsCoord(object.getDouble(API_VALUE_IDENTIFIER), joinedCoord.getLong(), joinedCoord.getSpeed(), joinedCoord.getAngle());
                     result.setGPSPosition(joinedCoord);
                 } else if (resource.equals("Longitude2_Value")) {
-                    joinedCoord = new GpsCoord(joinedCoord.getLat(), object.getDouble(API_VALUE_IDENTIFIER), joinedCoord.getSpeed(), joinedCoord.getDirection());
+                    joinedCoord = new GpsCoord(joinedCoord.getLat(), object.getDouble(API_VALUE_IDENTIFIER), joinedCoord.getSpeed(), joinedCoord.getAngle());
                     result.setGPSPosition(joinedCoord);
                 } else if (resource.equals("Course2_Value")) {
                     joinedCoord = new GpsCoord(joinedCoord.getLat(), joinedCoord.getLong(), joinedCoord.getSpeed(), object.getDouble(API_VALUE_IDENTIFIER));
