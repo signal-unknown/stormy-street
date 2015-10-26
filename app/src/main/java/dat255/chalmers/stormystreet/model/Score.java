@@ -1,7 +1,7 @@
 package dat255.chalmers.stormystreet.model;
 
 /**
- * Class representing score in any way
+ * A general representation of score, with any suffix and numerical value type
  * @author Kevin Hoogendijk
  * @since 2015-09-28
  */

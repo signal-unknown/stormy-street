@@ -1,7 +1,5 @@
 package dat255.chalmers.stormystreet.model;
 
-import android.provider.ContactsContract;
-
 import java.util.ArrayList;
 import java.util.List;
 

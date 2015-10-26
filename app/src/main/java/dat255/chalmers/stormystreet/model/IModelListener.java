@@ -5,7 +5,5 @@ package dat255.chalmers.stormystreet.model;
  * @since 2015-09-30
  */
 public interface IModelListener {
-
     void modelUpdated();
-
 }

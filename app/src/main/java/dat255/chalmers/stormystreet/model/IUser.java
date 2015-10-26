@@ -1,7 +1,5 @@
 package dat255.chalmers.stormystreet.model;
 
-import java.util.List;
-
 /**
  * @author Kevin Hoogendijk
  * @since 2015-09-23

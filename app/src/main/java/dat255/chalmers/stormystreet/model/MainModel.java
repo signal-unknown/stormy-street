@@ -14,7 +14,7 @@ import dat255.chalmers.stormystreet.model.bus.IBus;
 import dat255.chalmers.stormystreet.model.bus.IBusTrip;
 
 /**
- * The toplevel model of the app
+ * This is the model for the app. From this model all data is stored and can be accessed or changed.
  * @author Kevin Hoogendijk
  * @since 2015-09-24
  */
@@ -25,7 +25,7 @@ public class MainModel {
     private Set<IModelListener> listeners;
     private List<FacebookFriend> highscoreList;
 
-    public MainModel(){
+    public MainModel() {
         this.busManager = new BusManager();
         this.currentUser = new User("Dummy namn");
         this.listeners = new HashSet<>();

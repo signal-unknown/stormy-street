@@ -1,22 +1,13 @@
 package dat255.chalmers.stormystreet.model;
 
-import android.content.Context;
-import android.util.Log;
-
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
-import dat255.chalmers.stormystreet.R;
-import dat255.chalmers.stormystreet.model.bus.BusTrip;
-import dat255.chalmers.stormystreet.model.bus.IBus;
 import dat255.chalmers.stormystreet.model.bus.IBusTrip;
 
 /**

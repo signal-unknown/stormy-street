@@ -1,7 +1,5 @@
 package dat255.chalmers.stormystreet.model;
 
-import java.net.URL;
-
 /**
     @author Alexander Karlsson && Maxim Goretskyy
 

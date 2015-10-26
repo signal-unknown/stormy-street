@@ -1,7 +1,5 @@
 package dat255.chalmers.stormystreet.model;
 
-import android.content.Context;
-
 import java.util.List;
 
 import dat255.chalmers.stormystreet.model.bus.IBusTrip;

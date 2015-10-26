@@ -5,11 +5,10 @@ import dat255.chalmers.stormystreet.model.IJourneyInfo;
 import dat255.chalmers.stormystreet.model.NotYetImplementedException;
 
 /**
- * Model class representing a single bus
- * Some of the methods throws NotYetImplemented exceptions since this resource is not sending
- * anything from the buses yet
- * There is a variable and getter+setter for each resource of the bus thus creating a digital
- * representation of the bus
+ * This class represents a bus with all resources that are available through the ElectriCity API.
+ * Since some of the resources from the API aren't properly sending these will throw a
+ * NotYetImplemeted exception when trying to access it.
+ *
  * @author Kevin Hoogendijk
  * @since 2015-09-24
  */

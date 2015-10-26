@@ -29,6 +29,13 @@ public class BusManager {
         busList.remove(bus);
     }
 
+    /**
+     * Gets a bus based on its VIN number.
+     *
+     * @param dgwNumber The id of the bus to get
+     * @return A bus object representing the bus with the specified ID
+     * @throws BusNotFoundException Thrown if no bus with the specified id could be found.
+     */
     public IBus getBus(int dgwNumber) throws BusNotFoundException{
         for(IBus bus : busList){
             if(bus.getDgwNumber() == dgwNumber){
