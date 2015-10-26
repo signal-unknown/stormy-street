@@ -24,7 +24,7 @@ public class User implements IUser {
         this(new Statistics(), currentBusNumber);
     }
 
-    public User(String name){
+    public User(){
         this(new Statistics(), 0);
     }
 
