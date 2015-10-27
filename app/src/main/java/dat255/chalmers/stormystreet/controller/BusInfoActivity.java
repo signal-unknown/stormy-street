@@ -59,7 +59,9 @@ public class BusInfoActivity extends AppCompatActivity implements BusInfoUpdater
         // The activity might be finishing if it can't get the bus with the VIN number provided
         if (!isFinishing()) {
             // Set the toolbar text to the bus reg number
-            toolbar.setTitle(getString(R.string.bus) + " " + Constants.vinToRegNr(busVin));
+            if (getSupportActionBar() != null) {
+                getSupportActionBar().setTitle(getString(R.string.bus) + " " + Constants.vinToRegNr(busVin));
+            }
 
             // Starting thread for getting data from model
             new BusInfoUpdater(this).execute(busVin);
