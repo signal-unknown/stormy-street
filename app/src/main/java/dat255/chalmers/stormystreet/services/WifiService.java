@@ -87,7 +87,7 @@ public class WifiService extends IntentService {
      *   Checks if you are near a bus.
      */
     public synchronized boolean isNearBus(){
-        for(String mac : Constants.busMacVin.values()){
+        for(String mac : Constants.getAllMACS()){
             if(macAddresses.contains(mac)){
                 currMac = mac;
                 Log.d("Wifiservice", "Curr buss mac: " + currMac);
@@ -172,8 +172,8 @@ public class WifiService extends IntentService {
      *  Sets the bus-VIN number of the current bus you are on.
      */
     public synchronized void setCurrBus(String mac){
-        for(Map.Entry<Integer, String> entry : Constants.busMacVin.entrySet()){
-            if(entry.getValue().equals(mac)){
+        for(Map.Entry<Integer, String[]> entry : Constants.getVinToMACandRegNrMap().entrySet()){
+            if(entry.getValue()[Constants.BUS_MAC_INDEX] != null && entry.getValue()[Constants.BUS_MAC_INDEX].equals(mac)){
                 this.currBusNum = entry.getKey();
                 Log.d("Wifiservice", "Curr buss num: " + this.currBusNum);
             }

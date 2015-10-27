@@ -2,7 +2,9 @@ package dat255.chalmers.stormystreet;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -14,34 +16,25 @@ public class Constants {
     public static final String ACTION_WIFI_CHANGED = "ACTION_WIFI_CHANGED";
     public static final String EXTRA_BUS_INFO_BUS_ID = "EXTRA_BUS_INFO_BUS_ID";
 
-    public static final HashMap<Integer, String> busMacVin;
-    private static final HashMap<Integer, String> busVinRegNr;
+    public static final int BUS_MAC_INDEX = 0;
+    public static final int BUS_REG_NUMBER_INDEX = 1;
+
+    private static final HashMap<Integer, String[]> joinedVinMap;
     private static final Map<String, LatLng> busStops;//Contains all bus stops for the ElectriCity bus
     static{
-        busMacVin  = new HashMap<>();
-        //Updated BSSIDs below
-        busMacVin.put(100020, "04:f0:21:10:0a:07");
-        busMacVin.put(100021, "04:f0:21:10:09:df");
-        busMacVin.put(100022, "04:f0:21:10:09:e8");
-        busMacVin.put(171164, "04:f0:21:10:09:b8");
-        busMacVin.put(171235, "04:f0:21:10:09:5b");
-        busMacVin.put(171327, "04:f0:21:10:09:53");
-        busMacVin.put(171328, "04:f0:21:10:09:b9");
-        busMacVin.put(171330, "04:f0:21:10:09:b7");
-        busMacVin.put(171234, "04:f0:21:10:09:e7");
 
-        //Initialize map with bus vin numbers and registration numbers
-        busVinRegNr = new HashMap<Integer, String>();
-        busVinRegNr.put(100020,"EPO 131");
-        busVinRegNr.put(100021,"EPO 136");
-        busVinRegNr.put(100022,"EPO 143");
-        busVinRegNr.put(171164,"EOG 604");
-        busVinRegNr.put(171234,"EOG 606");
-        busVinRegNr.put(171235,"EOG 616");
-        busVinRegNr.put(171327,"EOG 622");
-        busVinRegNr.put(171328,"EOG 627");
-        busVinRegNr.put(171329,"EOG 631");
-        busVinRegNr.put(171330,"EOG 634");
+        // Maps bus VIN numbers to their MAC address and reg numbers
+        joinedVinMap = new HashMap<>();
+        joinedVinMap.put(100020, new String[]{"04:f0:21:10:0a:07", "EPO 131"});
+        joinedVinMap.put(100021, new String[]{"04:f0:21:10:09:df", "EPO 136"});
+        joinedVinMap.put(100022, new String[]{"04:f0:21:10:09:e8", "EPO 143"});
+        joinedVinMap.put(171327, new String[]{"04:f0:21:10:09:53", "EOG 622"});
+        joinedVinMap.put(171328, new String[]{"04:f0:21:10:09:b9", "EOG 627"});
+        joinedVinMap.put(171330, new String[]{"04:f0:21:10:09:b7", "EOG 634"});
+        joinedVinMap.put(171234, new String[]{"04:f0:21:10:09:e7", "EOG 606"});
+        joinedVinMap.put(171235, new String[]{"04:f0:21:10:09:5b", "EOG 616"});
+        joinedVinMap.put(171164, new String[]{"04:f0:21:10:09:b8", "EOG 604"});
+        joinedVinMap.put(171329, new String[]{null, "EOG 631"});
 
         //Initialize map with bus stops names and positions
         busStops = new HashMap<String, LatLng>();
@@ -64,16 +57,42 @@ public class Constants {
     }
 
     /**
-     * Converts a bus vin to a Reg nr, returns null if the vin is invalid
+     * Get the reg number that belong to the bus with the specified VIN number
+     *
+     * @param vin The VIN number of the bus
+     * @return The reg number for the bus
      */
     public static String vinToRegNr(Integer vin){
-        String regNr = busVinRegNr.get(vin);
-        return regNr;
+        return joinedVinMap.get(vin)[BUS_REG_NUMBER_INDEX];
+    }
+
+    /**
+     * Get the MAC address that belong to the bus with the specified VIN number
+     *
+     * @param vin The VIN number of the bus
+     * @return The MAC address for the bus
+     */
+    public static String vinToMAC(Integer vin) {
+        return joinedVinMap.get(vin)[BUS_MAC_INDEX];
+    }
+
+    /**
+     * Get a list of all MAC addresses known
+     */
+    public static List<String> getAllMACS() {
+        List<String> result = new ArrayList<>();
+        for (String[] stringArray : joinedVinMap.values()) {
+            result.add(stringArray[BUS_MAC_INDEX]);
+        }
+        return result;
+    }
+
+    public static Map<Integer, String[]> getVinToMACandRegNrMap() {
+        return joinedVinMap;
     }
 
     /**
      * Returns a map containing names mapped to the positions of busstops of bus 55 in Gothenburg
-     * @return A map containing names mapped to the positions of busstops of bus 55 in Gothenburg
      */
     public static Map<String, LatLng> getBusStopMap(){
         return busStops;
