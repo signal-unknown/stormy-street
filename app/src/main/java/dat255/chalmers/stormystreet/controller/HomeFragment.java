@@ -92,7 +92,7 @@ public class HomeFragment extends Fragment implements IModelListener, BusInfoUpd
     public void modelUpdated() {
         model = ((GlobalState) getActivity().getApplication()).getModel();
 
-        if (model.getIsOnBus()) {
+        if (model.getIsOnBus() && model.getCurrentTrip() != null) {
             // Starting thread for getting data from model
             new BusInfoUpdater(this).execute(model.getCurrentTrip().getCurrentVinNumber());
         } else {
