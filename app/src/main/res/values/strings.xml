@@ -1,6 +1,44 @@
 <resources>
-    <string name="app_name">Stormy Street</string>
+    <string name="app_name">Bus Battle</string>
 
-    <string name="hello_world">Hello world!</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+
+    <string name="hello_world" translatable="false">Hello world!</string>
     <string name="action_settings">Settings</string>
+
+    <string name="menu_drawer_home">Home</string>
+    <string name="menu_drawer_profile">My profile</string>
+    <string name="menu_drawer_bus_map">Bus map</string>
+    <string name="menu_drawer_save_data">Save data</string>
+    <string name="menu_drawer_bus_info">Bus info</string>
+    <string name="highscore_title">Highscore</string>
+
+    <string name="profile_stats">Statistics</string>
+    <string name="profile_stats_points">Points collected</string>
+    <string name="profile_stats_time">Total time travelled</string>
+    <string name="profile_stats_co2">Grams CO2 saved</string>
+
+
+    <string name="wifi_alert_title">WiFi is disabled</string>
+    <string name="wifi_alert_text">Do you want to enable WiFi?</string>
+    <string name="wifi_alert_positive">Settings</string>
+    <string name="wifi_alert_negative">Cancel</string>
+    <string name="wifi_alert_neutral">Enable</string>
+    <string name="wifi_alert_negative_toast">Bus Battle requires WiFi enabled to work</string>
+
+    <string name="error_facebook_cancel">You need to login for highscores to work.</string>
+    <string name="error_facebook_onError">Something went wrong, try again.</string>
+
+    <string name="bus">Bus</string>
+
+    <string name="points">Points</string>
+    <string name="next_stop">Next stop</string>
+    <string name="towards">Towards</string>
+    <string name="stopping">Stopping</string>
+    <string name="current_bus">Current bus</string>
+    <string name="on_wifi">On WiFi</string>
+    <string name="facebook_api_id" translatable="false">733566680083257</string>
+    <string name="points_per_week">Points/Week</string>
+    <string name="kmh">km/h</string>
 </resources>

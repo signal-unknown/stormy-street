@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/menu_drawer_home"
+            android:title="@string/menu_drawer_home"
+            android:icon="@drawable/ic_home_black_24dp"/>
+        <item
+            android:id="@+id/menu_drawer_profile"
+            android:title="@string/menu_drawer_profile"
+            android:icon="@drawable/ic_person_black_24dp"/>
+        <item
+            android:id="@+id/menu_drawer_map"
+            android:title="@string/menu_drawer_bus_map"
+            android:icon="@drawable/ic_directions_bus_black_24dp"/>
+        <item
+            android:id="@+id/menu_drawer_highscore"
+            android:title="@string/highscore_title"
+            android:icon="@drawable/ic_format_list_numbered_black_24dp"/>
+    </group>
+</menu>

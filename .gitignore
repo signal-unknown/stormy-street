@@ -8,3 +8,8 @@ Thumbs.db
 /captures
 *.iml
 app/src/main/res/values/api_keys.xml
+app/src/debug/res/values/google_maps_api.xml
+
+app/gradle*
+app/gradlew*
+app/local.properties

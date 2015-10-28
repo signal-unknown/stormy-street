@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Busskampen</string>
+    <string name="action_settings">Inställningar</string>
+    <string name="bus">Buss</string>
+    <string name="close">Stäng</string>
+    <string name="current_bus">Nuvarande buss</string>
+    <string name="highscore_title">Topplista</string>
+    <string name="kmh">km/h</string>
+    <string name="menu_drawer_bus_info">Bussinfo</string>
+    <string name="menu_drawer_bus_map">Busskarta</string>
+    <string name="menu_drawer_home">Hem</string>
+    <string name="menu_drawer_profile">Min profil </string>
+    <string name="next_stop">Nästa hållplats</string>
+    <string name="on_wifi">På WiFi</string>
+    <string name="open">Öppna</string>
+    <string name="points">Poäng</string>
+    <string name="points_per_week">Poäng/Vecka</string>
+    <string name="profile_stats">Statistik</string>
+    <string name="profile_stats_co2">Gram CO2 sparat</string>
+    <string name="profile_stats_points">Poäng insamlade</string>
+    <string name="profile_stats_time">Total tid åkt</string>
+    <string name="stopping">Stannar</string>
+    <string name="towards">Mot</string>
+    <string name="wifi_alert_negative">Avbryt</string>
+    <string name="wifi_alert_negative_toast">Busskampen kräver att WiFi är aktiverat för att fungera</string>
+    <string name="wifi_alert_neutral">Aktivera</string>
+    <string name="wifi_alert_positive">Inställningar</string>
+    <string name="wifi_alert_text">Will du aktivera WiFi</string>
+    <string name="wifi_alert_title">WiFi är avaktiverat</string>
+    <string name="error_facebook_cancel">Du måste logga in för att topplistan ska fungera.</string>
+    <string name="error_facebook_onError">Något gick fel, försök igen.</string>
+</resources>
