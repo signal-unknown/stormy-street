@@ -5,17 +5,14 @@ import android.app.Application;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.database.CursorIndexOutOfBoundsException;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import com.facebook.FacebookSdk;
 
-import dat255.chalmers.stormystreet.controller.SQLiteDataSource;
-import dat255.chalmers.stormystreet.model.AppSQLiteWrapper;
-import dat255.chalmers.stormystreet.model.DataValue;
+import dat255.chalmers.stormystreet.database.SQLiteDataSource;
+import dat255.chalmers.stormystreet.database.DataValue;
 import dat255.chalmers.stormystreet.model.MainModel;
 import dat255.chalmers.stormystreet.model.bus.BusTrip;
-import dat255.chalmers.stormystreet.model.bus.IBus;
 import dat255.chalmers.stormystreet.model.bus.IBusTrip;
 import dat255.chalmers.stormystreet.services.AlarmReceiver;
 

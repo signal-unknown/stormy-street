@@ -1,4 +1,4 @@
-package dat255.chalmers.stormystreet.controller;
+package dat255.chalmers.stormystreet.database;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,14 +6,10 @@ import android.database.Cursor;
 import android.database.CursorIndexOutOfBoundsException;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.provider.ContactsContract;
 import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import dat255.chalmers.stormystreet.model.AppSQLiteWrapper;
-import dat255.chalmers.stormystreet.model.DataValue;
 
 /**
  * Created by David Fogelberg on 2015-09-23.
