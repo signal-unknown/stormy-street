@@ -6,16 +6,9 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.util.Log;
 
-import org.json.JSONException;
-
-import java.io.IOException;
-
-import dat255.chalmers.stormystreet.BusResource;
 import dat255.chalmers.stormystreet.GlobalState;
-import dat255.chalmers.stormystreet.model.CurrentTrip;
 import dat255.chalmers.stormystreet.model.MainModel;
 import dat255.chalmers.stormystreet.utilities.APIParser;
-import dat255.chalmers.stormystreet.utilities.APIProxy;
 
 /**
  * Service that constantly updates the currenttip.
@@ -85,8 +78,8 @@ public class CurrentTripService extends IntentService{
         MainModel model = ((GlobalState) getApplication()).getModel();
         if(model.getCurrentTrip() != null){
             try {
-                long startDistance = Long.parseLong(APIParser.getBusResource(model.getCurrentTrip().getCurrentVinNumber(), model.getCurrentTrip().getTimestamp() - 60000, model.getCurrentTrip().getTimestamp(), BusResource.Total_Vehicle_Distance_Value));
-                long endDistance = Long.parseLong(APIParser.getBusResource(model.getCurrentTrip().getCurrentVinNumber(), System.currentTimeMillis() - 60000, System.currentTimeMillis(), BusResource.Total_Vehicle_Distance_Value));
+                long startDistance = Long.parseLong(APIParser.getBusResource(model.getCurrentTrip().getCurrentVinNumber(), model.getCurrentTrip().getTimestamp() - 60000, model.getCurrentTrip().getTimestamp(), APIParser.BusResource.TOTAL_VEHICLE_DISTANCE_VALUE));
+                long endDistance = Long.parseLong(APIParser.getBusResource(model.getCurrentTrip().getCurrentVinNumber(), System.currentTimeMillis() - 60000, System.currentTimeMillis(), APIParser.BusResource.TOTAL_VEHICLE_DISTANCE_VALUE));
                 model.setCurrentTripDistance((endDistance-startDistance)*5);
             }catch(APIParser.NoBusResourceException ex){
                 isFinished = true;

@@ -13,7 +13,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import dat255.chalmers.stormystreet.BusResource;
 import dat255.chalmers.stormystreet.model.GpsCoord;
 import dat255.chalmers.stormystreet.model.IGpsCoord;
 import dat255.chalmers.stormystreet.model.bus.BusModel;
@@ -27,6 +26,10 @@ public class APIParser {
 
     private static final String API_VALUE_IDENTIFIER = "value";
     private static final int BUS_INFO_UPDATE_INTERVAL = 180000;
+
+    public enum BusResource {
+        TOTAL_VEHICLE_DISTANCE_VALUE
+    }
 
     private APIParser(){
 
@@ -44,8 +47,8 @@ public class APIParser {
                 JSONObject object = jsonArray.getJSONObject(i);
                 String resource = object.getString("resourceSpec");
                 switch(busResource){
-                    case Total_Vehicle_Distance_Value:
-                        if(resource.equals("Total_Vehicle_Distance_Value")){
+                    case TOTAL_VEHICLE_DISTANCE_VALUE:
+                        if(resource.equals("TOTAL_VEHICLE_DISTANCE_VALUE")){
                             result.add(object.getString("value"));
                         }
                 }
@@ -78,7 +81,7 @@ public class APIParser {
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject object = jsonArray.getJSONObject(i);
                 String resource = object.getString("resourceSpec");
-                if (resource.equals("Total_Vehicle_Distance_Value")) {
+                if (resource.equals("TOTAL_VEHICLE_DISTANCE_VALUE")) {
                     int distance = Integer.parseInt(object.getString(API_VALUE_IDENTIFIER));
                     distance *= 5; //compensate for API dividing it by 5
                     result.setTotalDistanceDriven(distance);//will automatically be latest value from API
