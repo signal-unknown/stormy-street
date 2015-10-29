@@ -28,7 +28,7 @@ the ElectriCity API. These should then be inserted in the following files:
 app/src/main/res/values/api_keys.xml
 app/src/main/java/dat255/chalmers/stormystreet/APIConstants.java
 ```
-If you don't have these available but still want to try the app just use one of
+The app will still build without them but will not work as expected. If you don't have the keys available but still want to try the app just use one of
 the ways described under **Usage**.
 
 ##Development
