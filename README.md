@@ -41,8 +41,12 @@ git update-index --assume-unchanged app/src/main/java/dat255/chalmers/stormystre
 ```
 
 ###Contributors
-CrashIT14 -- Alexander Håkansson
-Criticalstone -- Kevin Hoogendijk
-Sweshiman -- Alexander Karlsson
-davve94 -- David Fogelberg
-Mxiim -- Maxim Goretskyy
+CrashIT14 -- Alexander Håkansson  
+
+Criticalstone -- Kevin Hoogendijk  
+
+Sweshiman -- Alexander Karlsson  
+
+davve94 -- David Fogelberg  
+
+Mxiim -- Maxim Goretskyy  
