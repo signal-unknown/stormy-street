@@ -91,6 +91,11 @@ public class HomeFragment extends Fragment implements IModelListener, BusInfoUpd
 
     @Override
     public void modelUpdated() {
+        if (getActivity() == null) {
+            // Might occur if model is updated when user is not in the main activity
+            return;
+        }
+
         model = ((GlobalState) getActivity().getApplication()).getModel();
 
         if (model.getIsOnBus() && model.getCurrentTrip() != null) {
