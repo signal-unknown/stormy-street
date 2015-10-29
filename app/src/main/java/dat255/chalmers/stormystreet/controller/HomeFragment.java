@@ -95,10 +95,11 @@ public class HomeFragment extends Fragment implements IModelListener, BusInfoUpd
 
         if (model.getIsOnBus() && model.getCurrentTrip() != null) {
             int busVin = model.getCurrentTrip().getCurrentVinNumber();
-            // Starting thread for getting data from model
             if (getActivity().getActionBar() != null) {
+                // set title to bus reg number if on it
                 getActivity().getActionBar().setTitle(getString(R.string.on_bus) + " " + Constants.vinToRegNr(busVin));
             }
+            // Starting thread for getting data from model
             new BusInfoUpdater(this).execute(busVin);
         } else {
             // Must run on UI thread
@@ -124,7 +125,8 @@ public class HomeFragment extends Fragment implements IModelListener, BusInfoUpd
         }
     }
 
-    public synchronized void updatePoints() {
+    // Only shows the points (not on bus)
+    private synchronized void updatePoints() {
         List<StatCardData> stats = new ArrayList<>();
 
         stats.add(new StatCardData(model.getTotalPlusCurrentScore().toString(), getString(R.string.points), null));
@@ -133,7 +135,7 @@ public class HomeFragment extends Fragment implements IModelListener, BusInfoUpd
         cardRecyclerView.setAdapter(recyclerViewAdapter);
     }
 
-
+    // Shows points and bus info (on bus)
     private synchronized void updateCards(final IBus bus){
         List<StatCardData> stats = new ArrayList<>();
         stats.add(new StatCardData(model.getTotalPlusCurrentScore().toString(), getString(R.string.points), null));
