@@ -7,11 +7,15 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import dat255.chalmers.stormystreet.GlobalState;
 import dat255.chalmers.stormystreet.model.bus.BusManager;
 import dat255.chalmers.stormystreet.model.bus.BusNotFoundException;
 import dat255.chalmers.stormystreet.model.bus.IBus;
 import dat255.chalmers.stormystreet.model.bus.IBusTrip;
+import dat255.chalmers.stormystreet.model.user.IScore;
+import dat255.chalmers.stormystreet.model.user.IStatistics;
+import dat255.chalmers.stormystreet.model.user.IUser;
+import dat255.chalmers.stormystreet.model.user.Score;
+import dat255.chalmers.stormystreet.model.user.User;
 
 /**
  * This is the model for the app. From this model all data is stored and can be accessed or changed.

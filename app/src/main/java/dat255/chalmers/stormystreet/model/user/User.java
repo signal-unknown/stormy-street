@@ -1,4 +1,4 @@
-package dat255.chalmers.stormystreet.model;
+package dat255.chalmers.stormystreet.model.user;
 
 /**
  * Representing a user and all that is related to it for example which bus he/she is on

@@ -1,4 +1,4 @@
-package dat255.chalmers.stormystreet.model;
+package dat255.chalmers.stormystreet.model.user;
 
 /**
  * A general representation of score, with any suffix and numerical value type
