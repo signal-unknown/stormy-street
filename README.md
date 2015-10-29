@@ -6,6 +6,12 @@ of Technology.
 ##Documentation
 All documentation for the project can be found in the documents folder.
 
+We also made two videos describing our concept and showing off our prototype:
+
+[Concept video - Swedish](https://www.youtube.com/watch?v=GyUcD81qmlM)
+
+[Prototype video](https://www.youtube.com/watch?v=jGopp9TR8vA)
+
 ##Usage
 A signed APK for the app can be found at `app/app-release.apk`. The app is also
 currently available as an open beta on Google Play at the following link:
