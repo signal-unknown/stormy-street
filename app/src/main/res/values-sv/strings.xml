@@ -30,4 +30,7 @@
     <string name="wifi_alert_title">WiFi är avaktiverat</string>
     <string name="error_facebook_cancel">Du måste logga in för att topplistan ska fungera.</string>
     <string name="error_facebook_onError">Något gick fel, försök igen.</string>
+    <string name="profile_stats_weekly">Snittpoäng per vecka</string>
+    <string name="profile">Profil</string>
+    <string name="on_bus">På buss</string>
 </resources>

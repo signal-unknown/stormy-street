@@ -34,7 +34,7 @@ public class Constants {
         joinedVinMap.put(171234, new String[]{"04:f0:21:10:09:e7", "EOG 606"});
         joinedVinMap.put(171235, new String[]{"04:f0:21:10:09:5b", "EOG 616"});
         joinedVinMap.put(171164, new String[]{"04:f0:21:10:09:b8", "EOG 604"});
-        joinedVinMap.put(171329, new String[]{null, "EOG 631"});
+        joinedVinMap.put(171329, new String[]{"", "EOG 631"});
 
         //Initialize map with bus stops names and positions
         busStops = new HashMap<String, LatLng>();

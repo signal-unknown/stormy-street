@@ -14,10 +14,13 @@
     <string name="menu_drawer_bus_info">Bus info</string>
     <string name="highscore_title">Highscore</string>
 
+    <string name="profile">Profile</string>
+
     <string name="profile_stats">Statistics</string>
     <string name="profile_stats_points">Points collected</string>
     <string name="profile_stats_time">Total time travelled</string>
     <string name="profile_stats_co2">Grams CO2 saved</string>
+    <string name="profile_stats_weekly">Weekly average points</string>
 
 
     <string name="wifi_alert_title">WiFi is disabled</string>
@@ -31,6 +34,7 @@
     <string name="error_facebook_onError">Something went wrong, try again.</string>
 
     <string name="bus">Bus</string>
+    <string name="on_bus">On bus</string>
 
     <string name="points">Points</string>
     <string name="next_stop">Next stop</string>

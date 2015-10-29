@@ -48,6 +48,11 @@ public class Statistics implements IStatistics{
     public long getWeeklyAverageScore() {
 
         List<IBusTrip> trips = getAllBusTrips();
+
+        if (trips.size() == 0) {
+            return 0; // No recorded trips
+        }
+
         Collections.sort(trips, new BusTripComparator());
 
         Calendar cal = Calendar.getInstance();
@@ -84,7 +89,7 @@ public class Statistics implements IStatistics{
             }
         }
 
-        //Calculates the sujm of each week
+        //Calculates the sum of each week
         List<Long> weekSum = new ArrayList<>();
         for (List<IBusTrip> tripList : weeklyTrips.values()) {
             long sum = 0;
