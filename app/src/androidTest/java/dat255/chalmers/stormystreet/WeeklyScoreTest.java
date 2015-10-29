@@ -8,7 +8,7 @@ import dat255.chalmers.stormystreet.model.bus.BusTrip;
 /**
  * @author Alexander Håkansson
  */
-public class WeeklyScoreText extends ActivityTestCase {
+public class WeeklyScoreTest extends ActivityTestCase {
     public void testWeeklyAverageCorrect() {
 
         MainModel model = new MainModel();
