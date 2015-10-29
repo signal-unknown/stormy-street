@@ -44,7 +44,7 @@ public class ProfileActivity extends AppCompatActivity implements FacebookCallba
 
     private LoginButton facebookLoginButton;
 
-    private TextView textPoints, textTime, textCO2;
+    private TextView textPoints, textTime, textCO2, textWeekly;
 
     private CallbackManager facebookCallbackManager;
 
@@ -67,6 +67,8 @@ public class ProfileActivity extends AppCompatActivity implements FacebookCallba
         textPoints = (TextView) findViewById(R.id.profile_stats_points_value);
         textTime = (TextView) findViewById(R.id.profile_stats_time_value);
         textCO2 = (TextView) findViewById(R.id.profile_stats_co2_value);
+        textWeekly = (TextView) findViewById(R.id.profile_stats_weekly_value);
+
 
         setupToolbar();
         setupDefaultProfile();
@@ -125,6 +127,7 @@ public class ProfileActivity extends AppCompatActivity implements FacebookCallba
         textPoints.setText(model.getTotalScore().toString());
         textTime.setText(DateUtils.formatElapsedTime(model.getTimeSpentOnBus()/1000));
         textCO2.setText(Long.toString(CO2Util.getGramsSavedPerKm(model.getTotalPlusCurrentScore().getValue(), CO2Util.CO2EmissionRegion.EU)));
+        textWeekly.setText(Long.toString(model.getWeeklyAverageScore()));
     }
 
     private void setupDefaultProfile() {

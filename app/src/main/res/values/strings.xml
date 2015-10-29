@@ -18,6 +18,7 @@
     <string name="profile_stats_points">Points collected</string>
     <string name="profile_stats_time">Total time travelled</string>
     <string name="profile_stats_co2">Grams CO2 saved</string>
+    <string name="profile_stats_weekly">Weekly average points</string>
 
 
     <string name="wifi_alert_title">WiFi is disabled</string>

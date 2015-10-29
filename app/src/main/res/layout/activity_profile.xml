@@ -166,6 +166,31 @@
                             android:layout_below="@id/profile_stats_co2_value"
                             android:text="@string/profile_stats_co2"/>
                     </RelativeLayout>
+
+                    <View
+                        android:layout_width="fill_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:background="#d2d2d2" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/profile_stats_weekly">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/profile_stats_weekly_value"
+                            android:textSize="28sp"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/profile_stats_weekly_header"
+                            android:textSize="20sp"
+                            android:layout_below="@id/profile_stats_weekly_value"
+                            android:text="@string/profile_stats_weekly"/>
+                    </RelativeLayout>
                 </LinearLayout>
 
             </android.support.v7.widget.CardView>
