@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
+import dat255.chalmers.stormystreet.Constants;
 import dat255.chalmers.stormystreet.GlobalState;
 import dat255.chalmers.stormystreet.R;
 import dat255.chalmers.stormystreet.model.IModelListener;
@@ -93,11 +94,18 @@ public class HomeFragment extends Fragment implements IModelListener, BusInfoUpd
         model = ((GlobalState) getActivity().getApplication()).getModel();
 
         if (model.getIsOnBus() && model.getCurrentTrip() != null) {
+            int busVin = model.getCurrentTrip().getCurrentVinNumber();
             // Starting thread for getting data from model
-            new BusInfoUpdater(this).execute(model.getCurrentTrip().getCurrentVinNumber());
+            if (getActivity().getActionBar() != null) {
+                getActivity().getActionBar().setTitle(getString(R.string.on_bus) + " " + Constants.vinToRegNr(busVin));
+            }
+            new BusInfoUpdater(this).execute(busVin);
         } else {
             // Must run on UI thread
             if (Looper.myLooper() == Looper.getMainLooper()) {
+                if (getActivity().getActionBar() != null) {
+                    getActivity().getActionBar().setTitle(getString(R.string.app_name));
+                }
                 updatePoints();
             } else {
                 Activity activity = getActivity();
@@ -105,6 +113,9 @@ public class HomeFragment extends Fragment implements IModelListener, BusInfoUpd
                     activity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            if (getActivity().getActionBar() != null) {
+                                getActivity().getActionBar().setTitle(getString(R.string.app_name));
+                            }
                             updatePoints();
                         }
                     });

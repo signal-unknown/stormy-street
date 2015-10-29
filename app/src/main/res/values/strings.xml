@@ -34,6 +34,7 @@
     <string name="error_facebook_onError">Something went wrong, try again.</string>
 
     <string name="bus">Bus</string>
+    <string name="on_bus">On bus</string>
 
     <string name="points">Points</string>
     <string name="next_stop">Next stop</string>
