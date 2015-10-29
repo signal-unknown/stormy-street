@@ -14,6 +14,8 @@
     <string name="menu_drawer_bus_info">Bus info</string>
     <string name="highscore_title">Highscore</string>
 
+    <string name="profile">Profile</string>
+
     <string name="profile_stats">Statistics</string>
     <string name="profile_stats_points">Points collected</string>
     <string name="profile_stats_time">Total time travelled</string>
