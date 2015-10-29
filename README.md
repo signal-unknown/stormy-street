@@ -19,7 +19,10 @@ currently available as an open beta on Google Play at the following link:
 
 Note that for the Facebook integration to properly work you need to be using
 the signed APK or install the app from Google Play - this is for security
-purposes.
+purposes. Your facebook account also needs to be added as a beta tester
+of the app, please contact the developers for this. There is also
+a test account that can be used, you can get the login details for this 
+from the developers
 
 ##Building
 Before building you need to grab your own API key for both Google Maps and for
