@@ -39,3 +39,10 @@ the following commands:
 git update-index --assume-unchanged app/src/main/res/values/api_keys.xml
 git update-index --assume-unchanged app/src/main/java/dat255/chalmers/stormystreet/APIConstants.java
 ```
+
+###Contributors
+CrashIT14 -- Alexander Håkansson
+Criticalstone -- Kevin Hoogendijk
+Sweshiman -- Alexander Karlsson
+davve94 -- David Fogelberg
+Mxiim -- Maxim Goretskyy
