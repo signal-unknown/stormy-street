@@ -87,6 +87,7 @@ public class HighscoreFragment extends Fragment implements IModelListener, Faceb
      * FacebookFriends to it
      */
     public synchronized void updateCards(){
+        model = ((GlobalState)getActivity().getApplication()).getModel();
         List<HighscoreCardData> stats = new ArrayList<>();
         List<FacebookFriend> friends = model.getHighscoreList();
 
@@ -127,6 +128,13 @@ public class HighscoreFragment extends Fragment implements IModelListener, Faceb
 
     @Override
     public void modelUpdated() {
+
+        if (getActivity() == null) {
+            // Might happen if model is updated outside the screen
+            return;
+        }
+
+
         // Must update UI from UI thread
         if (Looper.myLooper() == Looper.getMainLooper()) {
             updateCards();
