@@ -126,7 +126,7 @@ public class ProfileActivity extends AppCompatActivity implements FacebookCallba
         MainModel model = ((GlobalState)getApplication()).getModel();
         textPoints.setText(model.getTotalScore().toString());
         textTime.setText(DateUtils.formatElapsedTime(model.getTimeSpentOnBus()/1000));
-        textCO2.setText(Long.toString(CO2Util.getGramsSavedPerKm(model.getTotalPlusCurrentScore().getValue(), CO2Util.CO2EmissionRegion.EU)));
+        textCO2.setText(Long.toString(CO2Util.getGramsSavedPerKm(model.getTotalPlusCurrentScore().getValue() / 1000, CO2Util.CO2EmissionRegion.EU)));
         textWeekly.setText(Long.toString(model.getWeeklyAverageScore()));
     }
 
