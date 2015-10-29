@@ -12,8 +12,8 @@ android {
         applicationId "dat255.chalmers.stormystreet"
         minSdkVersion 15
         targetSdkVersion 23
-        versionCode 4
-        versionName "1.1.0"
+        versionCode 5
+        versionName "1.1.1"
     }
     buildTypes {
         release {
